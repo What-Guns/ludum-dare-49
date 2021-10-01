@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ESNEXT",
+    "allowJs": true,
+    "module": "ESNext",
+    "outDir": "./dist",
+    "lib": ["dom", "es2017"],
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "paths": {
+      "@lib": ["./node_modules"]
+    }
+  },
+  "rootDir": "./",
+  "include": [
+    "main.ts"
+  ]
+}
