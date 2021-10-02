@@ -1,4 +1,16 @@
 import { playBGM, playSFX, playSpeech } from "./audio.js";
+import {Room} from './room.js';
+
+const popupContainer = document.getElementById('popup-window-container') as HTMLDivElement;
+
+export function translateAndScalePopupContainer(room: Room) {
+  popupContainer.style.transform = `translateX(${room.camera.x}px) scale(${room.camera.scale})`;
+}
+
+export function resizePopupContainer(room: Room) {
+  popupContainer.style.width = room.width+'px';
+  popupContainer.style.height = room.height+'px';
+}
 
 class HudItemWindow {
   private element: HTMLElement;
@@ -51,7 +63,7 @@ class HudItemWindow {
     this.element.style.left = String(this.x);
     this.element.style.right = String(this.y);
     this.populateWindow();
-    document.body.appendChild(this.element);
+    popupContainer.appendChild(this.element);
   }
 
   private populateWindow() {

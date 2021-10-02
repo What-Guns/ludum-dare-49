@@ -4,6 +4,7 @@ import {loadImage} from './loader.js';
 import {Serializable, serialize, isSerializable, deserialize, pluck} from './serialization.js';
 import {ofType} from './crap.js';
 import {pointer} from './input.js';
+import {translateAndScalePopupContainer, resizePopupContainer} from './hud.js';
 
 @Serializable('./room.js')
 export class Room {
@@ -75,6 +76,7 @@ export class Room {
   activate() {
     this.things.forEach(t => t.startDrawingDOM?.());
     this.player = this.things.find(ofType(Player));
+    resizePopupContainer(this);
   }
 
   deactivate() {
@@ -98,6 +100,7 @@ export class Room {
     } else {
       this.camera.x = xOverflow * -xAmount;
     }
+    translateAndScalePopupContainer(this);
   }
 }
 

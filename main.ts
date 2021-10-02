@@ -2,6 +2,7 @@ import {deserialize} from './serialization.js';
 import {loadObject} from './loader.js';
 import {Game} from './game.js';
 import {init} from './input.js';
+import {resizePopupContainer} from './hud.js';
 import './audio.js';
 import './rpgTextBox.js';
 
@@ -25,6 +26,7 @@ addEventListener('load', async () => {
     const {width, height} = canvas.getBoundingClientRect();
     canvas.width = width;
     canvas.height = height;
+    if(game?.room) resizePopupContainer(game.room);
   }
 
   resizeCanvas();
