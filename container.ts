@@ -1,5 +1,4 @@
 import {Serializable, pluck, deserialize, serialize} from './serialization.js';
-import {pointer} from './input.js';
 import {Thing} from './main.js';
 import {ofType} from './crap.js';
 import {Player} from './player.js';
@@ -21,9 +20,8 @@ export class Container implements Thing {
     this.height = data.height;
   }
 
-  doClick() {
-    if(pointer.x < this.x || pointer.x > this.x + this.width) return false;
-    if(pointer.y < this.y || pointer.y > this.y + this.height) return false;
+  doClick(x: number, y: number) {
+    if(!this.isPointerOver(x, y)) return false;
 
     const player = this.room.things.find(ofType(Player));
     if(!player?.canReach(this.x, this.y)) return false;
@@ -39,13 +37,13 @@ export class Container implements Thing {
 
   draw(ctx: CanvasRenderingContext2D) {
     if(!debug) return;
-    ctx.fillStyle = this.isPointerOver() ? 'lime':'coral';
+    ctx.fillStyle = 'coral';
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 
-  private isPointerOver() {
-    if(pointer.x < this.x || pointer.x > this.x + this.width) return false;
-    if(pointer.y < this.y || pointer.y > this.y + this.height) return false;
+  private isPointerOver(x: number, y: number) {
+    if(x < this.x || x > this.x + this.width) return false;
+    if(y < this.y || y > this.y + this.height) return false;
     return true;
   }
 

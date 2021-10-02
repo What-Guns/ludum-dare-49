@@ -1,5 +1,4 @@
 import {Thing} from './main.js';
-import {pointer} from './input.js';
 import {Serializable} from './serialization.js';
 import { HudItemWindow } from './hud.js';
 
@@ -28,13 +27,13 @@ export class Item implements Thing {
     };
   }
 
-  doClick() {
-    if(Math.abs(this.x - pointer.x) > this.width / 2 || Math.abs(this.y - pointer.y) > this.height / 2) {
+  doClick(x: number, y: number) {
+    if(Math.abs(this.x - x) > this.width / 2 || Math.abs(this.y - y) > this.height / 2) {
       this.hudWindow.visible = false;
       return false;
     } 
-    this.hudWindow.x = pointer.x;
-    this.hudWindow.y = pointer.y;
+    this.hudWindow.x = x;
+    this.hudWindow.y = y;
     this.hudWindow.visible = true;
     return true;
   }

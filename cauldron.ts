@@ -1,5 +1,4 @@
 import {Thing} from './main.js';
-import {pointer} from './input.js';
 import {Serializable} from './serialization.js';
 import {Item} from './item.js';
 
@@ -54,13 +53,13 @@ export class Cauldron implements Thing {
     };
   }
 
-  doClick() {
-    if(Math.abs(this.x - pointer.x) > this.width / 2 || Math.abs(this.y - pointer.y) > this.height / 2) {
+  doClick(x: number, y: number) {
+    if(Math.abs(this.x - x) > this.width / 2 || Math.abs(this.y - y) > this.height / 2) {
       this.hudCauldronWindow.visible = false;
       return false;
     } 
-    this.hudCauldronWindow.x = pointer.x;
-    this.hudCauldronWindow.y = pointer.y;
+    this.hudCauldronWindow.x = x;
+    this.hudCauldronWindow.y = y;
     this.hudCauldronWindow.visible = true;
     return true;
   }

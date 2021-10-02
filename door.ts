@@ -2,7 +2,6 @@ import {Serializable, pluck} from './serialization.js';
 import {Room} from './room.js';
 import {Thing} from './main.js';
 import {Player} from './player.js';
-import {pointer} from './input.js';
 import {debug} from './debug.js';
 import {ofType} from './crap.js';
 
@@ -37,7 +36,6 @@ export class Door implements Thing {
     const floorSlope = (this.room.vanishingPoint.y - this.base) / (this.room.vanishingPoint.x - this.x);
     const ceilingSlope = (this.room.vanishingPoint.y - (this.base - this.height)) / (this.room.vanishingPoint.x - this.x);
 
-    ctx.fillStyle = this.isPointerOverDoor() ? 'lime' : 'brown';
     ctx.beginPath();
     ctx.moveTo(this.x - this.width / 2, this.base - floorSlope * (this.width / 2));
     ctx.lineTo(this.x + this.width / 2, this.base + floorSlope * (this.width / 2));
@@ -46,8 +44,8 @@ export class Door implements Thing {
     ctx.fill();
   }
 
-  doClick() {
-    if(!this.isPointerOverDoor()) return false;
+  doClick(x: number, y: number) {
+    if(!this.isPointerOverDoor(x, y)) return false;
 
     const player = this.room.things.find(ofType(Player));
     if(!player?.canReach(this.x, this.base)) return false;
@@ -58,10 +56,10 @@ export class Door implements Thing {
     return true;
   }
 
-  private isPointerOverDoor() {
-    if(Math.abs(pointer.x - this.x) > this.width / 2) return false;
-    const slope = (this.room.vanishingPoint.y - pointer.y) / (this.room.vanishingPoint.x - pointer.x);
-    const adjustedY = pointer.y - slope * (pointer.x - this.x);
+  private isPointerOverDoor(x: number, y: number) {
+    if(Math.abs(x - this.x) > this.width / 2) return false;
+    const slope = (this.room.vanishingPoint.y - y) / (this.room.vanishingPoint.x - x);
+    const adjustedY = y - slope * (x - this.x);
     if(adjustedY > this.base) return false;
     if(adjustedY < (this.base - this.height)) return false;
     return true;

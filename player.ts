@@ -1,4 +1,3 @@
-import {pointer} from './input.js';
 import {Serializable} from './serialization.js';
 import {loadImage} from './loader.js';
 
@@ -33,8 +32,8 @@ export class Player {
     return Math.abs(x - this.x) < 200;
   }
 
-  moveToCursor() {
-    if(pointer.active) this.targetX = pointer.x;
+  moveToCursor(x: number) {
+    this.targetX = x;
   }
 
   draw(ctx: CanvasRenderingContext2D) {

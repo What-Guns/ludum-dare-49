@@ -49,7 +49,7 @@ export class Game {
     if(this.transition) return;
 
     if(!this.wasPointerActive && pointer.active) {
-      this.room?.doClick();
+      this.room?.doClick(pointer.x, pointer.y);
     }
     this.wasPointerActive = pointer.active;
     this.room?.tick(dt);
@@ -68,9 +68,9 @@ export class Game {
         this.transition = null
       } else {
         const dx = this.transition.direction === 'right' ? -1 : 1;
-        this.ctx.translate(dx * this.transition.from.width * amount, 0);
+        this.ctx.translate(dx * this.ctx.canvas.width * amount, 0);
         this.transition.from.draw(this.ctx);
-        this.ctx.translate(this.transition.from.width * dx * -1, 0);
+        this.ctx.translate(this.ctx.canvas.width * dx * -1, 0);
         if(this.transition.startTime + this.transition.duration < this.now) this.transition = null;
       }
     }
@@ -87,7 +87,7 @@ export class Game {
 
   goToFirstRoom() {
     this.room = this.rooms.find(r => r.things.some(ofType(Player)))!;
-    this.room.things.forEach(t => t.startDrawingDOM ? t.startDrawingDOM() : null);
+    this.room.activate();
   }
 
   goToDoor(roomName: string, doorName: string, direction: TransitionDirection) {
@@ -101,7 +101,7 @@ export class Game {
     const player = this.room.things.find(ofType(Player));
     if(!player) throw new Error(`The player isn't in the current room!`);
 
-    this.room.things.forEach(t => t.stopDrawingDOM ? t.stopDrawingDOM() : null);
+    this.room.deactivate();
     this.room.things.splice(this.room.things.indexOf(player), 1);
 
     const targetRoom = this.rooms.find(room => room.name === roomName);
@@ -122,7 +122,7 @@ export class Game {
     player.y = targetDoor.base;
     player.targetX = targetDoor.x;
     targetRoom.things.push(player);
-    targetRoom.things.forEach(t => t.startDrawingDOM ? t.startDrawingDOM() : null);
+    targetRoom.activate();
   }
 }
 

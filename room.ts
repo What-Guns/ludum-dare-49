@@ -2,6 +2,7 @@ import {Player} from './player.js';
 import {Thing} from './main.js';
 import {loadImage} from './loader.js';
 import {Serializable, serialize, isSerializable, deserialize, pluck} from './serialization.js';
+import {ofType} from './crap.js';
 
 @Serializable('./room.js')
 export class Room {
@@ -10,8 +11,11 @@ export class Room {
   readonly height: number;
   readonly things: Thing[] = [];
   readonly vanishingPoint: {x: number, y: number};
+  readonly camera = {x: 0, scale: 1};
 
   pattern?: CanvasPattern;
+
+  player?: Player;
 
   constructor(private readonly background: CanvasImageSource, private readonly roomData: RoomData) {
     this.name = roomData.name;
@@ -43,20 +47,48 @@ export class Room {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
+    ctx.save();
+    this.doCameraStuff(ctx);
+    ctx.translate(this.camera.x, 0);
+    ctx.scale(this.camera.scale, this.camera.scale);
     this.pattern = this.pattern ?? ctx.createPattern(this.background, 'no-repeat')!;
     ctx.fillStyle = this.pattern!;
     ctx.fillRect(0, 0, this.width, this.height);
     for(const thing of this.things) {
       thing.draw?.(ctx);
     }
+    ctx.restore();
   }
 
-  doClick() {
+  doClick(x: number, y: number) {
+    const transformedX = (x - this.camera.x) / this.camera.scale;
+    const transformedY = y / this.camera.scale;
     for(const thing of this.things) {
-      if(thing.doClick?.()) return;
+      if(thing.doClick?.(transformedX, transformedY)) return;
     }
-    this.things.find((t): t is Player => t instanceof Player)?.moveToCursor();
-    import('./item.js').then(x => (window as any).x = x);
+    this.things.find((t): t is Player => t instanceof Player)?.moveToCursor(transformedX);
+  }
+
+  activate() {
+    this.things.forEach(t => t.startDrawingDOM?.());
+    this.player = this.things.find(ofType(Player));
+  }
+
+  deactivate() {
+    this.things.forEach(t => t.stopDrawingDOM ? t.stopDrawingDOM() : null);
+    this.player = undefined;
+  }
+
+  private doCameraStuff(ctx: CanvasRenderingContext2D) {
+    this.camera.scale = Math.min(ctx.canvas.height / this.height, 1);
+    if(!this.player) return;
+    const xAmount = this.player.x / this.width;
+    const xOverflow = (this.width * this.camera.scale) - ctx.canvas.width;
+    if(xOverflow < 0) {
+      this.camera.x = -xOverflow/2;
+    } else {
+      this.camera.x = xOverflow * -xAmount;
+    }
   }
 }
 
