@@ -43,6 +43,7 @@ class Game {
     this.room.things.push(new Player(100, 100));
     this.hotbar.imgSrcList = HudItemHotbar.defaultList;
     this.hotbar.redrawItems();
+    (window as any).hotbar = this.hotbar;
   }
 
   tick(dt: number) {

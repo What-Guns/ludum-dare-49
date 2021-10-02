@@ -86,6 +86,7 @@ class HudItemHotbar {
   readonly itemWidth = '40px';
   readonly itemHeight = '40px';
   private _capacity = 5;
+  private _selectedIndex = 0;
 
   private element = document.createElement('div');
   private _itemList = document.createElement('ul');
@@ -104,6 +105,9 @@ class HudItemHotbar {
     for(let i=0; i<this._capacity; i++) {
       const li = document.createElement('li');
       li.classList.add('hudHotbarItem');
+      if (i == this.selectedIndex) {
+        li.classList.add('selected');
+      }
       this._itemList.appendChild(li);
 
       const img = document.createElement('img');
@@ -129,6 +133,15 @@ class HudItemHotbar {
   setImageAt(index: number, src: string) {
     this._imageSrcList[index] = src;
     this.redrawItems();
+  }
+  
+  set selectedIndex(index: number) {
+    this._selectedIndex = index;
+    console.log(`Selecting ${this._selectedIndex} in hotbar`);
+    [].forEach.call(this._itemList.children, (element: HTMLUListElement, i) => {
+      element.classList.remove('selected');
+      if (index == i) element.classList.add('selected');
+    });
   }
 
   static defaultList = [

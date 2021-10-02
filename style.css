@@ -89,8 +89,8 @@ canvas {
 }
 
 .hudHotbarItem.selected > img {
-  border: 5px red solid;
-  background-color: lightgray;
+  /*border-color: red;*/
+  background-color: white;
 }
 
 ul {
