@@ -3,6 +3,7 @@ import {pointer} from './input.js';
 import { HudItemHotbar } from './hud.js';
 import {Room, demoRoom} from './room.js';
 import {deserialize} from './serialization.js';
+import './audio.js';
 
 addEventListener('load', async () => {
   const canvas = document.querySelector('canvas')!;
