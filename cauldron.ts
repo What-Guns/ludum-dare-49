@@ -61,7 +61,10 @@ export class Cauldron implements Thing {
   debugResize(evt: WheelEvent) {
     this.width += evt.deltaX / 50;
     this.height -= evt.deltaY / 50;
+  }
 
+  isUnderPointer(x: number, y: number) {
+    return Math.abs(x - this.x) < this.width && Math.abs(y - this.y) < this.height;
   }
 
   putItem(itm: Item) {
