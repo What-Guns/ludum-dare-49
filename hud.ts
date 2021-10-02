@@ -5,6 +5,9 @@ class HudItemWindow {
   private _itemDescription: HTMLDivElement = document.createElement('div');
   private _traitsList: HTMLUListElement = document.createElement('ul');
 
+  readonly imageHeight = "40px";
+  readonly imageWidth  = "40px";
+
   set traitsList(list: string[]) {
     while (this._traitsList.firstChild) {
       this._traitsList.removeChild(this._traitsList.firstChild);
@@ -58,6 +61,8 @@ class HudItemWindow {
     picDiv.classList.add('hudItemPicture');
     picAndName.appendChild(picDiv);
 
+    this._image.setAttribute('height', this.imageHeight);
+    this._image.setAttribute('width', this.imageWidth);
     picDiv.appendChild(this._image);
 
     this._itemName.classList.add('hudItemName');

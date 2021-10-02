@@ -10,11 +10,12 @@ canvas {
 
 .hudWindow {
   position: absolute;
+  font-size: x-small;
 }
 
 .hudItemWindow {
   user-select: none;
-  width: 200px;
+  width: 150px;
   border-radius: 10px;
   border: 3px darkblue solid;
   background-color: lightgray;
@@ -34,14 +35,11 @@ canvas {
   flex-grow: 1;
   text-align: center;
   margin: 5px;
-  width: 64px;
-  height: 64px;
 }
 
 .hudItemPicture > img {
-  border-radius: 10px;
-  width: 64px;
-  height: 64px;
+  width: 40px;
+  height: 40px;
 }
 
 .hudItemName {
