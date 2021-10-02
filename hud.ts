@@ -112,6 +112,7 @@ class HudItemHotbar {
       if (clickedIndex === 0) playBGM('banjo');
       if (clickedIndex === 1) playBGM('crystal');
       if (clickedIndex === 2) playSpeech('meow', 12, 130, 1.15, 1.1);
+      if (clickedIndex === 3) playSFX('splat');
     })
     document.body.appendChild(this.element);
   }
