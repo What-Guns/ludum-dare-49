@@ -1,5 +1,6 @@
 import {pointer} from './input.js';
 import {Serializable} from './serialization.js';
+import {loadImage} from './loader.js';
 
 @Serializable('./player.js')
 export class Player {
@@ -7,14 +8,16 @@ export class Player {
   public y: number;
   public targetX: number;
 
-  constructor({x, y}: PlayerData) {
+  constructor({x, y}: PlayerData, private standingImage: HTMLImageElement, private walkingImage: HTMLImageElement) {
     this.x = x;
     this.y = y;
     this.targetX = x;
   }
 
-  static deserialize(playerData: PlayerData) {
-    return Promise.resolve(new Player(playerData));
+  static async deserialize(playerData: PlayerData) {
+    const standing = await loadImage('./sprites/player-forwards.png');
+    const walking = await loadImage('./sprites/player-right.png');
+    return new Player(playerData, standing, walking);
   }
 
   tick(dt: number) {
@@ -31,10 +34,14 @@ export class Player {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    const width = 32;
-    const height = 48;
-    ctx.fillStyle = 'black';
-    ctx.fillRect(this.x - width/2, this.y - height, width, height);
+    const image = this.targetX !== this.x ? this.walkingImage : this.standingImage;
+    const width = image.width;
+    const height = image.height;
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    if(this.targetX < this.x) ctx.scale(-1, 1);
+    ctx.drawImage(image, -width/2, -height);
+    ctx.restore();
   }
 
   serialize(): PlayerData {

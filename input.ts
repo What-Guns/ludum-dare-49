@@ -25,7 +25,6 @@ function mouseClicked(evt: MouseEvent) {
   pointer.x = evt.pageX;
   pointer.y = evt.pageY;
   pointer.identifier = -1;
-  console.log(pointer);
 }
 
 function mouseMoved(evt: MouseEvent) {
