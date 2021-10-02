@@ -1,6 +1,7 @@
 import { loadAudio } from './loader.js';
 
 const bgm: {[k in string]: AudioTrack} = {};
+const sfx: {[k in string]: AudioTrack} = {};
 type AudioTrack = {
   url: string,
   buffer: AudioBuffer,
@@ -26,9 +27,20 @@ async function loadBGM(name:string, url: string) {
   await loadIt();
 }
 
+async function loadSFX(name:string, url: string) {
+  async function loadIt() {
+    const buffer = await loadAudio(url, audioContext);
+    sfx[name] = {
+      url,
+      buffer,
+    };
+  }
+  await loadIt();
+}
+
 export function playBGM(name: string) {
   if (!bgm[name]) {
-    console.error(`Audio track ${name} is not loaded`)
+    console.error(`BGM track ${name} is not loaded`)
     return;
   }
   currentlyPlayingBGM.stop();
@@ -40,7 +52,20 @@ export function playBGM(name: string) {
   currentlyPlayingBGM = sound;
 }
 
+export function playSFX(name: string) {
+  if (!sfx[name]) {
+    console.error(`SFX track ${name} is not loaded`)
+    return;
+  }
+  const sound = audioContext.createBufferSource();
+  sound.buffer = sfx[name].buffer;
+  sound.connect(gainNode);
+  sound.loop = false;
+  sound.start(0);
+}
+
 (window as any).playBGM = playBGM;
 
 loadBGM('crystal', 'audio/The_Scientists_Crystalarium.mp3');
 loadBGM('banjo', 'audio/Banjo_Kablooie.mp3');
+loadSFX('splat', 'audio/splat.ogg');

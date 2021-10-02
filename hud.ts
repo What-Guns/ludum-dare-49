@@ -1,4 +1,4 @@
-import { playBGM } from "./audio.js";
+import { playBGM, playSFX } from "./audio.js";
 
 class HudItemWindow {
   private element: HTMLElement;
@@ -111,6 +111,7 @@ class HudItemHotbar {
       if (clickedIndex > -1) this.selectedIndex = clickedIndex;
       if (clickedIndex === 0) playBGM('banjo');
       if (clickedIndex === 1) playBGM('crystal');
+      if (clickedIndex === 2) playSFX('splat');
     })
     document.body.appendChild(this.element);
   }
