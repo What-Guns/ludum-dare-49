@@ -102,6 +102,12 @@ class HudItemHotbar {
 
     this._itemList.classList.add('hudItemHotbarList');
     this.element.appendChild(this._itemList);
+    this.element.addEventListener('mousedown', ev => {
+      ev.stopPropagation();
+      const clickedItem = ev.composedPath()[1];
+      const clickedIndex = Array.from(this._itemList.childNodes).findIndex(el => el === clickedItem);
+      this.selectedIndex = clickedIndex;
+    })
     document.body.appendChild(this.element);
   }
 
