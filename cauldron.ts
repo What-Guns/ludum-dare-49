@@ -2,27 +2,27 @@ import {Thing} from './main.js';
 import {Serializable} from './serialization.js';
 import {Item} from './item.js';
 
-import {HudCauldronItemWindow } from './cauldron_hud.js';
 
 @Serializable('./cauldron_hud.ts')
 export class Cauldron implements Thing {
 
-  private hudCauldronWindow: HudCauldronItemWindow;
 
+  thingy = new Item(50,50,32,32,500);
+ 
 
   public timer = 0;
   public totalTime = 0;
   public timeOut = false;
-  readonly placedItems: Item[] = [];
+  readonly placedItems: Item[] = [this.thingy];
   public transformedItem: Item | null = null;
   public hurryUp = this.totalTime / 3;
 
+  readonly ITEM_CAPACITY = 5;
+
+
+
   constructor(public x: number, public y: number, public width: number, public height: number) {
-    this.hudCauldronWindow = new HudCauldronItemWindow();
-    this.hudCauldronWindow.image = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";
-    this.hudCauldronWindow.itemName = "Blue Square";
-    this.hudCauldronWindow.traitsList = ["Blue", "Four-sided"];
-    this.hudCauldronWindow.itemDescription = "A two-dimensional piece of blue material";
+   
   }
 
   tick(dt: number) {
@@ -53,17 +53,6 @@ export class Cauldron implements Thing {
     };
   }
 
-  doClick(x: number, y: number) {
-    if(Math.abs(this.x - x) > this.width / 2 || Math.abs(this.y - y) > this.height / 2) {
-      this.hudCauldronWindow.visible = false;
-      return false;
-    } 
-    this.hudCauldronWindow.x = x;
-    this.hudCauldronWindow.y = y;
-    this.hudCauldronWindow.visible = true;
-    return true;
-  }
-
   draw(ctx: CanvasRenderingContext2D) {
     ctx.fillStyle = 'black';
     ctx.fillRect(this.x - this.width/2, this.y - this.height/2, this.width, this.height);
@@ -72,8 +61,23 @@ export class Cauldron implements Thing {
   debugResize(evt: WheelEvent) {
     this.width += evt.deltaX / 50;
     this.height -= evt.deltaY / 50;
+
+  }
+
+  putItem(itm: Item) {
+    if (this.placedItems.length >= this.ITEM_CAPACITY) {
+      return this.denyItem();
+    }
+    this.placedItems.push(itm)
+  }
+
+  denyItem(){
+    console.log("I'm a cauldron not a storage unit!")
   }
 }
+
+
+
 
 interface CauldronData {
   x: number;
