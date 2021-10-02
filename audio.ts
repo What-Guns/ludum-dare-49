@@ -53,6 +53,10 @@ export function playBGM(name: string) {
 }
 
 export function playSFX(name: string) {
+  return playSFXPitchShifted(name, 1);
+}
+
+export function playSFXPitchShifted(name: string, shift: number) {
   if (!sfx[name]) {
     console.error(`SFX track ${name} is not loaded`)
     return;
@@ -60,12 +64,26 @@ export function playSFX(name: string) {
   const sound = audioContext.createBufferSource();
   sound.buffer = sfx[name].buffer;
   sound.connect(gainNode);
+  sound.playbackRate.value = shift + 1;
   sound.loop = false;
   sound.start(0);
+  return sound;
 }
 
-(window as any).playBGM = playBGM;
 
 loadBGM('crystal', 'audio/The_Scientists_Crystalarium.mp3');
 loadBGM('banjo', 'audio/Banjo_Kablooie.mp3');
 loadSFX('splat', 'audio/splat.ogg');
+
+async function playSpeech(sampleName: string, numberOfSamples: number, timeBetweenSamples: number, variance: number) {
+  for (let x=0; x<numberOfSamples; x++) {
+    setTimeout(() => {
+      const shift = (Math.random() - 0.5) * variance;
+      playSFXPitchShifted(sampleName, shift);
+    }, timeBetweenSamples * x);
+  }
+}
+//setTimeout(() => playSpeech('splat', 15, 150, 0.4), 3000);
+
+(window as any).playBGM = playBGM;
+(window as any).playSpeech = playSpeech;
