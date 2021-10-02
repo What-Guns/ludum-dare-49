@@ -1,8 +1,10 @@
 import {Serializable, pluck} from './serialization.js';
 import {Room} from './room.js';
 import {Thing} from './main.js';
+import {Player} from './player.js';
 import {pointer} from './input.js';
 import {debug} from './debug.js';
+import {ofType} from './crap.js';
 
 @Serializable('./door.js')
 export class Door implements Thing {
@@ -46,6 +48,10 @@ export class Door implements Thing {
 
   doClick() {
     if(!this.isPointerOverDoor()) return false;
+
+    const player = this.room.things.find(ofType(Player));
+    if(!player?.canReach(this.x, this.base)) return false;
+
     window.game?.goToDoor(...this.target);
     return true;
   }

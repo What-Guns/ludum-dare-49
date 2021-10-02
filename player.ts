@@ -29,6 +29,10 @@ export class Player {
     }
   }
 
+  canReach(x: number, _y: number) {
+    return Math.abs(x - this.x) < 200;
+  }
+
   moveToCursor() {
     if(pointer.active) this.targetX = pointer.x;
   }
