@@ -100,6 +100,7 @@ export class Game {
     const player = this.room.things.find(ofType(Player));
     if(!player) throw new Error(`The player isn't in the current room!`);
 
+    this.room.things.forEach(t => t.stopDrawingDOM ? t.stopDrawingDOM() : null);
     this.room.things.splice(this.room.things.indexOf(player), 1);
 
     const targetRoom = this.rooms.find(room => room.name === roomName);
@@ -120,6 +121,7 @@ export class Game {
     player.y = targetDoor.base;
     player.targetX = targetDoor.x;
     targetRoom.things.push(player);
+    targetRoom.things.forEach(t => t.startDrawingDOM ? t.startDrawingDOM() : null);
   }
 }
 

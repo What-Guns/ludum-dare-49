@@ -62,6 +62,16 @@ export class SpeechBubble implements Thing {
   static deserialize({x, y}: SpeechBubbleData) {
     return Promise.resolve(new SpeechBubble(x, y));
   }
+
+  stopDrawingDOM() {
+    this.visible = false;
+  }
+
+  startDrawingDOM() {
+    this.visible = true;
+    this.invisibleText.innerText = this.visibleText.innerText + this.invisibleText.innerText;
+    this.visibleText.innerText = "";
+  }
 }
 
 interface SpeechBubbleData {

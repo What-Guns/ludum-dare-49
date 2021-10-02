@@ -47,4 +47,7 @@ export interface Thing {
 
   /** Returns whether the thing was clicked. */
   doClick?(): boolean;
+
+  stopDrawingDOM?(): void; // tells the dom nodes to go invisible
+  startDrawingDOM?(): void; // tells the dom nodes to go visible
 }
