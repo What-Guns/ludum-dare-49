@@ -10,7 +10,8 @@ class HudWindow {
     this.element.style.left = String(this.x);
     this.element.style.right = String(this.y);
     this.element.innerText = 'Hello';
-    this.visible = false;
+    this.element.classList.add('hudWindow');
+    this.visible = true;
     document.body.appendChild(this.element);
   }
 
