@@ -13,6 +13,7 @@ export class Room {
   readonly things: Thing[] = [];
   readonly vanishingPoint: {x: number, y: number};
   readonly camera = {x: 0, scale: 1};
+  readonly floorHeight: number;
 
   pattern?: CanvasPattern;
 
@@ -23,6 +24,7 @@ export class Room {
     this.width = roomData.width;
     this.height = roomData.height;
     this.vanishingPoint = roomData.vanishingPoint;
+    this.floorHeight = roomData.floorHeight;
   }
 
   static async deserialize(roomData: RoomData) {
@@ -35,7 +37,7 @@ export class Room {
 
   serialize(): RoomData {
     return {
-      ...pluck(this, 'name', 'width', 'height', 'vanishingPoint'),
+      ...pluck(this, 'name', 'width', 'height', 'vanishingPoint', 'floorHeight'),
       background: this.roomData.background,
       things: (this.things as object[]).filter(isSerializable).map(serialize),
     };
@@ -106,4 +108,5 @@ export interface RoomData {
   width: number;
   height: number;
   vanishingPoint: {x: number, y: number};
+  floorHeight: number;
 }

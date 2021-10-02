@@ -8,6 +8,7 @@
       "name": "one",
       "width": 1203,
       "height": 839,
+      "floorHeight": 781,
       "vanishingPoint": {
         "x": 641,
         "y": 412
@@ -75,6 +76,7 @@
       "name": "two",
       "width": 1455,
       "height": 957,
+      "floorHeight": 791,
       "vanishingPoint": {
         "x": 727,
         "y": 415
@@ -103,6 +105,7 @@
       "name": "attic",
       "width": 1455,
       "height": 957,
+      "floorHeight": 791,
       "vanishingPoint": {
         "x": 727,
         "y": 415
