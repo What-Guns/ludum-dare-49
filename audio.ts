@@ -79,6 +79,7 @@ export function playSFXPitchShifted(name: string, shift: number) {
 loadBGM('crystal', 'audio/The_Scientists_Crystalarium.mp3');
 loadBGM('banjo', 'audio/Banjo_Kablooie.mp3');
 loadSFX('splat', 'audio/splat.ogg');
+loadSFX('mahp', 'audio/mahp.ogg');
 
 async function playSpeech(sampleName: string, numberOfSamples: number, timeBetweenSamples: number, variance: number) {
   for (let x=0; x<numberOfSamples; x++) {
