@@ -21,14 +21,6 @@
           "y": 800
         },
         {
-          "@type": "Item",
-          "@path": "./item.js",
-          "x": 50,
-          "y": 50,
-          "width": 32,
-          "height": 32
-        },
-        {
           "@type": "Door",
           "@path": "./door.js",
           "x": 152,
@@ -46,6 +38,24 @@
           "@path": "./speechBubble.js",
           "x": 650,
           "y": 450
+        },
+        {
+          "@type": "Container",
+          "@path": "./container.js",
+          "x": 822,
+          "y": 205,
+          "width": 235,
+          "height": 179,
+          "items": [
+            {
+              "@type": "Item",
+              "@path": "./item.js",
+              "x": 872,
+              "y": 257,
+              "width": 32,
+              "height": 32
+            }
+          ]
         }
       ]
     },

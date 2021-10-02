@@ -1,4 +1,4 @@
-export function serialize<T extends IAmSerializable<TData>, TData>(s: T) {
+export function serialize<T extends IAmSerializable<TData>, TData>(s: T): any {
   const typeName = s.constructor.name;
   if(!typeName) throw new Error(`No type name found when attempting to serialize ${s}`);
   return {
@@ -8,7 +8,7 @@ export function serialize<T extends IAmSerializable<TData>, TData>(s: T) {
   };
 }
 
-export async function deserialize<T extends IAmSerializable<TData>, TData, TExtras = never>(data: TData, extras?: TExtras): Promise<T> {
+export async function deserialize<T extends IAmSerializable<TData>, TData, TExtras = never>(data: TData, extras?: TExtras): Promise<any> {
   const name = (data as any)['@type']!;
   const path = (data as any)['@path']!;
   const theModule = await import(path);

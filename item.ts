@@ -44,7 +44,7 @@ export class Item implements Thing {
   }
 }
 
-interface ItemData {
+export interface ItemData {
   x: number;
   y: number;
   width: number;
