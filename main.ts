@@ -44,6 +44,9 @@ addEventListener('load', async () => {
 
 
 export interface Thing {
+  x: number;
+  y: number;
+
   draw?(ctx: CanvasRenderingContext2D): void;
   tick?(dt: number): void;
 

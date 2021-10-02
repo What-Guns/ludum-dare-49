@@ -119,7 +119,7 @@ export class Game {
     this.room = targetRoom;
 
     player.x = targetDoor.x;
-    player.y = targetDoor.base;
+    player.y = targetDoor.y;
     player.targetX = targetDoor.x;
     targetRoom.things.push(player);
     targetRoom.activate();

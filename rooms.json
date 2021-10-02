@@ -24,9 +24,9 @@
           "@type": "Door",
           "@path": "./door.js",
           "x": 152,
+          "y": 781,
           "height": 522,
           "width": 150,
-          "base": 781,
           "target": [
             "two",
             "right"
@@ -76,9 +76,9 @@
           "@type": "Door",
           "@path": "./door.js",
           "x": 1216,
+          "y": 791,
           "height": 531,
           "width": 145,
-          "base": 791,
           "target": [
             "one",
             "left"

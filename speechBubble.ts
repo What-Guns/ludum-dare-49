@@ -5,7 +5,7 @@ export class SpeechBubble implements Thing {
   private visibleText = document.createElement('span');
   private invisibleText = document.createElement('span');
 
-  constructor(private pointX: number, private pointY: number) {
+  constructor(public x: number, public y: number) {
     this.div.style.setProperty('position', 'absolute');
     this.div.style.setProperty('left', '500px');
     this.div.style.setProperty('top', '300px')
@@ -44,14 +44,14 @@ export class SpeechBubble implements Thing {
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.lineTo(this.pointX, this.pointY);
-    ctx.lineTo(this.pointX - offset, bottom);
+    ctx.lineTo(this.x, this.y);
+    ctx.lineTo(this.x - offset, bottom);
     ctx.lineTo(left, bottom);
     ctx.lineTo(left, top);
     ctx.lineTo(right, top);
     ctx.lineTo(right, bottom);
-    ctx.lineTo(this.pointX + offset, bottom);
-    ctx.lineTo(this.pointX, this.pointY);
+    ctx.lineTo(this.x + offset, bottom);
+    ctx.lineTo(this.x, this.y);
     ctx.fill();
     ctx.stroke();
   }

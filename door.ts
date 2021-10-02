@@ -10,16 +10,16 @@ export class Door implements Thing {
   readonly name: string;
   readonly x: number;
   readonly width: number;
-  readonly base: number;
+  readonly y: number;
   readonly height: number;
   readonly target: [string, string];
 
-  constructor(private readonly room: Room, {name, x, height, width, base, target}: DoorData) {
+  constructor(private readonly room: Room, {name, x, y, height, width, target}: DoorData) {
     this.name = name;
     this.x = x;
+    this.y = y;
     this.height = height;
     this.width = width;
-    this.base = base;
     this.target = target;
   }
 
@@ -28,19 +28,20 @@ export class Door implements Thing {
   }
 
   serialize(): DoorData {
-    return pluck(this, 'x', 'height', 'width', 'base', 'target', 'name');
+    return pluck(this, 'x', 'y', 'height', 'width', 'target', 'name');
   }
 
   draw(ctx: CanvasRenderingContext2D) {
     if(!debug) return;
-    const floorSlope = (this.room.vanishingPoint.y - this.base) / (this.room.vanishingPoint.x - this.x);
-    const ceilingSlope = (this.room.vanishingPoint.y - (this.base - this.height)) / (this.room.vanishingPoint.x - this.x);
+    const floorSlope = (this.room.vanishingPoint.y - this.y) / (this.room.vanishingPoint.x - this.x);
+    const ceilingSlope = (this.room.vanishingPoint.y - (this.y - this.height)) / (this.room.vanishingPoint.x - this.x);
 
+    ctx.fillStyle = 'brown';
     ctx.beginPath();
-    ctx.moveTo(this.x - this.width / 2, this.base - floorSlope * (this.width / 2));
-    ctx.lineTo(this.x + this.width / 2, this.base + floorSlope * (this.width / 2));
-    ctx.lineTo(this.x + this.width / 2, this.base - this.height + ceilingSlope * (this.width / 2));
-    ctx.lineTo(this.x - this.width / 2, this.base - this.height - ceilingSlope * (this.width / 2));
+    ctx.moveTo(this.x - this.width / 2, this.y - floorSlope * (this.width / 2));
+    ctx.lineTo(this.x + this.width / 2, this.y + floorSlope * (this.width / 2));
+    ctx.lineTo(this.x + this.width / 2, this.y - this.height + ceilingSlope * (this.width / 2));
+    ctx.lineTo(this.x - this.width / 2, this.y - this.height - ceilingSlope * (this.width / 2));
     ctx.fill();
   }
 
@@ -48,7 +49,7 @@ export class Door implements Thing {
     if(!this.isPointerOverDoor(x, y)) return false;
 
     const player = this.room.things.find(ofType(Player));
-    if(!player?.canReach(this.x, this.base)) return false;
+    if(!player?.canReach(this.x, this.y)) return false;
 
     const direction = this.x > this.room.vanishingPoint.x ? 'right' : 'left';
 
@@ -60,10 +61,10 @@ export class Door implements Thing {
     if(Math.abs(x - this.x) > this.width / 2) return false;
     const slope = (this.room.vanishingPoint.y - y) / (this.room.vanishingPoint.x - x);
     const adjustedY = y - slope * (x - this.x);
-    if(adjustedY > this.base) return false;
-    if(adjustedY < (this.base - this.height)) return false;
+    if(adjustedY > this.y) return false;
+    if(adjustedY < (this.y - this.height)) return false;
     return true;
   }
 }
 
-type DoorData = Pick<Door, 'x'|'height'|'width'|'base'|'target'|'name'>;
+type DoorData = Pick<Door, 'x'|'y'|'height'|'width'|'target'|'name'>;
