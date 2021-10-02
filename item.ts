@@ -2,6 +2,7 @@ import {Thing} from './main.js';
 import {Serializable} from './serialization.js';
 import { HudItemWindow } from './hud.js';
 
+
 @Serializable('./item.js')
 export class Item implements Thing {
   private hudWindow: HudItemWindow;
@@ -13,7 +14,7 @@ export class Item implements Thing {
     this.hudWindow.itemDescription = "A two-dimensional piece of blue material";
   }
 
-  static deserialize({x, y, width, height, brewTime}: ItemData) {
+  static async deserialize({x, y, width, height, brewTime}: ItemData) {
     return Promise.resolve(new Item(x, y, width, height, brewTime));
   }
 
