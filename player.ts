@@ -8,7 +8,6 @@ export class Player {
   }
 
   tick(dt: number) {
-    if(pointer.active) this.targetX = pointer.x;
     const maxMovement = 500 * dt;
     if(this.x > this.targetX) {
       this.x = Math.max(this.x - maxMovement, this.targetX);
@@ -17,9 +16,14 @@ export class Player {
     }
   }
 
+  moveToCursor() {
+    if(pointer.active) this.targetX = pointer.x;
+  }
+
   draw(ctx: CanvasRenderingContext2D) {
     const width = 32;
     const height = 48;
+    ctx.fillStyle = 'black';
     ctx.fillRect(this.x - width/2, this.y - height, width, height);
   }
 }

@@ -1,13 +1,13 @@
 import {Player} from './player.js';
 import {pointer} from './input.js';
 import { HudWindow } from './hud.js';
+import {Item} from './item.js';
 
 addEventListener('load', () => {
   const canvas = document.querySelector('canvas')!;
   const game = new Game(canvas);
 
   requestAnimationFrame(main);
-
 
   addEventListener('resize', resizeCanvas);
 
@@ -57,13 +57,22 @@ class Game {
       this.ctx.fillRect(pointer.x - 1, pointer.y - 4, 2, 8);
     }
   }
-
 }
 
 class Room {
   things: Thing[] = [];
 
+  private wasPointerActive = false;
+
+  constructor() {
+    this.things.push(new Item(50, 50));
+  }
+
   tick(dt: number) {
+    if(!this.wasPointerActive && pointer.active) {
+      this.doClick();
+    }
+    this.wasPointerActive = pointer.active;
     for(const thing of this.things) {
       thing.tick?.(dt);
     }
@@ -74,11 +83,19 @@ class Room {
       thing.draw?.(ctx);
     }
   }
+
+  private doClick() {
+    for(const thing of this.things) {
+      if(thing.doClick?.()) return;
+    }
+    this.things.find((t): t is Player => t instanceof Player)?.moveToCursor();
+  }
 }
 
-interface Thing {
+export interface Thing {
   draw?(ctx: CanvasRenderingContext2D): void;
   tick?(dt: number): void;
+
+  /** Returns whether the thing was clicked. */
+  doClick?(): boolean;
 }
-
-
