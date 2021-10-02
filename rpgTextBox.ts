@@ -4,7 +4,7 @@ export class RpgTextBox {
   private _text = document.createElement('div');
   private visibleText = document.createElement('span');
   private invisibleText = document.createElement('span');
-  private _dismissButton = document.createElement('span');
+  private _dismissButton = document.createElement('button');
 
   constructor() {
     this.element.classList.add('rpgTextBox');
