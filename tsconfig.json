@@ -15,13 +15,11 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "paths": {
-      "@lib": ["./node_modules"]
-    }
+    "emitDecoratorMetadata": true
   },
   "rootDir": "./",
   "include": [
-    "main.ts"
+    "main.ts",
+    "hud.ts"
   ]
 }

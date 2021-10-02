@@ -1,5 +1,6 @@
 import {Player} from './player.js';
 import {pointer} from './input.js';
+import { HudWindow } from './hud.js';
 
 addEventListener('load', () => {
   const canvas = document.querySelector('canvas')!;
@@ -33,6 +34,7 @@ addEventListener('load', () => {
 class Game {
   private room: Room;
   private ctx: CanvasRenderingContext2D;
+  private hudWindow = new HudWindow();
 
   constructor(canvas: HTMLCanvasElement) {
     this.ctx = canvas.getContext('2d')!;
@@ -43,6 +45,7 @@ class Game {
   draw(dt: number) {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     this.room.draw(this.ctx);
+    this.hudWindow.draw(this.ctx);
     const frameRate = 1000/dt;
     this.ctx.fillText(frameRate.toFixed(0), 10, 10);
 
