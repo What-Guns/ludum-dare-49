@@ -5,10 +5,7 @@ import {ResourceSpawner} from './resource-spawner.js';
 
 @Serializable('./cauldron_hud.ts')
 export class Cauldron implements Thing {
-
-
-  thingy = new ResourceSpawner(50,50,32,32,500);
- 
+  thingy = new ResourceSpawner(50,50,32,32,500,'coin');
 
   public timer = 0;
   public totalTime = 0;
@@ -18,8 +15,6 @@ export class Cauldron implements Thing {
   public hurryUp = this.totalTime / 3;
 
   readonly ITEM_CAPACITY = 5;
-
-
 
   constructor(public x: number, public y: number, public width: number, public height: number) {
    

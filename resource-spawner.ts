@@ -1,20 +1,23 @@
 import {Thing} from './main.js';
 import {Serializable} from './serialization.js';
 import { HudItemWindow } from './hud.js';
+import { materials } from './material.js';
 
 @Serializable('./resource-spawner.js')
 export class ResourceSpawner implements Thing {
   private hudWindow: HudItemWindow;
-  constructor(public x: number, public y: number, public width: number, public height: number, public brewTime: number) {
+  constructor(public x: number, public y: number, public width: number, public height: number, public brewTime: number, public resource: keyof typeof materials) {
+    const material = materials[resource];
+    if(!material) throw new Error(`Cannot find material with name ${resource}`);
     this.hudWindow = new HudItemWindow();
-    this.hudWindow.image = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";
-    this.hudWindow.itemName = "Blue Square";
-    this.hudWindow.traitsList = ["Blue", "Four-sided"];
-    this.hudWindow.itemDescription = "A two-dimensional piece of blue material";
+    this.hudWindow.image = material.imageUrl ?? "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";
+    this.hudWindow.itemName = material.name;
+    this.hudWindow.traitsList = [material.effect];
+    this.hudWindow.itemDescription = material.description;
   }
 
-  static async deserialize({x, y, width, height, brewTime}: ResourceSpawnerData) {
-    return Promise.resolve(new ResourceSpawner(x, y, width, height, brewTime));
+  static async deserialize({x, y, width, height, brewTime, resource}: ResourceSpawnerData) {
+    return Promise.resolve(new ResourceSpawner(x, y, width, height, brewTime, resource));
   }
 
   serialize(): ResourceSpawnerData {
@@ -23,7 +26,8 @@ export class ResourceSpawner implements Thing {
       y: this.y,
       width: this.width,
       height: this.height,
-      brewTime: this.brewTime
+      brewTime: this.brewTime,
+      resource: this.resource,
     };
   }
 
@@ -59,4 +63,5 @@ export interface ResourceSpawnerData {
   width: number;
   height: number;
   brewTime: number;
+  resource: keyof typeof materials;
 }
