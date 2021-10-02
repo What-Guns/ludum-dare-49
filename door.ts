@@ -12,7 +12,7 @@ export class Door implements Thing {
   width: number;
   y: number;
   height: number;
-  readonly target: [string, string];
+  readonly target: [string, string, TransitionDirection];
 
   constructor(private readonly room: Room, {name, x, y, height, width, target}: DoorData) {
     this.name = name;
@@ -56,9 +56,7 @@ export class Door implements Thing {
     const player = this.room.things.find(ofType(Player));
     if(!player?.canReach(this.x, this.y)) return false;
 
-    const direction = this.x > this.room.vanishingPoint.x ? 'right' : 'left';
-
-    window.game?.goToDoor(...this.target, direction);
+    window.game?.goToDoor(...this.target);
     return true;
   }
 
@@ -78,3 +76,5 @@ export class Door implements Thing {
 }
 
 type DoorData = Pick<Door, 'x'|'y'|'height'|'width'|'target'|'name'>;
+
+export type TransitionDirection = 'right'|'left';

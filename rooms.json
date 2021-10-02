@@ -29,7 +29,8 @@
           "width": 150,
           "target": [
             "two",
-            "right"
+            "right",
+            "left"
           ],
           "name": "left"
         },
@@ -81,7 +82,8 @@
           "width": 145,
           "target": [
             "one",
-            "left"
+            "left",
+            "right"
           ],
           "name": "right"
         }

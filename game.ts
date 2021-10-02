@@ -6,6 +6,7 @@ import {Door} from './door.js';
 import {serialize, Serializable, deserialize} from './serialization.js';
 import {ofType} from './crap.js';
 import {debugTick} from './debug.js';
+import {TransitionDirection} from './door.js';
 import './audio.js';
 
 @Serializable('./game.js')
@@ -142,5 +143,3 @@ interface Transition {
   direction: TransitionDirection;
   duration: number;
 }
-
-type TransitionDirection = 'right'|'left';
