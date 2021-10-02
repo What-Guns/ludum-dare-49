@@ -143,6 +143,15 @@
             "down"
           ],
           "name": "ladder"
+        },
+        {
+          "@type": "Npc",
+          "@path": "./npc.js",
+          "x": 600,
+          "y": 400,
+          "height": 100,
+          "width": 100,
+          "name": "npc"
         }
       ]
     }

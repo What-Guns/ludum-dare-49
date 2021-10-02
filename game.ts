@@ -56,7 +56,6 @@ export class Game {
     }
     this.wasPointerActive = pointer.active;
     this.room?.tick(dt);
-    (window as any).textBox.tick(dt);
     if(this.nextRoom) {
       try {
         this.goToDoorImmediately(...this.nextRoom)

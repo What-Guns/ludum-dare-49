@@ -4,7 +4,6 @@ import {Game} from './game.js';
 import {init} from './input.js';
 import {resizePopupContainer} from './hud.js';
 import './audio.js';
-import './rpgTextBox.js';
 
 declare global {
   interface Window {

@@ -18,7 +18,7 @@ export class RpgTextBox {
     this.element.appendChild(this._text);
 
     this.invisibleText.style.setProperty('color', 'lightgrey');
-    this.invisibleText.innerText = "I'm not actually the cauldron talking! That's crazy! No, I'm your familiar! I could be a cat or a bat or a rat, or even an animal that doesn't end in 'at'!"
+    this.invisibleText.innerText = "If you see this text, a text box has not been set up properly. Sorry!"
     this._text.appendChild(this.visibleText);
     this._text.appendChild(this.invisibleText);
 
@@ -32,6 +32,15 @@ export class RpgTextBox {
     this.element.style.setProperty('visibility', isVisible ? 'visible' : 'hidden');
   }
 
+  get visible(): boolean {
+    return this.element.style.getPropertyValue('visibility') === 'visible' ? true : false;
+  }
+
+  set textContent(text: string) {
+    this.visibleText.innerText = "";
+    this.invisibleText.innerText = text;
+  }
+
   clickDismiss() {
     if (this.invisibleText.innerText.length !== 0) {
       this.visibleText.innerText = this.visibleText.innerText + this.invisibleText.innerText;
@@ -42,6 +51,7 @@ export class RpgTextBox {
   }
 
   tick(_dt: number) {
+    if (!this.visible) return;
     this.revealLetter(2);
   }
 
@@ -52,5 +62,3 @@ export class RpgTextBox {
     this.visibleText.innerText = this.visibleText.innerText + letter;
   }
 }
-
-(window as any).textBox = new RpgTextBox();
