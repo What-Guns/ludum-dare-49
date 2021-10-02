@@ -30,6 +30,9 @@ export class Container implements Thing {
 
     this.room.things.push(...this.items);
     this.items.length = 0;
+    const index = this.room.things.indexOf(this);
+    if(index === -1) throw new Error(`Trying to remove the cupboard from a room that doesn't contain it.`);
+    this.room.things.splice(index, 1);
 
     return true;
   }
