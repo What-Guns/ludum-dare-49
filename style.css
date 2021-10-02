@@ -16,6 +16,8 @@ canvas {
   background-color: lightgray;
   padding: 5px;
   font-family: 'Yusei Magic', sans-serif;
+  position: absolute;
+  visibility: hidden;
 }
 
 .hudPictureAndName {

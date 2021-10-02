@@ -36,7 +36,7 @@ addEventListener('load', async () => {
 
 class Game {
   private ctx: CanvasRenderingContext2D;
-  private hudWindow = new HudWindow();
+  hudWindow = new HudWindow();
 
   constructor(public room: Room, canvas: HTMLCanvasElement) {
     this.ctx = canvas.getContext('2d')!;
@@ -50,7 +50,6 @@ class Game {
   draw() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     this.room.draw(this.ctx);
-    this.hudWindow.draw(this.ctx);
 
     if(pointer.active) {
       this.ctx.fillRect(pointer.x - 4, pointer.y - 1, 8, 2);
