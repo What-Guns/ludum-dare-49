@@ -21,8 +21,6 @@
           "y": 800
         },
         {
-<<<<<<< HEAD
-=======
           "@type": "Item",
           "@path": "./item.js",
           "x": 50,
@@ -32,7 +30,6 @@
           "brewTime": 500
         },
         {
->>>>>>> 57df5a1 (It's time to brew items)
           "@type": "Door",
           "@path": "./door.js",
           "x": 152,
