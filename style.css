@@ -9,6 +9,10 @@ canvas {
 }
 
 .hudWindow {
+  position: absolute;
+}
+
+.hudItemWindow {
   user-select: none;
   width: 200px;
   border-radius: 10px;
@@ -16,7 +20,6 @@ canvas {
   background-color: lightgray;
   padding: 5px;
   font-family: 'Yusei Magic', sans-serif;
-  position: absolute;
   visibility: hidden;
 }
 

@@ -42,7 +42,7 @@ class HudItemWindow {
 
   constructor() {
     this.element = document.createElement('div');
-    this.element.classList.add('hudWindow');
+    this.element.classList.add('hudWindow', 'hudItemWindow');
     this.element.style.left = String(this.x);
     this.element.style.right = String(this.y);
     this.populateWindow();
