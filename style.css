@@ -9,12 +9,12 @@ canvas {
 }
 
 .hudWindow {
+  user-select: none;
   position: absolute;
   font-size: x-small;
 }
 
 .hudItemWindow {
-  user-select: none;
   width: 150px;
   border-radius: 10px;
   border: 3px darkblue solid;

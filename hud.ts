@@ -106,7 +106,7 @@ class HudItemHotbar {
       ev.stopPropagation();
       const clickedItem = ev.composedPath()[1];
       const clickedIndex = Array.from(this._itemList.childNodes).findIndex(el => el === clickedItem);
-      this.selectedIndex = clickedIndex;
+      if (clickedIndex > -1) this.selectedIndex = clickedIndex;
     })
     document.body.appendChild(this.element);
   }
