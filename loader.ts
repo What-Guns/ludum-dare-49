@@ -22,3 +22,9 @@ export async function loadAudio(url: string, ctx: AudioContext) {
   })
 }
 
+
+export async function loadObject(url: string) {
+  const response = await fetch(url);
+  if(!response.ok) return Promise.reject(response.text())
+  return await response.json();
+}

@@ -1,0 +1,23 @@
+{
+  "@type": "Room",
+  "@path": "./room.js",
+  "background": "./backgrounds/sample.jpeg",
+  "things": [
+    {
+      "@type": "Player",
+      "@path": "./player.js",
+      "x": 50,
+      "y": 800
+    },
+    {
+      "@type": "Item",
+      "@path": "./item.js",
+      "x": 50,
+      "y": 50,
+      "width": 32,
+      "height": 32
+    }
+  ],
+  "width": 1203,
+  "height": 839
+}

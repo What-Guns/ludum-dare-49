@@ -4,7 +4,7 @@ import {loadImage} from './loader.js';
 import {pointer} from './input.js';
 import {Serializable, serialize, isSerializable, deserialize} from './serialization.js';
 
-@Serializable()
+@Serializable('./room.js')
 export class Room {
   things: Thing[] = [];
   width: number;
@@ -21,7 +21,7 @@ export class Room {
   static async deserialize(roomData: RoomData) {
     const background = await loadImage(roomData.background);
     const room = new Room(background, roomData);
-    const loadedItems = (await Promise.all(roomData.things.map(deserialize)) as Thing[]);
+    const loadedItems = await Promise.all(roomData.things.map(x => deserialize(x) as Promise<Thing>));
     room.things.push(...loadedItems);
     return Promise.resolve(room);
   }
@@ -59,23 +59,8 @@ export class Room {
       if(thing.doClick?.()) return;
     }
     this.things.find((t): t is Player => t instanceof Player)?.moveToCursor();
+    import('./item.js').then(x => (window as any).x = x);
   }
-}
-
-import './item.js';
-export const demoRoom: RoomData = {
-  width: 600,
-  height: 600,
-  background: 'https://picsum.photos/600/600',
-  things: [
-    {
-      '@type': 'Item',
-      x: 50,
-      y: 50,
-      height: 32,
-      width: 32,
-    }
-  ],
 }
 
 export interface RoomData {

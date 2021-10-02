@@ -1,10 +1,21 @@
 import {pointer} from './input.js';
+import {Serializable} from './serialization.js';
 
+@Serializable('./player.js')
 export class Player {
+  public x: number;
+  public y: number;
+
   private targetX;
 
-  constructor(public x: number, public y: number) {
+  constructor({x, y}: PlayerData) {
     this.targetX = x;
+    this.x = x;
+    this.y = y;
+  }
+
+  static deserialize(playerData: PlayerData) {
+    return Promise.resolve(new Player(playerData));
   }
 
   tick(dt: number) {
@@ -26,5 +37,16 @@ export class Player {
     ctx.fillStyle = 'black';
     ctx.fillRect(this.x - width/2, this.y - height, width, height);
   }
+
+  serialize(): PlayerData {
+    return {
+      x: this.x,
+      y: this.y,
+    };
+  }
 }
 
+interface PlayerData {
+  x: number;
+  y: number;
+}

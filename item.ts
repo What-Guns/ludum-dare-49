@@ -3,7 +3,7 @@ import {pointer} from './input.js';
 import {Serializable} from './serialization.js';
 import { HudItemWindow } from './hud.js';
 
-@Serializable()
+@Serializable('./item.js')
 export class Item implements Thing {
   private hudWindow: HudItemWindow;
   constructor(public x: number, public y: number, public width: number, public height: number) {

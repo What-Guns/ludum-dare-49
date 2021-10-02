@@ -17,9 +17,5 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "rootDir": "./",
-  "include": [
-    "main.ts",
-    "hud.ts"
-  ]
+  "rootDir": "./"
 }

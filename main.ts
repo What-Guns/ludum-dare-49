@@ -1,13 +1,14 @@
-import {Player} from './player.js';
 import {pointer} from './input.js';
 import { HudItemHotbar } from './hud.js';
-import {Room, demoRoom} from './room.js';
-import {deserialize} from './serialization.js';
+import {Room} from './room.js';
+import {deserialize, serialize} from './serialization.js';
+import {loadObject} from './loader.js';
 import './audio.js';
 
 addEventListener('load', async () => {
   const canvas = document.querySelector('canvas')!;
-  const room = await deserialize(demoRoom, Room);
+  const roomData = await loadObject('./rooms.json');
+  const room = await deserialize(roomData) as Room;
   const game = new Game(room, canvas);
 
   requestAnimationFrame(main);
@@ -41,10 +42,14 @@ class Game {
 
   constructor(public room: Room, canvas: HTMLCanvasElement) {
     this.ctx = canvas.getContext('2d')!;
-    this.room.things.push(new Player(100, 100));
     this.hotbar.imgSrcList = HudItemHotbar.defaultList;
     this.hotbar.redrawItems();
+    (window as any).game = this;
     (window as any).hotbar = this.hotbar;
+  }
+
+  save() {
+    return serialize(this.room);
   }
 
   tick(dt: number) {
