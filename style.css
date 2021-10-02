@@ -78,8 +78,14 @@ canvas {
 }
 
 .hudHotbarItem > img {
-  border: 5px darkblue solid;
+  border-left: 5px darkblue solid;
+  border-top: 5px darkblue solid;
+  border-bottom: 5px darkblue solid;
   background-color: darkgray;
+}
+
+.hudHotbarItem:last-of-type > img {
+  border-right: 5px darkblue solid;
 }
 
 .hudHotbarItem.selected > img {

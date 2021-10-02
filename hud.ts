@@ -83,6 +83,60 @@ class HudItemWindow {
 }
 
 class HudItemHotbar {
+  readonly itemWidth = '40px';
+  readonly itemHeight = '40px';
+  private _capacity = 5;
+
+  private element = document.createElement('div');
+  private _itemList = document.createElement('ul');
+  private _imageSrcList: string[] = [];
+
+  constructor() {
+    this.element.classList.add('hudWindow', 'hudItemHotbar');
+
+    this._itemList.classList.add('hudItemHotbarList');
+    this.element.appendChild(this._itemList);
+    document.body.appendChild(this.element);
+  }
+
+  redrawItems() {
+    while (this._itemList.firstChild) this._itemList.removeChild(this._itemList.firstChild);
+    for(let i=0; i<this._capacity; i++) {
+      const li = document.createElement('li');
+      li.classList.add('hudHotbarItem');
+      this._itemList.appendChild(li);
+
+      const img = document.createElement('img');
+      img.setAttribute('height', this.itemHeight);
+      img.setAttribute('width', this.itemWidth);
+      if (i < this._imageSrcList.length) {
+        img.setAttribute('src', this._imageSrcList[i]);
+      }
+      li.appendChild(img);
+    } 
+  }
+
+  set capacity(c: number) {
+    this._capacity = c;
+    this.redrawItems();
+  }
+
+  set imgSrcList(srcList: string[]) {
+    this._imageSrcList = srcList;
+    this.redrawItems();
+  }
+
+  setImageAt(index: number, src: string) {
+    this._imageSrcList[index] = src;
+    this.redrawItems();
+  }
+
+  static defaultList = [
+    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/owl_1f989.png",
+    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/bat_1f987.png",
+    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/orange-heart_1f9e1.png",
+    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/jack-o-lantern_1f383.png",
+  ]
 
 }
 export { HudItemWindow, HudItemHotbar }

@@ -1,6 +1,6 @@
 import {Player} from './player.js';
 import {pointer} from './input.js';
-import { HudItemWindow } from './hud.js';
+import { HudItemHotbar } from './hud.js';
 import {Room, demoRoom} from './room.js';
 import {deserialize} from './serialization.js';
 
@@ -36,11 +36,13 @@ addEventListener('load', async () => {
 
 class Game {
   private ctx: CanvasRenderingContext2D;
-  hudWindow = new HudItemWindow();
+  hotbar = new HudItemHotbar();
 
   constructor(public room: Room, canvas: HTMLCanvasElement) {
     this.ctx = canvas.getContext('2d')!;
     this.room.things.push(new Player(100, 100));
+    this.hotbar.imgSrcList = HudItemHotbar.defaultList;
+    this.hotbar.redrawItems();
   }
 
   tick(dt: number) {
