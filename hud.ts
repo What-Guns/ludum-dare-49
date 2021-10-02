@@ -81,4 +81,8 @@ class HudItemWindow {
     traitsListDiv.appendChild(this._traitsList);
   }
 }
-export { HudItemWindow as HudItemWindow }
+
+class HudItemHotbar {
+
+}
+export { HudItemWindow, HudItemHotbar }

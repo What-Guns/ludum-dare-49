@@ -58,6 +58,35 @@ canvas {
   text-align: center;
 }
 
+.hudItemHotbar {
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  text-align: center;
+}
+
+.hudItemHotbarList {
+  display: inline;
+  list-style-type: none;
+  padding: 0px;
+}
+
+.hudHotbarItem {
+  display: inline;
+  list-style-type: none;
+  margin-right: 0px;
+}
+
+.hudHotbarItem > img {
+  border: 5px darkblue solid;
+  background-color: darkgray;
+}
+
+.hudHotbarItem.selected > img {
+  border: 5px red solid;
+  background-color: lightgray;
+}
+
 ul {
   margin-top: 0;
   margin-bottom: 0;
