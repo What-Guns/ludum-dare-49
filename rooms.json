@@ -17,7 +17,7 @@
         {
           "@type": "Player",
           "@path": "./player.js",
-          "x": 50,
+          "x": 782.5,
           "y": 800
         },
         {
@@ -35,10 +35,18 @@
           "name": "left"
         },
         {
-          "@type": "SpeechBubble",
-          "@path": "./speechBubble.js",
-          "x": 650,
-          "y": 450
+          "@type": "Ladder",
+          "@path": "./door.js",
+          "x": 427,
+          "y": 705,
+          "height": 569,
+          "width": 100,
+          "target": [
+            "attic",
+            "ladder",
+            "up"
+          ],
+          "name": "ladder"
         },
         {
           "@type": "Container",
@@ -86,6 +94,34 @@
             "right"
           ],
           "name": "right"
+        }
+      ]
+    },
+    {
+      "@type": "Room",
+      "@path": "./room.js",
+      "name": "attic",
+      "width": 1455,
+      "height": 957,
+      "vanishingPoint": {
+        "x": 727,
+        "y": 415
+      },
+      "background": "./backgrounds/attic.png",
+      "things": [
+        {
+          "@type": "Ladder",
+          "@path": "./door.js",
+          "x": 427,
+          "y": 705,
+          "height": 569,
+          "width": 100,
+          "target": [
+            "one",
+            "ladder",
+            "down"
+          ],
+          "name": "ladder"
         }
       ]
     }

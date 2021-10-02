@@ -9,8 +9,9 @@ export function serialize<T extends IAmSerializable<TData>, TData>(s: T): any {
 }
 
 export async function deserialize<T extends IAmSerializable<TData>, TData, TExtras = never>(data: TData, extras?: TExtras): Promise<any> {
-  const name = (data as any)['@type']!;
   const path = (data as any)['@path']!;
+  const name = (data as any)['@type']!;
+  console.log(`deserializing ${name} from ${path}`);
   const theModule = await import(path);
   const type = theModule[name];
   if(!type) throw new Error(`Failed to find serializable type ${name}`);

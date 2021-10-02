@@ -57,8 +57,11 @@ export class Game {
     this.wasPointerActive = pointer.active;
     this.room?.tick(dt);
     if(this.nextRoom) {
-      this.goToDoorImmediately(...this.nextRoom)
-      this.nextRoom = null;
+      try {
+        this.goToDoorImmediately(...this.nextRoom)
+      } finally {
+        this.nextRoom = null;
+      }
     }
   }
 
@@ -70,10 +73,27 @@ export class Game {
       if(amount > 1) {
         this.transition = null
       } else {
-        const dx = this.transition.direction === 'right' ? -1 : 1;
-        this.ctx.translate(dx * this.ctx.canvas.width * amount, 0);
+        let dx, dy;
+        switch(this.transition.direction) {
+          case 'right':
+            dx = -1;
+            dy = 0;
+            break;
+          case 'left':
+            dx = 1;
+            dy = 0;
+            break;
+          case 'down':
+            dx = 0;
+            dy = -1;
+            break;
+          case 'up':
+            dx = 0;
+            dy = 1;
+        }
+        this.ctx.translate(dx * this.ctx.canvas.width * amount, dy * this.ctx.canvas.height * amount);
         this.transition.from.draw(this.ctx);
-        this.ctx.translate(this.ctx.canvas.width * dx * -1, 0);
+        this.ctx.translate(this.ctx.canvas.width * dx * -1, this.ctx.canvas.height * dy * -1);
         if(this.transition.startTime + this.transition.duration < this.now) this.transition = null;
       }
     }

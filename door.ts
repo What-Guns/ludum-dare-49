@@ -24,7 +24,7 @@ export class Door implements Thing {
   }
 
   static deserialize(data: DoorData, {room}: {room: Room}) {
-    return Promise.resolve(new Door(room, data));
+    return Promise.resolve(new this(room, data));
   }
 
   serialize(): DoorData {
@@ -75,6 +75,30 @@ export class Door implements Thing {
   }
 }
 
+@Serializable('./door.js')
+export class Ladder extends Door {
+  override isUnderPointer(x: number, y: number) {
+    return Math.abs(x - this.x) < this.width && y < this.y && y > this.y - this.height;
+  }
+
+  override draw(ctx: CanvasRenderingContext2D) {
+    if(!debug) return;
+    ctx.fillStyle = 'brown';
+    ctx.beginPath();
+    ctx.moveTo(this.x - this.width / 2, this.y);
+    ctx.lineTo(this.x + this.width / 2, this.y);
+    ctx.lineTo(this.x + this.width / 2, this.y - this.height);
+    ctx.lineTo(this.x - this.width / 2, this.y - this.height);
+    ctx.fill();
+
+    ctx.fillStyle = 'lime';
+    ctx.textAlign = 'center';
+    ctx.font = '24px sans-serif';
+    ctx.fillText(this.target.join(', '), this.x, this.y - this.height / 2);
+
+  }
+}
+
 type DoorData = Pick<Door, 'x'|'y'|'height'|'width'|'target'|'name'>;
 
-export type TransitionDirection = 'right'|'left';
+export type TransitionDirection = 'right'|'left'|'up'|'down';
