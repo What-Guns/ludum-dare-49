@@ -1,6 +1,7 @@
 import {deserialize} from './serialization.js';
 import {loadObject} from './loader.js';
 import {Game} from './game.js';
+import {init} from './input.js';
 import './audio.js';
 
 declare global {
@@ -11,6 +12,7 @@ declare global {
 
 addEventListener('load', async () => {
   const canvas = document.querySelector('canvas')!;
+  init(canvas);
   const gameData = await loadObject('./rooms.json');
   const game = await deserialize(gameData, {canvas}) as Game;
 

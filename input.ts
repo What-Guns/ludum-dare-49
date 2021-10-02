@@ -50,20 +50,22 @@ function getRelevantTouch(evt: TouchEvent) {
   return null;
 }
 
-addEventListener('touchstart', evt => {
-  evt.preventDefault();
-  touched(evt);
-});
+export function init(canvas: HTMLElement) {
+  canvas.addEventListener('touchstart', evt => {
+    evt.preventDefault();
+    touched(evt);
+  });
 
-addEventListener('touchmove', evt => {
-  evt.preventDefault();
-  touched(evt);
-});
+  canvas.addEventListener('touchmove', evt => {
+    evt.preventDefault();
+    touched(evt);
+  });
 
-addEventListener('touchend', touchend);
+  canvas.addEventListener('touchend', touchend);
 
-addEventListener('mousedown', mouseClicked);
+  canvas.addEventListener('mousedown', mouseClicked);
 
-addEventListener('mousemove', mouseMoved);
+  canvas.addEventListener('mousemove', mouseMoved);
 
-addEventListener('mouseup', mouseUnclicked);
+  canvas.addEventListener('mouseup', mouseUnclicked);
+}
