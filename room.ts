@@ -6,9 +6,11 @@ import {Serializable, serialize, isSerializable, deserialize} from './serializat
 
 @Serializable('./room.js')
 export class Room {
-  things: Thing[] = [];
-  width: number;
-  height: number;
+  readonly width: number;
+  readonly height: number;
+  readonly things: Thing[] = [];
+  readonly vanishingPoint: {x: number, y: number};
+
   pattern?: CanvasPattern;
 
   private wasPointerActive = false;
@@ -16,12 +18,13 @@ export class Room {
   constructor(private readonly background: CanvasImageSource, private readonly roomData: RoomData) {
     this.width = roomData.width;
     this.height = roomData.height;
+    this.vanishingPoint = {x: this.width / 2, y: this.height / 2};
   }
 
   static async deserialize(roomData: RoomData) {
     const background = await loadImage(roomData.background);
     const room = new Room(background, roomData);
-    const loadedItems = await Promise.all(roomData.things.map(x => deserialize(x) as Promise<Thing>));
+    const loadedItems = await Promise.all(roomData.things.map(x => deserialize(x, {room}) as Promise<Thing>));
     room.things.push(...loadedItems);
     return Promise.resolve(room);
   }

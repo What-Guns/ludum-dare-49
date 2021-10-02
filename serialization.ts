@@ -8,13 +8,13 @@ export function serialize<T extends IAmSerializable<TData>, TData>(s: T) {
   };
 }
 
-export async function deserialize<T extends IAmSerializable<TData>, TData>(data: TData): Promise<T> {
+export async function deserialize<T extends IAmSerializable<TData>, TData, TExtras = never>(data: TData, extras?: TExtras): Promise<T> {
   const name = (data as any)['@type']!;
   const path = (data as any)['@path']!;
   const theModule = await import(path);
   const type = theModule[name];
   if(!type) throw new Error(`Failed to find serializable type ${name}`);
-  return type.deserialize(data) as Promise<T>;
+  return type.deserialize(data, extras) as Promise<T>;
 }
 
 export function Serializable(filePath: string) {
@@ -27,9 +27,9 @@ export function isSerializable(x: object): x is IAmSerializable<unknown> {
   return pathByType.has(x.constructor);
 }
 
-type SerializableType<T extends IAmSerializable<TData>, TData> = {
+type SerializableType<T extends IAmSerializable<TData>, TData, TExtras = never> = {
   new(...args: any[]): T;
-  deserialize(data: TData): Promise<T>;
+  deserialize(data: TData, extras: TExtras): Promise<T>;
 }
 
 export interface IAmSerializable<TData> {
@@ -37,3 +37,16 @@ export interface IAmSerializable<TData> {
 }
 
 const pathByType = new Map<Function, string>();
+
+async function whatDoIHave() {
+  const modules = await Promise.all(Array.from(pathByType.values()).map(async (path) => {
+    return [path, Object.keys(await import(path))];
+  }));
+  return Object.fromEntries(modules);
+}
+
+(window as any).whatDoIHave = whatDoIHave;
+
+export function pluck<T, K extends keyof T>(o: T, ...propertyNames: K[]): Pick<T, K> {
+  return Object.fromEntries(propertyNames.map(n => ([n, o[n]]))) as Pick<T, K>;
+}
