@@ -52,7 +52,9 @@ export class Door implements Thing {
     const player = this.room.things.find(ofType(Player));
     if(!player?.canReach(this.x, this.base)) return false;
 
-    window.game?.goToDoor(...this.target);
+    const direction = this.x > this.room.vanishingPoint.x ? 'right' : 'left';
+
+    window.game?.goToDoor(...this.target, direction);
     return true;
   }
 

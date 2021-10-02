@@ -10,11 +10,14 @@ import './audio.js';
 @Serializable('./game.js')
 export class Game {
   readonly rooms: Room[] = [];
+  now = 0;
+
   private room: Room|null = null;
   private ctx: CanvasRenderingContext2D;
   hotbar = new HudItemHotbar();
-  private nextRoom: [string, string]|null = null;
+  private nextRoom: [string, string, TransitionDirection]|null = null;
   private wasPointerActive = false;
+  private transition: Transition|null = null;
 
   constructor(canvas: HTMLCanvasElement) {
     this.ctx = canvas.getContext('2d')!;
@@ -43,6 +46,8 @@ export class Game {
   }
 
   tick(dt: number) {
+    if(this.transition) return;
+
     if(!this.wasPointerActive && pointer.active) {
       this.room?.doClick();
     }
@@ -56,35 +61,59 @@ export class Game {
 
   draw() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    this.ctx.save();
+    if(this.transition) {
+      const amount = (this.now - this.transition.startTime) / this.transition.duration;
+      if(amount > 1) {
+        this.transition = null
+      } else {
+        const dx = this.transition.direction === 'right' ? -1 : 1;
+        this.ctx.translate(dx * this.transition.from.width * amount, 0);
+        this.transition.from.draw(this.ctx);
+        this.ctx.translate(this.transition.from.width * dx * -1, 0);
+        if(this.transition.startTime + this.transition.duration < this.now) this.transition = null;
+      }
+    }
+
     this.room?.draw(this.ctx);
 
     if(pointer.active) {
       this.ctx.fillRect(pointer.x - 4, pointer.y - 1, 8, 2);
       this.ctx.fillRect(pointer.x - 1, pointer.y - 4, 2, 8);
     }
+
+    this.ctx.restore();
   }
 
   goToFirstRoom() {
     this.room = this.rooms.find(r => r.things.some(ofType(Player)))!;
   }
 
-  goToDoor(roomName: string, doorName: string) {
+  goToDoor(roomName: string, doorName: string, direction: TransitionDirection) {
     // defer the room transition so we don't tick two rooms in one pass
-    this.nextRoom = [roomName, doorName];
+    this.nextRoom = [roomName, doorName, direction];
   }
 
-  private goToDoorImmediately(roomName: string, doorName: string) {
+  private goToDoorImmediately(roomName: string, doorName: string, direction: TransitionDirection) {
     if(!this.room) throw new Error(`Cannot go through a door when we don't have a source room.`);
 
     const player = this.room.things.find(ofType(Player));
     if(!player) throw new Error(`The player isn't in the current room!`);
 
-    this.room!.things.splice(this.room.things.indexOf(player), 1);
+    this.room.things.splice(this.room.things.indexOf(player), 1);
 
     const targetRoom = this.rooms.find(room => room.name === roomName);
     if(!targetRoom) throw new Error(`Couldn't find room named ${roomName}`);
     const targetDoor = targetRoom.things.filter<Door>(ofType(Door)).find(d => d.name === doorName);
     if(!targetDoor) throw new Error(`Couldn't find door named ${doorName}`);
+
+    this.transition = {
+      from: this.room,
+      startTime: this.now,
+      direction,
+      duration: 1,
+    };
+
     this.room = targetRoom;
 
     player.x = targetDoor.x;
@@ -101,3 +130,12 @@ interface GameData {
 interface GameExtras {
   canvas: HTMLCanvasElement;
 }
+
+interface Transition {
+  from: Room;
+  startTime: number;
+  direction: TransitionDirection;
+  duration: number;
+}
+
+type TransitionDirection = 'right'|'left';

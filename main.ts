@@ -31,6 +31,7 @@ addEventListener('load', async () => {
   function main(timestamp: number) {
     if(lastTick) {
       const dt = (timestamp - lastTick) / 1000;
+      game.now = timestamp/1000;
       game.tick(dt);
       game.draw();
     }
