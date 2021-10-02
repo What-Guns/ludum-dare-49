@@ -5,13 +5,12 @@ import {Serializable} from './serialization.js';
 export class Player {
   public x: number;
   public y: number;
-
-  private targetX;
+  public targetX: number;
 
   constructor({x, y}: PlayerData) {
-    this.targetX = x;
     this.x = x;
     this.y = y;
+    this.targetX = x;
   }
 
   static deserialize(playerData: PlayerData) {

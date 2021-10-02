@@ -1,11 +1,11 @@
 import {Player} from './player.js';
 import {Thing} from './main.js';
 import {loadImage} from './loader.js';
-import {pointer} from './input.js';
-import {Serializable, serialize, isSerializable, deserialize} from './serialization.js';
+import {Serializable, serialize, isSerializable, deserialize, pluck} from './serialization.js';
 
 @Serializable('./room.js')
 export class Room {
+  readonly name: string;
   readonly width: number;
   readonly height: number;
   readonly things: Thing[] = [];
@@ -13,12 +13,11 @@ export class Room {
 
   pattern?: CanvasPattern;
 
-  private wasPointerActive = false;
-
   constructor(private readonly background: CanvasImageSource, private readonly roomData: RoomData) {
+    this.name = roomData.name;
     this.width = roomData.width;
     this.height = roomData.height;
-    this.vanishingPoint = {x: this.width / 2, y: this.height / 2};
+    this.vanishingPoint = roomData.vanishingPoint;
   }
 
   static async deserialize(roomData: RoomData) {
@@ -31,18 +30,13 @@ export class Room {
 
   serialize(): RoomData {
     return {
+      ...pluck(this, 'name', 'width', 'height', 'vanishingPoint'),
       background: this.roomData.background,
       things: (this.things as object[]).filter(isSerializable).map(serialize),
-      width: this.width,
-      height: this.height,
     };
   }
 
   tick(dt: number) {
-    if(!this.wasPointerActive && pointer.active) {
-      this.doClick();
-    }
-    this.wasPointerActive = pointer.active;
     for(const thing of this.things) {
       thing.tick?.(dt);
     }
@@ -57,7 +51,7 @@ export class Room {
     }
   }
 
-  private doClick() {
+  doClick() {
     for(const thing of this.things) {
       if(thing.doClick?.()) return;
     }
@@ -67,8 +61,10 @@ export class Room {
 }
 
 export interface RoomData {
+  name: string;
   background: string;
   things: object[];
   width: number;
   height: number;
+  vanishingPoint: {x: number, y: number};
 }

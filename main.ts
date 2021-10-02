@@ -1,15 +1,18 @@
-import {pointer} from './input.js';
-import { HudItemHotbar } from './hud.js';
-import {Room} from './room.js';
-import {deserialize, serialize} from './serialization.js';
+import {deserialize} from './serialization.js';
 import {loadObject} from './loader.js';
+import {Game} from './game.js';
 import './audio.js';
+
+declare global {
+  interface Window {
+    game?: Game;
+  }
+}
 
 addEventListener('load', async () => {
   const canvas = document.querySelector('canvas')!;
-  const roomData = await loadObject('./rooms.json');
-  const room = await deserialize(roomData) as Room;
-  const game = new Game(room, canvas);
+  const gameData = await loadObject('./rooms.json');
+  const game = await deserialize(gameData, {canvas}) as Game;
 
   requestAnimationFrame(main);
 
@@ -36,36 +39,6 @@ addEventListener('load', async () => {
   }
 });
 
-class Game {
-  private ctx: CanvasRenderingContext2D;
-  hotbar = new HudItemHotbar();
-
-  constructor(public room: Room, canvas: HTMLCanvasElement) {
-    this.ctx = canvas.getContext('2d')!;
-    this.hotbar.imgSrcList = HudItemHotbar.defaultList;
-    this.hotbar.redrawItems();
-    (window as any).game = this;
-    (window as any).hotbar = this.hotbar;
-  }
-
-  save() {
-    return serialize(this.room);
-  }
-
-  tick(dt: number) {
-    this.room.tick(dt);
-  }
-
-  draw() {
-    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-    this.room.draw(this.ctx);
-
-    if(pointer.active) {
-      this.ctx.fillRect(pointer.x - 4, pointer.y - 1, 8, 2);
-      this.ctx.fillRect(pointer.x - 1, pointer.y - 4, 2, 8);
-    }
-  }
-}
 
 export interface Thing {
   draw?(ctx: CanvasRenderingContext2D): void;

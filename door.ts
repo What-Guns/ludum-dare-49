@@ -2,19 +2,24 @@ import {Serializable, pluck} from './serialization.js';
 import {Room} from './room.js';
 import {Thing} from './main.js';
 import {pointer} from './input.js';
+import {debug} from './debug.js';
 
 @Serializable('./door.js')
 export class Door implements Thing {
+  readonly name: string;
   readonly x: number;
   readonly width: number;
   readonly base: number;
   readonly height: number;
+  readonly target: [string, string];
 
-  constructor(private readonly room: Room, {x, height, width, base}: DoorData) {
+  constructor(private readonly room: Room, {name, x, height, width, base, target}: DoorData) {
+    this.name = name;
     this.x = x;
     this.height = height;
     this.width = width;
     this.base = base;
+    this.target = target;
   }
 
   static deserialize(data: DoorData, {room}: {room: Room}) {
@@ -22,15 +27,15 @@ export class Door implements Thing {
   }
 
   serialize(): DoorData {
-    return pluck(this, 'x', 'height', 'width', 'base');
+    return pluck(this, 'x', 'height', 'width', 'base', 'target', 'name');
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    if(!this.isPointerOverDoor()) return;
+    if(!debug) return;
     const floorSlope = (this.room.vanishingPoint.y - this.base) / (this.room.vanishingPoint.x - this.x);
     const ceilingSlope = (this.room.vanishingPoint.y - (this.base - this.height)) / (this.room.vanishingPoint.x - this.x);
 
-    ctx.fillStyle = 'lime';
+    ctx.fillStyle = this.isPointerOverDoor() ? 'lime' : 'brown';
     ctx.beginPath();
     ctx.moveTo(this.x - this.width / 2, this.base - floorSlope * (this.width / 2));
     ctx.lineTo(this.x + this.width / 2, this.base + floorSlope * (this.width / 2));
@@ -41,7 +46,7 @@ export class Door implements Thing {
 
   doClick() {
     if(!this.isPointerOverDoor()) return false;
-    alert('go to another room now please');
+    window.game?.goToDoor(...this.target);
     return true;
   }
 
@@ -55,4 +60,4 @@ export class Door implements Thing {
   }
 }
 
-type DoorData = Pick<Door, 'x'|'height'|'width'|'base'>;
+type DoorData = Pick<Door, 'x'|'height'|'width'|'base'|'target'|'name'>;

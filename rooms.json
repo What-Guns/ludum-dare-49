@@ -1,31 +1,74 @@
 {
-  "@type": "Room",
-  "@path": "./room.js",
-  "background": "./backgrounds/sample.jpeg",
-  "things": [
+  "@type": "Game",
+  "@path": "./game.js",
+  "rooms": [
     {
-      "@type": "Player",
-      "@path": "./player.js",
-      "x": 50,
-      "y": 800
+      "@type": "Room",
+      "@path": "./room.js",
+      "name": "one",
+      "width": 1203,
+      "height": 839,
+      "vanishingPoint": {
+        "x": 641,
+        "y": 412
+      },
+      "background": "./backgrounds/sample.jpeg",
+      "things": [
+        {
+          "@type": "Player",
+          "@path": "./player.js",
+          "x": 50,
+          "y": 800
+        },
+        {
+          "@type": "Item",
+          "@path": "./item.js",
+          "x": 50,
+          "y": 50,
+          "width": 32,
+          "height": 32
+        },
+        {
+          "@type": "Door",
+          "@path": "./door.js",
+          "x": 152,
+          "height": 522,
+          "width": 150,
+          "base": 781,
+          "target": [
+            "two",
+            "right"
+          ],
+          "name": "left"
+        }
+      ]
     },
     {
-      "@type": "Item",
-      "@path": "./item.js",
-      "x": 50,
-      "y": 50,
-      "width": 32,
-      "height": 32
-    },
-    {
-      "@type": "Door",
-      "@path": "./door.js",
-      "x": 152,
-      "width": 150,
-      "height": 522,
-      "base": 781
+      "@type": "Room",
+      "@path": "./room.js",
+      "name": "two",
+      "width": 1455,
+      "height": 957,
+      "vanishingPoint": {
+        "x": 727,
+        "y": 415
+      },
+      "background": "./backgrounds/sample.png",
+      "things": [
+        {
+          "@type": "Door",
+          "@path": "./door.js",
+          "x": 1216,
+          "height": 531,
+          "width": 145,
+          "base": 791,
+          "target": [
+            "one",
+            "left"
+          ],
+          "name": "right"
+        }
+      ]
     }
-  ],
-  "width": 1203,
-  "height": 839
+  ]
 }
