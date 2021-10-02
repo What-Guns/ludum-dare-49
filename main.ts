@@ -1,7 +1,7 @@
 import {Player} from './player.js';
 import {pointer} from './input.js';
 import { HudWindow } from './hud.js';
-import {Item} from './item.js';
+import {Room} from './room.js';
 
 addEventListener('load', () => {
   const canvas = document.querySelector('canvas')!;
@@ -56,39 +56,6 @@ class Game {
       this.ctx.fillRect(pointer.x - 4, pointer.y - 1, 8, 2);
       this.ctx.fillRect(pointer.x - 1, pointer.y - 4, 2, 8);
     }
-  }
-}
-
-class Room {
-  things: Thing[] = [];
-
-  private wasPointerActive = false;
-
-  constructor() {
-    this.things.push(new Item(50, 50));
-  }
-
-  tick(dt: number) {
-    if(!this.wasPointerActive && pointer.active) {
-      this.doClick();
-    }
-    this.wasPointerActive = pointer.active;
-    for(const thing of this.things) {
-      thing.tick?.(dt);
-    }
-  }
-
-  draw(ctx: CanvasRenderingContext2D) {
-    for(const thing of this.things) {
-      thing.draw?.(ctx);
-    }
-  }
-
-  private doClick() {
-    for(const thing of this.things) {
-      if(thing.doClick?.()) return;
-    }
-    this.things.find((t): t is Player => t instanceof Player)?.moveToCursor();
   }
 }
 
