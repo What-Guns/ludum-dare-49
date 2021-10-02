@@ -33,7 +33,6 @@ export class RpgTextBox {
   }
 
   clickDismiss() {
-    console.log('dismissified' + this.invisibleText.innerText.length)
     if (this.invisibleText.innerText.length !== 0) {
       this.visibleText.innerText = this.visibleText.innerText + this.invisibleText.innerText;
       this.invisibleText.innerText = "";
