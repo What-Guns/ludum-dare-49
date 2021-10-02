@@ -1,6 +1,6 @@
 import {Player} from './player.js';
 import {pointer} from './input.js';
-import { HudWindow } from './hud.js';
+import { HudItemWindow } from './hud.js';
 import {Room, demoRoom} from './room.js';
 import {deserialize} from './serialization.js';
 
@@ -36,7 +36,7 @@ addEventListener('load', async () => {
 
 class Game {
   private ctx: CanvasRenderingContext2D;
-  hudWindow = new HudWindow();
+  hudWindow = new HudItemWindow();
 
   constructor(public room: Room, canvas: HTMLCanvasElement) {
     this.ctx = canvas.getContext('2d')!;

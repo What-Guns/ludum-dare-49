@@ -1,4 +1,4 @@
-class HudWindow {
+class HudItemWindow {
   private element: HTMLElement;
   private _image: HTMLImageElement = document.createElement('img');
   private _itemName: HTMLDivElement = document.createElement('div');
@@ -81,4 +81,4 @@ class HudWindow {
     traitsListDiv.appendChild(this._traitsList);
   }
 }
-export { HudWindow }
+export { HudItemWindow as HudItemWindow }

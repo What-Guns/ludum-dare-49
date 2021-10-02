@@ -1,13 +1,13 @@
 import {Thing} from './main.js';
 import {pointer} from './input.js';
 import {Serializable} from './serialization.js';
-import { HudWindow } from './hud.js';
+import { HudItemWindow } from './hud.js';
 
 @Serializable()
 export class Item implements Thing {
-  private hudWindow: HudWindow;
+  private hudWindow: HudItemWindow;
   constructor(public x: number, public y: number, public width: number, public height: number) {
-    this.hudWindow = new HudWindow();
+    this.hudWindow = new HudItemWindow();
     this.hudWindow.image = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";
     this.hudWindow.itemName = "Blue Square";
     this.hudWindow.traitsList = ["Blue", "Four-sided"];
