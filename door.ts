@@ -43,6 +43,11 @@ export class Door implements Thing {
     ctx.lineTo(this.x + this.width / 2, this.y - this.height + ceilingSlope * (this.width / 2));
     ctx.lineTo(this.x - this.width / 2, this.y - this.height - ceilingSlope * (this.width / 2));
     ctx.fill();
+
+    ctx.fillStyle = 'lime';
+    ctx.textAlign = 'center';
+    ctx.font = '24px sans-serif';
+    ctx.fillText(this.target.join(', '), this.x, this.y - this.height / 2);
   }
 
   doClick(x: number, y: number) {
