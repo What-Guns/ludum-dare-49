@@ -4,7 +4,7 @@ import {ofType} from './crap.js';
 import {Player} from './player.js';
 import {Room} from './room.js';
 import {debug} from './debug.js';
-import {Item, ItemData} from './item.js';
+import {ResourceSpawner, ResourceSpawnerData} from './resource-spawner.js';
 
 @Serializable('./container.js')
 export class Container implements Thing {
@@ -13,7 +13,7 @@ export class Container implements Thing {
   width: number;
   height: number;
 
-  constructor(private readonly room: Room, private readonly items: Item[], data: ContainerData) {
+  constructor(private readonly room: Room, private readonly items: ResourceSpawner[], data: ContainerData) {
     this.x = data.x;
     this.y = data.y;
     this.width = data.width;
@@ -65,4 +65,4 @@ export class Container implements Thing {
   }
 }
 
-type ContainerData = Pick<Container, 'x'|'y'|'width'|'height'>&{items: ItemData[]}
+type ContainerData = Pick<Container, 'x'|'y'|'width'|'height'>&{items: ResourceSpawnerData[]}

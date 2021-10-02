@@ -1,20 +1,20 @@
 import {Thing} from './main.js';
 import {Serializable} from './serialization.js';
-import {Item} from './item.js';
+import {ResourceSpawner} from './resource-spawner.js';
 
 
 @Serializable('./cauldron_hud.ts')
 export class Cauldron implements Thing {
 
 
-  thingy = new Item(50,50,32,32,500);
+  thingy = new ResourceSpawner(50,50,32,32,500);
  
 
   public timer = 0;
   public totalTime = 0;
   public timeOut = false;
-  readonly placedItems: Item[] = [this.thingy];
-  public transformedItem: Item | null = null;
+  readonly placedItems: ResourceSpawner[] = [this.thingy];
+  public transformedItem: ResourceSpawner | null = null;
   public hurryUp = this.totalTime / 3;
 
   readonly ITEM_CAPACITY = 5;
@@ -67,7 +67,7 @@ export class Cauldron implements Thing {
     return Math.abs(x - this.x) < this.width && Math.abs(y - this.y) < this.height;
   }
 
-  putItem(itm: Item) {
+  putItem(itm: ResourceSpawner) {
     if (this.placedItems.length >= this.ITEM_CAPACITY) {
       return this.denyItem();
     }

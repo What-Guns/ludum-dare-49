@@ -2,9 +2,8 @@ import {Thing} from './main.js';
 import {Serializable} from './serialization.js';
 import { HudItemWindow } from './hud.js';
 
-
-@Serializable('./item.js')
-export class Item implements Thing {
+@Serializable('./resource-spawner.js')
+export class ResourceSpawner implements Thing {
   private hudWindow: HudItemWindow;
   constructor(public x: number, public y: number, public width: number, public height: number, public brewTime: number) {
     this.hudWindow = new HudItemWindow();
@@ -14,11 +13,11 @@ export class Item implements Thing {
     this.hudWindow.itemDescription = "A two-dimensional piece of blue material";
   }
 
-  static async deserialize({x, y, width, height, brewTime}: ItemData) {
-    return Promise.resolve(new Item(x, y, width, height, brewTime));
+  static async deserialize({x, y, width, height, brewTime}: ResourceSpawnerData) {
+    return Promise.resolve(new ResourceSpawner(x, y, width, height, brewTime));
   }
 
-  serialize(): ItemData {
+  serialize(): ResourceSpawnerData {
     return {
       x: this.x,
       y: this.y,
@@ -54,7 +53,7 @@ export class Item implements Thing {
   }
 }
 
-export interface ItemData {
+export interface ResourceSpawnerData {
   x: number;
   y: number;
   width: number;
