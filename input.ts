@@ -63,7 +63,10 @@ export function init(canvas: HTMLElement) {
 
   canvas.addEventListener('touchend', touchend);
 
-  canvas.addEventListener('mousedown', mouseClicked);
+  canvas.addEventListener('mousedown', evt => {
+    if(evt.which !== 1) return;
+    mouseClicked(evt);
+  });
 
   canvas.addEventListener('mousemove', mouseMoved);
 

@@ -5,6 +5,7 @@ import {Room, RoomData} from './room.js';
 import {Door} from './door.js';
 import {serialize, Serializable, deserialize} from './serialization.js';
 import {ofType} from './crap.js';
+import {debugTick} from './debug.js';
 import './audio.js';
 
 @Serializable('./game.js')
@@ -12,7 +13,7 @@ export class Game {
   readonly rooms: Room[] = [];
   now = 0;
 
-  private room: Room|null = null;
+  room: Room|null = null;
   private ctx: CanvasRenderingContext2D;
   hotbar = new HudItemHotbar();
   private nextRoom: [string, string, TransitionDirection]|null = null;
@@ -46,10 +47,11 @@ export class Game {
   }
 
   tick(dt: number) {
+    debugTick();
     if(this.transition) return;
 
     if(!this.wasPointerActive && pointer.active) {
-      this.room?.doClick(pointer.x, pointer.y);
+      this.room?.doClick();
     }
     this.wasPointerActive = pointer.active;
     this.room?.tick(dt);

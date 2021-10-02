@@ -28,7 +28,7 @@ export class Item implements Thing {
   }
 
   doClick(x: number, y: number) {
-    if(Math.abs(this.x - x) > this.width / 2 || Math.abs(this.y - y) > this.height / 2) {
+    if(!this.isUnderPointer(x, y)) {
       this.hudWindow.visible = false;
       return false;
     } 
@@ -38,9 +38,18 @@ export class Item implements Thing {
     return true;
   }
 
+  isUnderPointer(x: number, y: number) {
+    return !(Math.abs(this.x - x) > this.width / 2 || Math.abs(this.y - y) > this.height / 2);
+  }
+
   draw(ctx: CanvasRenderingContext2D) {
     ctx.fillStyle = 'blue';
     ctx.fillRect(this.x - this.width/2, this.y - this.height/2, this.width, this.height);
+  }
+
+  debugResize(evt: WheelEvent) {
+    this.width += evt.deltaX / 50;
+    this.height -= evt.deltaY / 50;
   }
 }
 

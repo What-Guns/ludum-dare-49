@@ -8,10 +8,10 @@ import {Item, ItemData} from './item.js';
 
 @Serializable('./container.js')
 export class Container implements Thing {
-  readonly x: number;
-  readonly y: number;
-  readonly width: number;
-  readonly height: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 
   constructor(private readonly room: Room, private readonly items: Item[], data: ContainerData) {
     this.x = data.x;
@@ -21,7 +21,7 @@ export class Container implements Thing {
   }
 
   doClick(x: number, y: number) {
-    if(!this.isPointerOver(x, y)) return false;
+    if(!this.isUnderPointer(x, y)) return false;
 
     const player = this.room.things.find(ofType(Player));
     if(!player?.canReach(this.x, this.y)) return false;
@@ -41,7 +41,7 @@ export class Container implements Thing {
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 
-  private isPointerOver(x: number, y: number) {
+  isUnderPointer(x: number, y: number) {
     if(x < this.x || x > this.x + this.width) return false;
     if(y < this.y || y > this.y + this.height) return false;
     return true;
@@ -57,6 +57,11 @@ export class Container implements Thing {
       ...pluck(this, 'x', 'y', 'width', 'height'),
       items: this.items.map(serialize),
     };
+  }
+
+  debugResize(evt: WheelEvent) {
+    this.width += evt.deltaX / 100;
+    this.height += evt.deltaY / 50;
   }
 }
 

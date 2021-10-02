@@ -3,6 +3,7 @@ import {Thing} from './main.js';
 import {loadImage} from './loader.js';
 import {Serializable, serialize, isSerializable, deserialize, pluck} from './serialization.js';
 import {ofType} from './crap.js';
+import {pointer} from './input.js';
 
 @Serializable('./room.js')
 export class Room {
@@ -60,9 +61,9 @@ export class Room {
     ctx.restore();
   }
 
-  doClick(x: number, y: number) {
-    const transformedX = (x - this.camera.x) / this.camera.scale;
-    const transformedY = y / this.camera.scale;
+  doClick() {
+    const transformedX = (pointer.x - this.camera.x) / this.camera.scale;
+    const transformedY = pointer.y / this.camera.scale;
     for(const thing of this.things) {
       if(thing.doClick?.(transformedX, transformedY)) return;
     }
@@ -77,6 +78,12 @@ export class Room {
   deactivate() {
     this.things.forEach(t => t.stopDrawingDOM ? t.stopDrawingDOM() : null);
     this.player = undefined;
+  }
+
+  getThingUnderCursor() {
+    const transformedX = (pointer.x - this.camera.x) / this.camera.scale;
+    const transformedY = pointer.y / this.camera.scale;
+    return this.things.find(thing => thing.isUnderPointer?.(transformedX, transformedY));
   }
 
   private doCameraStuff(ctx: CanvasRenderingContext2D) {

@@ -8,10 +8,10 @@ import {ofType} from './crap.js';
 @Serializable('./door.js')
 export class Door implements Thing {
   readonly name: string;
-  readonly x: number;
-  readonly width: number;
-  readonly y: number;
-  readonly height: number;
+  x: number;
+  width: number;
+  y: number;
+  height: number;
   readonly target: [string, string];
 
   constructor(private readonly room: Room, {name, x, y, height, width, target}: DoorData) {
@@ -46,7 +46,7 @@ export class Door implements Thing {
   }
 
   doClick(x: number, y: number) {
-    if(!this.isPointerOverDoor(x, y)) return false;
+    if(!this.isUnderPointer(x, y)) return false;
 
     const player = this.room.things.find(ofType(Player));
     if(!player?.canReach(this.x, this.y)) return false;
@@ -57,13 +57,18 @@ export class Door implements Thing {
     return true;
   }
 
-  private isPointerOverDoor(x: number, y: number) {
+  isUnderPointer(x: number, y: number) {
     if(Math.abs(x - this.x) > this.width / 2) return false;
     const slope = (this.room.vanishingPoint.y - y) / (this.room.vanishingPoint.x - x);
     const adjustedY = y - slope * (x - this.x);
     if(adjustedY > this.y) return false;
     if(adjustedY < (this.y - this.height)) return false;
     return true;
+  }
+
+  debugResize(evt: WheelEvent) {
+    this.height -= evt.deltaY / 100;
+    this.width += evt.deltaX / 100;
   }
 }
 
