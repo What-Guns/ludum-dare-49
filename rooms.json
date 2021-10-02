@@ -40,6 +40,12 @@
             "right"
           ],
           "name": "left"
+        },
+        {
+          "@type": "SpeechBubble",
+          "@path": "./speechBubble.js",
+          "x": 650,
+          "y": 450
         }
       ]
     },
