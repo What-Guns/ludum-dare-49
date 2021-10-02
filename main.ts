@@ -23,8 +23,9 @@ addEventListener('load', () => {
 
   function main(timestamp: number) {
     if(lastTick) {
-      const dt = timestamp - lastTick;
-      game.draw(dt);
+      const dt = (timestamp - lastTick) / 1000;
+      game.tick(dt);
+      game.draw();
     }
     lastTick = timestamp;
     requestAnimationFrame(main);
@@ -42,12 +43,14 @@ class Game {
     this.room.things.push(new Player(100, 100));
   }
 
-  draw(dt: number) {
+  tick(dt: number) {
+    this.room.tick(dt);
+  }
+
+  draw() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     this.room.draw(this.ctx);
     this.hudWindow.draw(this.ctx);
-    const frameRate = 1000/dt;
-    this.ctx.fillText(frameRate.toFixed(0), 10, 10);
 
     if(pointer.active) {
       this.ctx.fillRect(pointer.x - 4, pointer.y - 1, 8, 2);
@@ -59,6 +62,12 @@ class Game {
 
 class Room {
   things: Thing[] = [];
+
+  tick(dt: number) {
+    for(const thing of this.things) {
+      thing.tick?.(dt);
+    }
+  }
 
   draw(ctx: CanvasRenderingContext2D) {
     for(const thing of this.things) {
