@@ -1,3 +1,5 @@
+import { playBGM } from "./audio.js";
+
 class HudItemWindow {
   private element: HTMLElement;
   private _image: HTMLImageElement = document.createElement('img');
@@ -107,6 +109,8 @@ class HudItemHotbar {
       const clickedItem = ev.composedPath()[1];
       const clickedIndex = Array.from(this._itemList.childNodes).findIndex(el => el === clickedItem);
       if (clickedIndex > -1) this.selectedIndex = clickedIndex;
+      if (clickedIndex === 0) playBGM('banjo');
+      if (clickedIndex === 1) playBGM('crystal');
     })
     document.body.appendChild(this.element);
   }
@@ -156,8 +160,8 @@ class HudItemHotbar {
   }
 
   static defaultList = [
-    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/owl_1f989.png",
-    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/bat_1f987.png",
+    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/banjo_1fa95.png",
+    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/crystal-ball_1f52e.png",
     "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/orange-heart_1f9e1.png",
     "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/jack-o-lantern_1f383.png",
   ]
