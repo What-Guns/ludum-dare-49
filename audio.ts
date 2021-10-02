@@ -69,7 +69,7 @@ export function playSFXPitchShifted(name: string, shift: number) {
   const sound = audioContext.createBufferSource();
   sound.buffer = sfx[name].buffer;
   sound.connect(sfxGainNode);
-  sound.playbackRate.value = shift + 1;
+  sound.playbackRate.value = shift;
   sound.loop = false;
   sound.start(0);
   return sound;
@@ -79,13 +79,15 @@ export function playSFXPitchShifted(name: string, shift: number) {
 loadBGM('crystal', 'audio/The_Scientists_Crystalarium.mp3');
 loadBGM('banjo', 'audio/Banjo_Kablooie.mp3');
 loadSFX('splat', 'audio/splat.ogg');
+loadSFX('meow', 'audio/Meow_9.ogg');
 loadSFX('mahp', 'audio/mahp.ogg');
 
-async function playSpeech(sampleName: string, numberOfSamples: number, timeBetweenSamples: number, variance: number) {
+export async function playSpeech(sampleName: string, numberOfSamples: number, timeBetweenSamples: number, variance: number, shift: number) {
   for (let x=0; x<numberOfSamples; x++) {
     setTimeout(() => {
-      const shift = (Math.random() - 0.5) * variance;
-      playSFXPitchShifted(sampleName, shift);
+      const netShift = variance ** ((Math.random() * 2) - 1) * shift;
+
+      playSFXPitchShifted(sampleName, netShift);
     }, timeBetweenSamples * x);
   }
 }

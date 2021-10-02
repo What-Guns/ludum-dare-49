@@ -1,4 +1,4 @@
-import { playBGM, playSFX } from "./audio.js";
+import { playBGM, playSFX, playSpeech } from "./audio.js";
 
 class HudItemWindow {
   private element: HTMLElement;
@@ -111,7 +111,7 @@ class HudItemHotbar {
       if (clickedIndex > -1) this.selectedIndex = clickedIndex;
       if (clickedIndex === 0) playBGM('banjo');
       if (clickedIndex === 1) playBGM('crystal');
-      if (clickedIndex === 2) playSFX('splat');
+      if (clickedIndex === 2) playSpeech('meow', 12, 130, 1.15, 1.1);
     })
     document.body.appendChild(this.element);
   }
@@ -163,7 +163,7 @@ class HudItemHotbar {
   static defaultList = [
     "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/banjo_1fa95.png",
     "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/crystal-ball_1f52e.png",
-    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/orange-heart_1f9e1.png",
+    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/cat_1f408.png",
     "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/jack-o-lantern_1f383.png",
   ]
 
