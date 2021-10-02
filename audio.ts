@@ -9,9 +9,14 @@ type AudioTrack = {
 
 
 export const audioContext = new AudioContext();
-const gainNode = audioContext.createGain();
-gainNode.gain.value = 0.5;
-gainNode.connect(audioContext.destination);
+
+const bgmGainNode = audioContext.createGain();
+bgmGainNode.gain.value = 0.5;
+bgmGainNode.connect(audioContext.destination);
+
+const sfxGainNode = audioContext.createGain();
+sfxGainNode.gain.value = 0.5;
+sfxGainNode.connect(audioContext.destination);
 
 let currentlyPlayingBGM: AudioBufferSourceNode = audioContext.createBufferSource();
 currentlyPlayingBGM.start();
@@ -46,7 +51,7 @@ export function playBGM(name: string) {
   currentlyPlayingBGM.stop();
   const sound = audioContext.createBufferSource();
   sound.buffer = bgm[name].buffer;
-  sound.connect(gainNode);
+  sound.connect(bgmGainNode);
   sound.loop = true;
   sound.start(0);
   currentlyPlayingBGM = sound;
@@ -63,7 +68,7 @@ export function playSFXPitchShifted(name: string, shift: number) {
   }
   const sound = audioContext.createBufferSource();
   sound.buffer = sfx[name].buffer;
-  sound.connect(gainNode);
+  sound.connect(sfxGainNode);
   sound.playbackRate.value = shift + 1;
   sound.loop = false;
   sound.start(0);
@@ -83,7 +88,51 @@ async function playSpeech(sampleName: string, numberOfSamples: number, timeBetwe
     }, timeBetweenSamples * x);
   }
 }
-//setTimeout(() => playSpeech('splat', 15, 150, 0.4), 3000);
+
+export class AudioHUD {
+  private element = document.createElement('div');
+  private _muteBgm = document.createElement('span');
+  private _bgmSlider = document.createElement('input');
+  private _muteSfx = document.createElement('span');
+  private _sfxSlider = document.createElement('input');
+
+  constructor() {
+    this.element.classList.add('audioControlWrapper');
+    document.body.appendChild(this.element);
+
+    const bgmControls = document.createElement('div');
+    this.element.appendChild(bgmControls);
+    
+    this._muteBgm.innerText = 'music_note';
+    this._muteBgm.classList.add('material-icons-outlined')
+    bgmControls.appendChild(this._muteBgm);
+
+    this._bgmSlider.classList.add('audioRange')
+    this._bgmSlider.setAttribute('type', 'range');
+    this._bgmSlider.setAttribute('min', '0');
+    this._bgmSlider.setAttribute('max', '1');
+    this._bgmSlider.setAttribute('step', 'any');
+    this._bgmSlider.addEventListener('change', ev => bgmGainNode.gain.value = Number((ev.target! as HTMLInputElement).value));
+    bgmControls.appendChild(this._bgmSlider);
+
+    const sfxControls = document.createElement('div');
+    this.element.appendChild(sfxControls);
+    
+    this._muteSfx.innerText = 'volume_up';
+    this._muteSfx.classList.add('material-icons-outlined')
+    sfxControls.appendChild(this._muteSfx);
+
+    this._sfxSlider.classList.add('audioRange')
+    this._sfxSlider.setAttribute('type', 'range');
+    this._sfxSlider.setAttribute('min', '0');
+    this._sfxSlider.setAttribute('max', '1');
+    this._sfxSlider.setAttribute('step', 'any');
+    this._sfxSlider.addEventListener('change', ev => sfxGainNode.gain.value = Number((ev.target! as HTMLInputElement).value));
+    sfxControls.appendChild(this._sfxSlider);
+  }
+}
+
+new AudioHUD();
 
 (window as any).playBGM = playBGM;
 (window as any).playSpeech = playSpeech;

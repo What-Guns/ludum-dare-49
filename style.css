@@ -96,3 +96,14 @@ ul {
   margin-top: 0;
   margin-bottom: 0;
 }
+
+.audioControlWrapper {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 15;
+}
+
+.audioRange {
+  width: 50px;
+}
