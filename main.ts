@@ -3,6 +3,7 @@ import {loadObject} from './loader.js';
 import {Game} from './game.js';
 import {init} from './input.js';
 import './audio.js';
+import './rpgTextBox.js';
 
 declare global {
   interface Window {

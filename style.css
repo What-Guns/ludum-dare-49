@@ -109,3 +109,42 @@ ul {
 .audioRange {
   width: 50px;
 }
+
+.rpgTextBox {
+  width: 95%;
+  margin: auto;
+  padding: 5px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 200px;
+  border: 3px blue solid;
+  text-align: center;
+  background-color: lightgray;
+}
+
+.rpgTextBoxPortrait {
+  text-align: center;
+  margin: 5px;
+  height: 190px;
+  width: 190px;
+}
+
+.rpgTextBoxText {
+  flex-grow: 4;
+  text-align: left;
+  margin: 5px;
+  font-family: 'Yusei Magic', sans-serif;
+  font-size: xx-large;
+}
+
+.rpgTextBoxDismissButton {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  align-self: flex-end;
+}
