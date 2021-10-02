@@ -87,6 +87,7 @@ export class Game {
 
   goToFirstRoom() {
     this.room = this.rooms.find(r => r.things.some(ofType(Player)))!;
+    this.room.things.forEach(t => t.startDrawingDOM ? t.startDrawingDOM() : null);
   }
 
   goToDoor(roomName: string, doorName: string, direction: TransitionDirection) {

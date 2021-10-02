@@ -18,6 +18,7 @@ export class SpeechBubble implements Thing {
     this.invisibleText.style.setProperty('color', 'white');
 
     this.stringContent = "I'm not actually the cauldron talking! That's crazy! No, I'm your familiar! I could be a cat or a bat or a rat, or even an animal that doesn't end in 'at'!";
+    this.visible = false;
   }
 
   set visible(isVisible: boolean) {
