@@ -6,7 +6,7 @@ import { HudItemWindow } from './hud.js';
 @Serializable('./item.js')
 export class Item implements Thing {
   private hudWindow: HudItemWindow;
-  constructor(public x: number, public y: number, public width: number, public height: number) {
+  constructor(public x: number, public y: number, public width: number, public height: number, public brewTime: number) {
     this.hudWindow = new HudItemWindow();
     this.hudWindow.image = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";
     this.hudWindow.itemName = "Blue Square";
@@ -14,8 +14,8 @@ export class Item implements Thing {
     this.hudWindow.itemDescription = "A two-dimensional piece of blue material";
   }
 
-  static deserialize({x, y, width, height}: ItemData) {
-    return Promise.resolve(new Item(x, y, width, height));
+  static deserialize({x, y, width, height, brewTime}: ItemData) {
+    return Promise.resolve(new Item(x, y, width, height, brewTime));
   }
 
   serialize(): ItemData {
@@ -24,6 +24,7 @@ export class Item implements Thing {
       y: this.y,
       width: this.width,
       height: this.height,
+      brewTime: this.brewTime
     };
   }
 
@@ -49,4 +50,5 @@ export interface ItemData {
   y: number;
   width: number;
   height: number;
+  brewTime: number;
 }

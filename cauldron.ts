@@ -15,7 +15,8 @@ export class Cauldron implements Thing {
   public totalTime = 0;
   public timeOut = false;
   readonly placedItems: Item[] = [];
-  transformedItem: Item | null = null;
+  public transformedItem: Item | null = null;
+  public hurryUp = this.totalTime / 3;
 
   constructor(public x: number, public y: number, public width: number, public height: number) {
     this.hudCauldronWindow = new HudCauldronItemWindow();
@@ -27,15 +28,17 @@ export class Cauldron implements Thing {
 
   tick(dt: number) {
 
-    this.totalTime += dt;
-
     if (this.placedItems.length > 0) {
     this.timer -= dt;
-    if(this.timer <= 0){
-      this.transformedItem = null;
-      this.timer = 0;
-      this.timeOut = true
-     }
+      if (this.timer <= this.hurryUp) //transform item
+      if (this.transformedItem != null){
+        this.timer = this.timer - (dt * 1.25);
+        if(this.timer <= 0){
+          this.transformedItem = null;
+          this.timer = 0;
+          this.timeOut = true
+         }
+      }
     }
   }
   static deserialize({x, y, width, height}: CauldronData) {
@@ -74,5 +77,7 @@ interface CauldronData {
   width: number;
   height: number;
 }
+
+
 
 
