@@ -1,11 +1,13 @@
 import {Player} from './player.js';
 import {pointer} from './input.js';
 import { HudWindow } from './hud.js';
-import {Room} from './room.js';
+import {Room, demoRoom} from './room.js';
+import {deserialize} from './serialization.js';
 
-addEventListener('load', () => {
+addEventListener('load', async () => {
   const canvas = document.querySelector('canvas')!;
-  const game = new Game(canvas);
+  const room = await deserialize(demoRoom, Room);
+  const game = new Game(room, canvas);
 
   requestAnimationFrame(main);
 
@@ -33,13 +35,11 @@ addEventListener('load', () => {
 });
 
 class Game {
-  private room: Room;
   private ctx: CanvasRenderingContext2D;
   private hudWindow = new HudWindow();
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(public room: Room, canvas: HTMLCanvasElement) {
     this.ctx = canvas.getContext('2d')!;
-    this.room = new Room();
     this.room.things.push(new Player(100, 100));
   }
 
