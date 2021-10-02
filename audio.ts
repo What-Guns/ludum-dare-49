@@ -101,6 +101,9 @@ export class AudioHUD {
 
   constructor() {
     this.element.classList.add('audioControlWrapper');
+    this.element.addEventListener('mousedown', ev => {
+      ev.stopPropagation();
+    })
     document.body.appendChild(this.element);
 
     const bgmControls = document.createElement('div');
