@@ -18,7 +18,6 @@ canvas, #popup-window-container {
 #popup-window-container {
   pointer-events: none;
   z-index: 1;
-  box-siding: border-box;
   transform-origin: top left;
 }
 
