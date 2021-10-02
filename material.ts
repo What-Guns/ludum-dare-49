@@ -3,7 +3,8 @@ interface Material {
   name: string;
   effect: Effect;
   description: string;
-  imageUrl?: string;
+  inventoryImageUrl?: string;
+  worldImageUrl?: string;
 }
 
 export type Effect = 
@@ -49,7 +50,8 @@ export const materials: {[key: string]: Material} = {
     name: 'Coins',
     description: 'smol CA$H MONEY',
     effect: 'metallic',
-    imageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/coin_1fa99.png',
+    inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/coin_1fa99.png',
+    worldImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/coin_1fa99.png',
   },
   'firewrood': {
     name: 'Firewood',
@@ -106,3 +108,5 @@ export const oppositeEffects: {[key in Effect]: Effect} = {
   'ephemeral': 'enduring',
   'enduring': 'ephemeral'
 };
+
+export type MaterialType = keyof typeof materials;

@@ -10,7 +10,7 @@ export class ResourceSpawner implements Thing {
     const material = materials[resource];
     if(!material) throw new Error(`Cannot find material with name ${resource}`);
     this.hudWindow = new HudItemWindow();
-    this.hudWindow.image = material.imageUrl ?? "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";
+    this.hudWindow.image = material.worldImageUrl ?? "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";
     this.hudWindow.itemName = material.name;
     this.hudWindow.traitsList = [material.effect];
     this.hudWindow.itemDescription = material.description;
