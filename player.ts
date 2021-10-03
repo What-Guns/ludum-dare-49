@@ -182,10 +182,14 @@ export class Player {
     const materialToApplyTo = this.heldMaterials.find(mat => getMaterialType(mat) === applyTo);
     const puzzleObjectToApplyTo = this.heldPuzzleObjects.find(po => getPuzzleObjectType(po) === applyTo);
     if (materialToApplyTo) {
-      // apply material transformation
+      const { turnsInto } = potion;
+      const newMaterial = materials[turnsInto as MaterialType];
+      this.heldMaterials.splice(this.heldMaterials.indexOf(materialToApplyTo), 1, newMaterial);
       return true;
     } else if (puzzleObjectToApplyTo) {
-      // apply puzzle object transformation
+      const { turnsInto } = potion;
+      const newPuzzleObject = puzzleObjects[turnsInto as PuzzleObjectType];
+      this.heldPuzzleObjects.splice(this.heldPuzzleObjects.indexOf(puzzleObjectToApplyTo), 1, newPuzzleObject);
       return true;
     }
     return false;
