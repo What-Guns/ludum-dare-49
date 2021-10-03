@@ -1,7 +1,9 @@
 import { startSpeech, stopSpeech } from "./audio.js";
 import { Thing } from "./main.js";
 import { RpgTextBox } from "./rpgTextBox.js";
+import {Serializable, pluck} from './serialization.js';
 
+@Serializable('./npc.js')
 export class Npc implements Thing {
   readonly textbox: RpgTextBox = new RpgTextBox(this.textboxDone.bind(this));
   static readonly speechParams: {[k in NpcType]: SpeechParams} = {
@@ -52,8 +54,15 @@ export class Npc implements Thing {
     stopSpeech();
   }
 
-  static deserialize({x, y, width, height, type}: NpcData) {
+  static async deserialize({x, y, width, height, type}: NpcData) {
     return new Npc(x, y, width, height, type);
+  }
+
+  serialize(): NpcData {
+    return {
+      ...pluck(this, 'x', 'y', 'width', 'height'),
+      type: this.npcType,
+    };
   }
 }
 
