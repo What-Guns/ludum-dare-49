@@ -77,11 +77,6 @@ export const materials: {[key: string]: Material} = {
     description: 'Just like humans, ghosts get sad sometimes too. You should never make a ghost cry, but if you do, their tears can be collected!',
     effect: 'incorporeal',
   },
-  'gravity-stone': {
-    name: 'Gravity Stone',
-    description: 'This rock is made out of some very heavy minerals and metals! It’s also really slippery, and it feels like it might fall from your grasp. Watch your toes!',
-    effect: 'heavy'
-  },
   'transmuters-draught': {
     name: 'Transmuter’s Draught',
     description: 'Transmutation is the magical art of turning one object or substance into another. Alchemists use this substance to aid them in their art!',
