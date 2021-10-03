@@ -9,6 +9,8 @@ export interface Material {
   worldImageUrl?: string;
   inventoryImage?: HTMLImageElement;
   worldImage?: HTMLImageElement;
+  brewTime: number;
+  expireTime: number;
 }
 
 export type Effect = 
@@ -39,16 +41,22 @@ export const materials: {[key: string]: Material} = {
     name: 'Mouse Whisker',
     description: 'Mice grow these on their faces, they help the mice to know whether holes are big enough for them to squeeze through! This whisker fell off of a mouse, I didn’t have to pluck it out (that would be cruel).',
     effect: 'smaller',
+    brewTime: 5,
+    expireTime: 10,
   },
   'gunpowder': {
     name: 'Gunpowder',
     description: 'Mixing sulfur, saltpeter, and charcoal makes an explosive powder! Please be careful with this stuff, there’s a great deal of power stored here.',
-    effect: 'strong'
+    effect: 'strong',
+    brewTime: 5,
+    expireTime: 10,
   },
   'morning-dew': {
     name: 'Morning Dew',
     description: 'Overnight, water condenses on grass and leaves. Early in the morning, you can feel this water, but it will evaporate before long!',
     effect: 'ephemeral',
+    brewTime: 5,
+    expireTime: 10,
   },
   'coin': {
     name: 'Coins',
@@ -56,31 +64,43 @@ export const materials: {[key: string]: Material} = {
     effect: 'metallic',
     inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/coin_1fa99.png',
     worldImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/coin_1fa99.png',
+    brewTime: 10,
+    expireTime: 5*60,
   },
   'firewood': {
     name: 'Firewood',
     description: 'The best wood for making a fire is dry dead wood! Firewood is lightweight, rigid, and relatively flammable compared to live wood, or wood that’s been rained on.',
     effect: 'wooden',
+    brewTime: 5,
+    expireTime: 10,
   },
   'anti-dote': {
     name: 'Anti-dote',
     description: 'emit emas eht ta thgil dna yvaeh sleef ti ,tnaillirb dna elap skool ti ,gnibmun dna ycips sllems ffuts sihT',
-    effect: 'reversed'
+    effect: 'reversed',
+    brewTime: 5,
+    expireTime: 10,
   },
   'hushroom': {
     name: 'Hushroom',
     description: 'This little mushroom will wilt if exposed to bright lights or loud sounds. Chill times and good vibes are this mushroom’s specialty!',
     effect: 'relaxed',
+    brewTime: 10,
+    expireTime: 20,
   },
   'ghost-tears': {
     name: 'Ghost Tears',
     description: 'Just like humans, ghosts get sad sometimes too. You should never make a ghost cry, but if you do, their tears can be collected!',
     effect: 'incorporeal',
+    brewTime: 5,
+    expireTime: 10,
   },
   'transmuters-draught': {
     name: 'Transmuter’s Draught',
     description: 'Transmutation is the magical art of turning one object or substance into another. Alchemists use this substance to aid them in their art!',
     effect: 'transmuted',
+    brewTime: 5,
+    expireTime: 10,
   }
 };
 

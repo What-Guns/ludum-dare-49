@@ -12,12 +12,7 @@ export class Cauldron implements Thing {
   y: number;
   width: number;
   height: number;
-  readonly placedItems: Material[];
-  public timer = 0;
-  public totalTime = 0;
-  public timeOut = false;
-  public transformedItem: MaterialType | null = null;
-  public hurryUp = this.totalTime / 3;
+  readonly brewing: BrewingMaterial[];
   readonly ITEM_CAPACITY = 5;
   private rotation = 0;
 
@@ -26,28 +21,37 @@ export class Cauldron implements Thing {
     this.y = data.y;
     this.height = data.height;
     this.width = data.width;
-    this.placedItems = (data.placedItems ?? []).map(matType => materials[matType]);
+    this.brewing = (data.brewing ?? []).map(({materialType, timeSpentInCauldron}) => ({
+      material: materials[materialType],
+      timeSpentInCauldron, 
+    }));
   }
 
   tick(dt: number) {
-    if (this.placedItems.length > 0) {
-    this.timer -= dt;
-      if (this.timer <= this.hurryUp) // transform item
-      if (this.transformedItem != null){
-        this.timer = this.timer - (dt * 1.25);
-        if(this.timer <= 0){
-          this.transformedItem = null;
-          this.timer = 0;
-          this.timeOut = true
-         }
-      }
-    }
     this.rotation -= dt;
     this.rotation = this.rotation % (2 * Math.PI);
+    for(const item of this.brewing) {
+      item.timeSpentInCauldron += dt;
+    }
   }
 
   static async deserialize(data: CauldronData) {
     return new Cauldron(data);
+  }
+
+  doClick(x: number, y: number) {
+    if(!this.isUnderPointer(x, y)) return false;
+    if(!this.brewing.length) return false;
+    const isSuccessful = this.brewing.every(({timeSpentInCauldron, material}) => 
+      timeSpentInCauldron < material.expireTime && timeSpentInCauldron > material.brewTime);
+    if(isSuccessful) {
+      toast('hooray');
+    } else {
+      toast('oh no');
+    }
+    // TODO: actually produce a potion
+    this.brewing.length = 0;
+    return true;
   }
 
   serialize(): CauldronData {
@@ -56,7 +60,10 @@ export class Cauldron implements Thing {
       y: this.y,
       width: this.width,
       height: this.height,
-      placedItems: this.placedItems.map(getMaterialType),
+      brewing: this.brewing.map(({material, timeSpentInCauldron}) => ({
+        materialType: getMaterialType(material),
+        timeSpentInCauldron
+      })),
     };
   }
 
@@ -66,12 +73,55 @@ export class Cauldron implements Thing {
       ctx.fillRect(this.x - this.width/2, this.y - this.height/2, this.width, this.height);
     }
 
-    for(let i = 0; i < this.placedItems.length; i++) {
+    for(let i = 0; i < this.brewing.length; i++) {
       const dir = 2 * Math.PI * (i/this.ITEM_CAPACITY) + this.rotation;
       const x = Math.cos(dir) * this.width / 3 + this.x;
       const y = Math.sin(dir) * this.width / 6 + this.y - this.height/2 - 50;
-      ctx.drawImage(this.placedItems[i].inventoryImage!, x - 20, y - 20, 40, 40);
+      this.drawBrewingItem(ctx, this.brewing[i], x, y);
     }
+  }
+
+  private drawBrewingItem(ctx: CanvasRenderingContext2D, brewing: BrewingMaterial, x: number, y: number) {
+    const radius = 44;
+    ctx.textAlign = 'center';
+    ctx.font = '20px sans-serif';
+
+    const goodPercent = brewing.material.brewTime / brewing.material.expireTime;
+
+    // draw background
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+    ctx.fill();
+
+    // draw "good" region
+    ctx.fillStyle = 'rgba(0, 255, 0, 0.5)';
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.arc(x, y, radius, -Math.PI / 2 + 2 * Math.PI * goodPercent, Math.PI * 3/2, false);
+    ctx.lineTo(x, y);
+    ctx.fill();
+
+    // draw "brewed" region
+    const fillColor = brewing.timeSpentInCauldron > brewing.material.expireTime
+      ? 'red'
+      : brewing.timeSpentInCauldron >= brewing.material.brewTime
+        ? 'green'
+        : 'yellow';
+
+    ctx.fillStyle = fillColor;
+    const percent = Math.min(1, brewing.timeSpentInCauldron / brewing.material.expireTime);
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.arc(x, y, radius, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * percent, false);
+    ctx.lineTo(x, y);
+    ctx.fill();
+
+
+    ctx.drawImage(brewing.material.inventoryImage!, x - 20, y - 20, 40, 40);
+
+    ctx.fillStyle = 'rebeccapurple';
+    ctx.fillText(brewing.timeSpentInCauldron.toFixed(2), x, y);
   }
 
   debugResize(evt: WheelEvent) {
@@ -84,11 +134,11 @@ export class Cauldron implements Thing {
   }
 
   putItem(material: Material): boolean {
-    if (this.placedItems.length >= this.ITEM_CAPACITY) {
+    if (this.brewing.length >= this.ITEM_CAPACITY) {
       this.denyItem();
       return false;
     }
-    this.placedItems.push(material)
+    this.brewing.push(({material, timeSpentInCauldron: 0}));
     return true;
   }
 
@@ -97,10 +147,20 @@ export class Cauldron implements Thing {
   }
 }
 
+interface BrewingMaterial {
+  material: Material;
+  timeSpentInCauldron: number;
+}
+
 interface CauldronData {
   x: number;
   y: number;
   width: number;
   height: number;
-  placedItems?: MaterialType[];
+  brewing?: BrewingMaterialData[];
+}
+
+interface BrewingMaterialData {
+  materialType: MaterialType;
+  timeSpentInCauldron: number;
 }
