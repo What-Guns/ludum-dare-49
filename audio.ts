@@ -9,6 +9,9 @@ export type SfxName = keyof typeof sfx;
 const bgm = {
   'crystal':'audio/The_Scientists_Crystalarium.mp3', 
   'banjo': 'audio/Banjo_Kablooie.mp3',
+  'overworld': 'audio/overworld_song.mp3',
+  'greenhouse': 'audio/Bach_Chorale.mp3',
+  'attic': 'audio/Spooky_Attic.mp3',
 };
 
 const sfx = {
@@ -25,7 +28,7 @@ for(const [name, url] of Object.entries({...bgm, ...sfx})) {
 }
 
 
-const bgmGainNode = audioContext.createGain();
+export const bgmGainNode = audioContext.createGain();
 bgmGainNode.gain.value = 0.5;
 bgmGainNode.connect(audioContext.destination);
 

@@ -2,6 +2,7 @@ import {pointer} from './input.js';
 import {Room, RoomData} from './room.js';
 import {serialize, Serializable, deserialize} from './serialization.js';
 import {debugTick} from './debug.js';
+import {Music} from './music.js';
 import {TransitionDirection} from './door.js';
 import './audio.js';
 import { toast, Toast } from './toast.js';
@@ -22,13 +23,13 @@ export class Game {
   private transition: Transition|null = null;
   private needsToSave = false;
 
-  constructor(public readonly canvas: HTMLCanvasElement) {
+  constructor(public readonly canvas: HTMLCanvasElement, private readonly music: Music) {
     this.ctx = canvas.getContext('2d')!;
     window.game = this;
   }
 
   static async deserialize(data: GameData, {canvas}: GameExtras)  {
-    const game = new Game(canvas);
+    const game = new Game(canvas, await Music.create());
     const rooms = (await Promise.all(data.rooms.map(deserialize))) as Room[];
     setProgressLevel(data.currentProgressLevel);
     game.rooms.push(...rooms as Room[]);
@@ -122,6 +123,7 @@ export class Game {
   goToFirstRoom() {
     this.room = this.rooms.find(r => r.player)!;
     this.room.activate();
+    this.music.roomChanged(this.room.name);
   }
 
   goToDoor(roomName: string, doorName: string, direction: TransitionDirection) {
@@ -158,6 +160,8 @@ export class Game {
     player.targetX = targetDoor.x;
     targetRoom.adoptThing(player);
     targetRoom.activate();
+
+    this.music.roomChanged(roomName);
 
     this.save();
   }

@@ -140,7 +140,6 @@ export class Room {
     this.pointer.y = pointer.y / this.camera.scale;
   }
 
-
   private doCameraStuff(ctx: CanvasRenderingContext2D) {
     this.camera.scale = Math.min(ctx.canvas.height / this.height, 1);
     if(!this.player) return;

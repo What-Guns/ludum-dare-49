@@ -6,6 +6,7 @@ import {Room} from './room.js';
 import {preloadMaterialImages} from './material.js';
 import {resizePopupContainer} from './hud.js';
 import './audio.js';
+import './music.js';
 
 declare global {
   interface Window {
