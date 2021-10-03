@@ -85,9 +85,9 @@ for(const material of Object.keys(materials)) {
 }
 
 const progressSelector = document.getElementById('progress-level-selector') as HTMLSelectElement;
-for (const level of progressData.map(d => d.level)) {
+for (let level = 0; level < progressData.length; level++) {
   const option = document.createElement('option');
-  option.textContent = `${level}: ${progressData.find(d => d.level === level)!.unlockedDoors.toString()}`;
+  option.textContent = `${level}: ${progressData[level].unlockedRooms.toString()}`;
   console.log('Checking progress level: ' + getProgressLevel() + ' vs ' + level)
   if(getProgressLevel() === level) option.selected = true;
   progressSelector.appendChild(option);

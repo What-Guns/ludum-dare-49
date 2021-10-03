@@ -7,7 +7,7 @@ import './audio.js';
 import { toast, Toast } from './toast.js';
 import './toast.js';
 import './progressManager.js';
-import { getProgressLevel, isDoorUnlocked, setProgressLevel } from './progressManager.js';
+import { getProgressLevel, isRoomUnlocked, setProgressLevel } from './progressManager.js';
 
 @Serializable('./game.js')
 export class Game {
@@ -119,7 +119,7 @@ export class Game {
   }
 
   goToDoor(roomName: string, doorName: string, direction: TransitionDirection) {
-    if (!isDoorUnlocked(doorName)) return toast('Locked');
+    if (!isRoomUnlocked(roomName)) return toast('Locked');
     // defer the room transition so we don't tick two rooms in one pass
     this.nextRoom = [roomName, doorName, direction];
   }
