@@ -83,6 +83,11 @@ export class Player {
     this.hotbar.removeItemByName(obj.name);
   }
 
+  placePuzzleObject(obj: PuzzleObject) {
+    console.log('Any cauldrons for this ' + obj.name + ' to go into?');
+    console.log(this.room?.getObjectsOfType(Cauldron));
+  }
+
   takePuzzleObject(obj: PuzzleObject, silent: boolean) {
     this.heldPuzzleObjects.push(obj);
     if(!silent) {
@@ -99,7 +104,7 @@ export class Player {
           traits: [],
           description: obj.description,
           onToss: () => { this.tossPuzzleObject(obj) },
-          onPlace: () => { console.log('tried to place ' + obj.name)},
+          onPlace: () => { this.placePuzzleObject(obj) },
         });
         hudItemWindow.visible = true;
       }
