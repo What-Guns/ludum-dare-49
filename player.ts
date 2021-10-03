@@ -80,6 +80,7 @@ export class Player {
 
   takePuzzleObject(obj: PuzzleObject) {
     this.heldPuzzleObjects.push(obj);
+    playSFX('chimes-002');
     window.game!.save();
   }
 

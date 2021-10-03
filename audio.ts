@@ -82,6 +82,7 @@ loadSFX('splat', 'audio/splat.ogg');
 loadSFX('meow', 'audio/Meow_9.ogg');
 loadSFX('mahp', 'audio/mahp.ogg');
 loadSFX('great-jearb-06', 'audio/great-jearb-06.wav');
+loadSFX('chimes-002', 'audio/Chimes-002.wav');
 loadSFX('bad-job-4', 'audio/bad-job-4.wav');
 
 export async function playSpeech(sampleName: string, numberOfSamples: number, timeBetweenSamples: number, variance: number, shift: number) {
