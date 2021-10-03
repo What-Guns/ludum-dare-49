@@ -8,6 +8,7 @@ import {Cauldron} from './cauldron.js';
 import { toast } from './toast.js';
 import { getPuzzleObjectType, PuzzleObject, puzzleObjects, PuzzleObjectType } from './puzzleObject.js';
 import { Furnace } from './furnace.js';
+import { Potion } from './potions.js';
 
 @Serializable('./player.js')
 export class Player {
@@ -174,6 +175,20 @@ export class Player {
     if(!isInitializing) {
       window.game!.save();
     }
+  }
+
+  applyPotion(potion: Potion): boolean {
+    const { applyTo } = potion;
+    const materialToApplyTo = this.heldMaterials.find(mat => getMaterialType(mat) === applyTo);
+    const puzzleObjectToApplyTo = this.heldPuzzleObjects.find(po => getPuzzleObjectType(po) === applyTo);
+    if (materialToApplyTo) {
+      // apply material transformation
+      return true;
+    } else if (puzzleObjectToApplyTo) {
+      // apply puzzle object transformation
+      return true;
+    }
+    return false;
   }
 }
 
