@@ -18,6 +18,18 @@ export const puzzleObjects: {[key: string]: PuzzleObject} = {
     inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/old-key_1f5dd-fe0f.png',
     spawnerImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/old-key_1f5dd-fe0f.png',
   },
+  'small-key': {
+    name: 'Small Key',
+    description: 'This key has become really tiny! It looks like it\'s the right size to fit into a lockbox of some kind.',
+    inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/old-key_1f5dd-fe0f.png',
+    spawnerImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/old-key_1f5dd-fe0f.png',
+  },
+  'big-key': {
+    name: 'Big Key',
+    description: 'This key has become really tiny! It looks like it\'s the right size to fit into a lockbox of some kind.',
+    inventoryImageUrl: 'https://static.wikia.nocookie.net/zelda/images/0/09/Boss_Key_%28Ocarina_of_Time%29.png',
+    spawnerImageUrl: 'https://static.wikia.nocookie.net/zelda/images/0/09/Boss_Key_%28Ocarina_of_Time%29.png',
+  },
   'radio': {
     name: 'Broken Radio',
     description: 'This radio is looking fine, but it won\'t play any tunes! It seems like it has been drained of power, and just needs some energy to start playing again.',
