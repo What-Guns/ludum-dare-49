@@ -81,7 +81,7 @@ export class Door extends Portal {
 @Serializable('./door.js')
 export class Ladder extends Portal {
   override isUnderPointer(x: number, y: number) {
-    return Math.abs(x - this.x) < this.width && y < this.y && y > this.y - this.height;
+    return Math.abs(x - this.x) < this.width / 2 && y < this.y && y > this.y - this.height;
   }
 
   draw(ctx: CanvasRenderingContext2D) {

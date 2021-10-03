@@ -60,7 +60,7 @@ export class Cauldron implements Thing {
   }
 
   isUnderPointer(x: number, y: number) {
-    return Math.abs(x - this.x) < this.width && Math.abs(y - this.y) < this.height;
+    return Math.abs(x - this.x) < this.width / 2  && Math.abs(y - this.y) < this.height / 2;
   }
 
   putItem(itm: MaterialType): boolean {
