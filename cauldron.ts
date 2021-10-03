@@ -1,6 +1,8 @@
 import {Thing} from './main.js';
 import {Serializable} from './serialization.js';
 import {Material, MaterialType, getMaterialType, materials} from './material.js';
+import {toast} from './toast.js';
+import {debug} from './debug.js';
 
 
 @Serializable('./cauldron.js')
@@ -40,7 +42,7 @@ export class Cauldron implements Thing {
          }
       }
     }
-    this.rotation += dt / 10000;
+    this.rotation -= dt;
     this.rotation = this.rotation % (2 * Math.PI);
   }
 
@@ -59,13 +61,15 @@ export class Cauldron implements Thing {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    ctx.fillStyle = 'black';
-    ctx.fillRect(this.x - this.width/2, this.y - this.height/2, this.width, this.height);
+    if(debug) {
+      ctx.fillStyle = 'black';
+      ctx.fillRect(this.x - this.width/2, this.y - this.height/2, this.width, this.height);
+    }
 
     for(let i = 0; i < this.placedItems.length; i++) {
       const dir = 2 * Math.PI * (i/this.ITEM_CAPACITY) + this.rotation;
-      const x = Math.cos(dir) * this.width / 2 + this.x;
-      const y = Math.sin(dir) * this.width / 5 + this.y - this.height/2 - 100;
+      const x = Math.cos(dir) * this.width / 3 + this.x;
+      const y = Math.sin(dir) * this.width / 6 + this.y - this.height/2 - 50;
       ctx.drawImage(this.placedItems[i].inventoryImage!, x - 20, y - 20, 40, 40);
     }
   }
@@ -89,7 +93,7 @@ export class Cauldron implements Thing {
   }
 
   denyItem(){
-    alert("I'm a cauldron not a storage unit!")
+    toast("I'm a cauldron not a storage unit!")
   }
 }
 
