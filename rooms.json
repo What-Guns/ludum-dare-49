@@ -18,10 +18,11 @@
         {
           "@type": "Cauldron",
           "@path": "./cauldron.js",
-          "x": 722,
-          "y": 649,
-          "width": 100,
-          "height": 100
+          "x": 651,
+          "y": 637,
+          "width": 242,
+          "height": 152,
+          "placedItems": []
         },
         {
           "@type": "Door",
@@ -71,7 +72,7 @@
         {
           "@type": "Player",
           "@path": "./player.js",
-          "x": 790.5,
+          "x": 300,
           "y": 781,
           "heldMaterials": [],
           "heldPuzzleObjects": [],
@@ -134,8 +135,6 @@
           "@path": "./puzzleObject.js",
           "x": 400,
           "y": 400,
-          "width": 100,
-          "height": 100,
           "puzzleObjectType": "key"
         }
       ]
