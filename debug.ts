@@ -88,7 +88,6 @@ const progressSelector = document.getElementById('progress-level-selector') as H
 for (let level = 0; level < progressData.length; level++) {
   const option = document.createElement('option');
   option.textContent = `${level}: ${progressData[level].unlockedRooms.toString()}`;
-  console.log('Checking progress level: ' + getProgressLevel() + ' vs ' + level)
   if(getProgressLevel() === level) option.selected = true;
   progressSelector.appendChild(option);
 }
