@@ -1,10 +1,11 @@
-import {Player} from './player.js';
-import {Thing} from './main.js';
-import {loadImage} from './loader.js';
-import {Serializable, serialize, isSerializable, deserialize, pluck} from './serialization.js';
-import {pointer} from './input.js';
 import {Door} from './door.js';
+import {Player} from './player.js';
+import {Serializable, serialize, isSerializable, deserialize, pluck} from './serialization.js';
+import {Thing} from './main.js';
+import {debug} from './debug.js';
+import {loadImage} from './loader.js';
 import {ofType, Type} from './crap.js';
+import {pointer} from './input.js';
 import {translateAndScalePopupContainer, resizePopupContainer} from './hud.js';
 
 @Serializable('./room.js')
@@ -83,6 +84,10 @@ export class Room {
       thing.draw?.(ctx);
     }
     ctx.restore();
+    if(debug) {
+      ctx.font = '24px sans-serif';
+      ctx.fillText(this.name, this.width / 2, 48);
+    }
   }
 
   doClick() {
