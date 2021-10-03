@@ -3,6 +3,7 @@ import {loadObject} from './loader.js';
 import {Game} from './game.js';
 import {init} from './input.js';
 import {Room} from './room.js';
+import {preloadMaterialImages} from './material.js';
 import {resizePopupContainer} from './hud.js';
 import './audio.js';
 
@@ -12,9 +13,12 @@ declare global {
   }
 }
 
+const materialsLoaded = preloadMaterialImages();
+
 addEventListener('load', async () => {
   const canvas = document.querySelector('canvas')!;
   const continueButton = document.getElementById('continue-button') as HTMLButtonElement;
+  await materialsLoaded;
   init(canvas);
 
   document.getElementById('new-game-button')!.addEventListener('click', async () => {

@@ -1,3 +1,5 @@
+import {loadImage} from './loader.js';
+
 /** A thing that goes in your pocket, or in a cauldron. Cannot exist in the world. */
 export interface Material {
   name: string;
@@ -5,6 +7,8 @@ export interface Material {
   description: string;
   inventoryImageUrl?: string;
   worldImageUrl?: string;
+  inventoryImage?: HTMLImageElement;
+  worldImage?: HTMLImageElement;
 }
 
 export type Effect = 
@@ -84,6 +88,19 @@ export const materials: {[key: string]: Material} = {
     effect: 'transmuted',
   }
 };
+
+export async function preloadMaterialImages() {
+  await Promise.all(Object.values(materials).map(loadMaterial));
+}
+
+async function loadMaterial(material: Material) {
+  if(material.inventoryImageUrl) {
+    material.inventoryImage = await loadImage(material.inventoryImageUrl);
+  }
+  if(material.worldImageUrl) {
+    material.worldImage = await loadImage(material.worldImageUrl);
+  }
+}
 
 export const oppositeEffects: {[key in Effect]: Effect} = {
   'transmuted': 'transmuted',
