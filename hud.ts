@@ -14,35 +14,29 @@ export function resizePopupContainer(room: Room) {
 
 class HudItemWindow {
   private element: HTMLElement;
-  private _image: HTMLImageElement = document.createElement('img');
-  private _itemName: HTMLDivElement = document.createElement('div');
-  private _itemDescription: HTMLDivElement = document.createElement('div');
-  private _traitsList: HTMLUListElement = document.createElement('ul');
-
-  readonly imageHeight = "40px";
-  readonly imageWidth  = "40px";
 
   set traitsList(list: string[]) {
-    while (this._traitsList.firstChild) {
-      this._traitsList.removeChild(this._traitsList.firstChild);
+    const traitsList = this.element.querySelector('ul')!;
+    while (traitsList.firstChild) {
+      traitsList.removeChild(traitsList.firstChild);
     }
     list.forEach(trait => {
       const li = document.createElement('li');
       li.innerText = trait;
-      this._traitsList.appendChild(li);
+      traitsList.appendChild(li);
     })
   }
 
   set itemDescription(desc: string) {
-    this._itemDescription.innerText = desc;
+    this.element.querySelector('.hudItemDescription')!.textContent = desc;
   }
 
   set itemName(name: string) {
-    this._itemName.innerText = name;
+    this.element.querySelector('.hudItemName')!.textContent = name;
   }
 
   set image(src: string) {
-    this._image.src = src;
+    this.element.querySelector('img')!.src = src;
   }
 
   set x(xVal: number) {
@@ -58,46 +52,9 @@ class HudItemWindow {
   }
 
   constructor() {
-    this.element = document.createElement('div');
-    this.element.classList.add('hudWindow', 'hudItemWindow');
-    this.element.style.left = String(this.x);
-    this.element.style.right = String(this.y);
-    this.populateWindow();
+    const template = document.getElementById('hud-window') as HTMLTemplateElement;
+    this.element = template.content.firstElementChild!.cloneNode(true) as HTMLDivElement;
     popupContainer.appendChild(this.element);
-  }
-
-  private populateWindow() {
-    const picAndName = document.createElement('div');
-    picAndName.classList.add('hudPictureAndName');
-    this.element.appendChild(picAndName);
-
-    const picDiv = document.createElement('div');
-    picDiv.classList.add('hudItemPicture');
-    picAndName.appendChild(picDiv);
-
-    this._image.setAttribute('height', this.imageHeight);
-    this._image.setAttribute('width', this.imageWidth);
-    picDiv.appendChild(this._image);
-
-    this._itemName.classList.add('hudItemName');
-    picAndName.appendChild(this._itemName);
-
-    this._itemDescription.classList.add('hudItemDescription');
-    this.element.appendChild(this._itemDescription);
-
-    const traitsTitleDiv = document.createElement('div');
-    traitsTitleDiv.classList.add('hudItemTraitsTitle');
-    this.element.appendChild(traitsTitleDiv);
-
-    const traitsTitle = document.createElement('strong');
-    traitsTitle.innerText = 'Traits';
-    traitsTitleDiv.appendChild(traitsTitle);
-
-    const traitsListDiv = document.createElement('div');
-    traitsListDiv.classList.add('hudItemTraitsList');
-    this.element.appendChild(traitsListDiv);
-
-    traitsListDiv.appendChild(this._traitsList);
   }
 }
 
