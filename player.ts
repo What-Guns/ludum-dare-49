@@ -1,5 +1,6 @@
 import {Serializable} from './serialization.js';
 import {loadImage} from './loader.js';
+import {Material, MaterialType, materials, getMaterialType} from './material.js';
 
 @Serializable('./player.js')
 export class Player {
@@ -7,10 +8,13 @@ export class Player {
   public y: number;
   public targetX: number;
 
-  constructor({x, y}: PlayerData, private standingImage: HTMLImageElement, private walkingImage: HTMLImageElement) {
+  readonly heldMaterials: Material[];  
+
+  constructor({x, y, heldMaterials = []}: PlayerData, private standingImage: HTMLImageElement, private walkingImage: HTMLImageElement) {
     this.x = x;
     this.y = y;
     this.targetX = x;
+    this.heldMaterials = heldMaterials.map(type => materials[type]);
   }
 
   static async deserialize(playerData: PlayerData) {
@@ -51,11 +55,19 @@ export class Player {
     return {
       x: this.x,
       y: this.y,
+      heldMaterials: this.heldMaterials.map(getMaterialType),
     };
+  }
+
+  takeMaterial(mat: Material) {
+    if(this.heldMaterials.indexOf(mat) !== -1) return;
+    this.heldMaterials.push(mat);
+    window.game!.save();
   }
 }
 
 interface PlayerData {
   x: number;
   y: number;
+  heldMaterials: MaterialType[];
 }

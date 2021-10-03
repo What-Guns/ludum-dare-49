@@ -33,15 +33,14 @@
       <button id="new-game-button"> New Game </button>
     </div>
     <template id="hud-window">
-      <div class="hudWindow hudItemWindow">
-        <div class="hudPictureAndName">
+      <aside class="hudWindow hudItemWindow">
+        <header class="hudPictureAndName">
           <div class="hudItemPicture">
             <img data-world-image width="40px" height="40px"/>
           </div>
           <div class="hudItemName"></div>
-        </div>
-        <div class="hudItemDescription">
-        </div>
+        </header>
+        <div class="hudItemDescription"></div>
         <div class="hudItemTraitsTitle">
           <strong>Traits</strong>
         </div>
@@ -49,7 +48,10 @@
           <ul>
           </ul>
         </div>
-      </div>
+        <footer>
+          <button data-take-item>Take</button>
+        </footer>
+      </aside>
     </template>
   </body>
 </html>

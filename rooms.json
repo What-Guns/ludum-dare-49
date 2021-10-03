@@ -8,18 +8,19 @@
       "name": "one",
       "width": 1203,
       "height": 839,
-      "floorHeight": 781,
       "vanishingPoint": {
         "x": 641,
         "y": 412
       },
+      "floorHeight": 781,
       "background": "./backgrounds/sample.jpeg",
       "things": [
         {
           "@type": "Player",
           "@path": "./player.js",
           "x": 782.5,
-          "y": 800
+          "y": 800,
+          "heldMaterials": []
         },
         {
           "@type": "Cauldron",
@@ -82,11 +83,11 @@
       "name": "two",
       "width": 1455,
       "height": 957,
-      "floorHeight": 791,
       "vanishingPoint": {
         "x": 727,
         "y": 415
       },
+      "floorHeight": 791,
       "background": "./backgrounds/sample.png",
       "things": [
         {
@@ -108,9 +109,8 @@
           "@path": "./npc.js",
           "x": 600,
           "y": 400,
-          "height": 100,
           "width": 100,
-          "name": "npc",
+          "height": 100,
           "type": "GHOST"
         }
       ]
@@ -121,11 +121,11 @@
       "name": "attic",
       "width": 1455,
       "height": 957,
-      "floorHeight": 791,
       "vanishingPoint": {
         "x": 727,
         "y": 415
       },
+      "floorHeight": 791,
       "background": "./backgrounds/attic.png",
       "things": [
         {
@@ -147,9 +147,8 @@
           "@path": "./npc.js",
           "x": 600,
           "y": 400,
-          "height": 100,
           "width": 100,
-          "name": "npc",
+          "height": 100,
           "type": "CAT"
         }
       ]

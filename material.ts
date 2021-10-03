@@ -109,4 +109,12 @@ export const oppositeEffects: {[key in Effect]: Effect} = {
   'enduring': 'ephemeral'
 };
 
+export function getMaterialType(material: Material) {
+  const entry = Object.entries(materials).find(([_, mat]) => mat === material);
+  if(!entry) {
+    throw new Error(`Material not found.`);
+  }
+  return entry![0];
+}
+
 export type MaterialType = keyof typeof materials;

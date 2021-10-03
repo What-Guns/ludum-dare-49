@@ -1,3 +1,4 @@
+import {Room} from './room.js';
 import {Thing} from './main.js';
 import {Serializable} from './serialization.js';
 import {loadImage} from './loader.js';
@@ -12,23 +13,25 @@ export class ResourceSpawner implements Thing {
   readonly width: number;
   readonly height: number;
 
-  constructor(readonly material: Material, readonly worldImage: HTMLImageElement, {x, y}: ResourceSpawnerData) {
+  constructor(readonly material: Material, readonly worldImage: HTMLImageElement, private readonly room: Room, {x, y}: ResourceSpawnerData) {
     this.x = x;
     this.y = y;
     this.width = worldImage.width;
     this.height = worldImage.height;
-    this.hudWindow = new HudItemWindow();
-    this.hudWindow.image = worldImage.src;
-    this.hudWindow.itemName = material.name;
-    this.hudWindow.traitsList = [material.effect];
-    this.hudWindow.itemDescription = material.description;
+    this.hudWindow = new HudItemWindow({
+      image: worldImage.src,
+      name: material.name,
+      traits: [material.effect],
+      description: material.description,
+      onTake: () => this.take(),
+    });
   }
 
-  static async deserialize(data: ResourceSpawnerData) {
+  static async deserialize(data: ResourceSpawnerData, {room}: {room: Room}) {
     const material = materials[data.resourceType];
     if(!material) throw new Error(`Cannot find material with name ${data.resourceType}`);
     const image = await loadImage(material.worldImageUrl ?? material.inventoryImageUrl ?? PLACEHOLDER_IMAGE_URL);
-    return new ResourceSpawner(material, image, data);
+    return new ResourceSpawner(material, image, room, data);
   }
 
   serialize(): ResourceSpawnerData {
@@ -45,10 +48,15 @@ export class ResourceSpawner implements Thing {
       this.hudWindow.visible = false;
       return false;
     } 
-    this.hudWindow.x = x;
-    this.hudWindow.y = y;
+    if(!this.room.player?.canReach(this.x, this.y)) return false;
+    this.hudWindow.x = this.x;
+    this.hudWindow.y = this.y;
     this.hudWindow.visible = true;
     return true;
+  }
+
+  take() {
+    this.room.player?.takeMaterial(this.material);
   }
 
   isUnderPointer(x: number, y: number) {

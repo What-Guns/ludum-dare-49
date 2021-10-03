@@ -51,11 +51,32 @@ class HudItemWindow {
     this.element.style.visibility = isVisible ? 'visible' : 'hidden';
   }
 
-  constructor() {
+  constructor({onTake, ...params}: HudItemWindowParams) {
     const template = document.getElementById('hud-window') as HTMLTemplateElement;
     this.element = template.content.firstElementChild!.cloneNode(true) as HTMLDivElement;
+    this.image = params.image;
+    this.itemName = params.name;
+    this.traitsList = params.traits;
+    this.itemDescription = params.description;
+    const takeButton = this.element.querySelector('[data-take-item]') as HTMLButtonElement;
+    if(onTake) {
+      takeButton.addEventListener('click', () => {
+        onTake();
+        this.visible = false;
+      })
+    } else {
+      takeButton.style.display = 'none';
+    }
     popupContainer.appendChild(this.element);
   }
+}
+
+interface HudItemWindowParams {
+  image: string;
+  name: string;
+  traits: string[];
+  description: string;
+  onTake?: () => void;
 }
 
 class HudItemHotbar {
