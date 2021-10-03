@@ -17,6 +17,18 @@ export class Room {
   readonly camera = {x: 0, scale: 1};
   readonly floorHeight: number;
   readonly portals: Portal[] = [];
+  readonly pointer = {x: pointer.x, y: pointer.y};
+
+  private _cursor = 'default';
+
+  get cursor() {
+    return this._cursor;
+  }
+
+  set cursor(cursor: string) {
+    if(this._cursor !== cursor) window.game!.canvas.style.cursor = cursor;
+    this._cursor = cursor;
+  }
 
   private readonly things: Thing[] = [];
 
@@ -67,6 +79,7 @@ export class Room {
   }
 
   tick(dt: number) {
+    this.transformPointer();
     for(const thing of this.things) {
       thing.tick?.(dt);
     }
@@ -88,6 +101,8 @@ export class Room {
       ctx.font = '24px sans-serif';
       ctx.fillText(this.name, this.width / 2, 48);
     }
+
+    ctx.canvas.style.cursor = this.things.some(t => t.isUnderPointer?.(this.pointer.x, this.pointer.y)) ? 'pointer' : '';
   }
 
   doClick() {
@@ -118,6 +133,12 @@ export class Room {
   getObjectsOfType<T extends Thing>(t: Type<T>) {
     return this.things.filter(ofType(t));
   }
+
+  private transformPointer() {
+    this.pointer.x = (pointer.x - this.camera.x) / this.camera.scale;
+    this.pointer.y = pointer.y / this.camera.scale;
+  }
+
 
   private doCameraStuff(ctx: CanvasRenderingContext2D) {
     this.camera.scale = Math.min(ctx.canvas.height / this.height, 1);

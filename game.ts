@@ -21,7 +21,7 @@ export class Game {
   private wasPointerActive = false;
   private transition: Transition|null = null;
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(public readonly canvas: HTMLCanvasElement) {
     this.ctx = canvas.getContext('2d')!;
     window.game = this;
   }
@@ -53,12 +53,11 @@ export class Game {
   tick(dt: number) {
     debugTick();
     if(this.transition) return;
-
+    this.room?.tick(dt);
     if(!this.wasPointerActive && pointer.active) {
       this.room?.doClick();
     }
     this.wasPointerActive = pointer.active;
-    this.room?.tick(dt);
     this.toast?.tick(dt);
     if(this.nextRoom) {
       try {
