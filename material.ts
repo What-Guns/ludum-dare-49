@@ -65,7 +65,7 @@ export const materials: {[key: string]: Material} = {
     inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/coin_1fa99.png',
     worldImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/coin_1fa99.png',
     brewTime: 10,
-    expireTime: 5*60,
+    expireTime: Infinity,
   },
   'firewood': {
     name: 'Firewood',
