@@ -42,6 +42,12 @@ export const puzzleObjects: {[key: string]: PuzzleObject} = {
     inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/rock_1faa8.png',
     spawnerImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/rock_1faa8.png',
   },
+  'hot-gravity-stone': {
+    name: 'Gravity Stone',
+    description: 'This rock is smokin\' hot! Yeow! Also: still very very heavy!',
+    inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/rock_1faa8.png',
+    spawnerImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/rock_1faa8.png',
+  },
 }
 
 export function getPuzzleObjectType(puzzleObject: PuzzleObject) {

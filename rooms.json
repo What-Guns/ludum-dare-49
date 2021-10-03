@@ -247,6 +247,15 @@
           "y": 826,
           "z": 0,
           "puzzleObjectType": "radio"
+        },{
+          "@type": "Furnace",
+          "@path": "./furnace.js",
+          "x": 1250,
+          "y": 850,
+          "z": -1,
+          "width": 300,
+          "height": 250,
+          "brewing": []
         }
       ]
     }
