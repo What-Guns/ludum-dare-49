@@ -2,6 +2,7 @@ import {deserialize} from './serialization.js';
 import {loadObject} from './loader.js';
 import {Game} from './game.js';
 import {init} from './input.js';
+import {Room} from './room.js';
 import {resizePopupContainer} from './hud.js';
 import './audio.js';
 
@@ -64,6 +65,7 @@ async function startGame(gameData: any, canvas: HTMLCanvasElement) {
 export interface Thing {
   x: number;
   y: number;
+  room?: Room;
 
   draw?(ctx: CanvasRenderingContext2D): void;
   tick?(dt: number): void;

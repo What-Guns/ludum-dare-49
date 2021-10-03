@@ -1,4 +1,4 @@
-interface Type<T> {
+export interface Type<T> {
   new(...params: any[]): T;
 }
 

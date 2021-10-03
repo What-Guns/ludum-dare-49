@@ -41,6 +41,7 @@ export class Room {
 
   adoptThing(thing: Thing) {
     this.things.push(thing);
+    thing.room = this;
     if(thing instanceof Player) this.player = thing;
     if(thing instanceof Door) this.doors.push(thing);
   }

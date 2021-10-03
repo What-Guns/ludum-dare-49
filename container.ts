@@ -10,8 +10,9 @@ export class Container implements Thing {
   y: number;
   width: number;
   height: number;
+  room?: Room;
 
-  constructor(private readonly room: Room, private readonly items: ResourceSpawner[], data: ContainerData) {
+  constructor(private readonly items: ResourceSpawner[], data: ContainerData) {
     this.x = data.x;
     this.y = data.y;
     this.width = data.width;
@@ -21,12 +22,12 @@ export class Container implements Thing {
   doClick(x: number, y: number) {
     if(!this.isUnderPointer(x, y)) return false;
 
-    const player = this.room.player;
+    const player = this.room?.player;
     if(!player?.canReach(this.x, this.y)) return false;
 
-    for(const item of this.items) this.room.adoptThing(item);
+    for(const item of this.items) this.room?.adoptThing(item);
     this.items.length = 0;
-    this.room.disown(this);
+    this.room?.disown(this);
 
     window.game!.save();
 
@@ -45,9 +46,9 @@ export class Container implements Thing {
     return true;
   }
 
-  static async deserialize(data: ContainerData, extras: {room: Room}) {
-    const items = await Promise.all(data.items.map(i => deserialize(i, extras)));
-    return new Container(extras.room, items, data);
+  static async deserialize(data: ContainerData) {
+    const items = await Promise.all(data.items.map(i => deserialize(i)));
+    return new Container(items, data);
   }
 
   serialize(): ContainerData {

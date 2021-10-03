@@ -12,8 +12,9 @@ export class ResourceSpawner implements Thing {
   y: number;
   readonly width: number;
   readonly height: number;
+  room?: Room;
 
-  constructor(readonly material: Material, readonly worldImage: HTMLImageElement, private readonly room: Room, {x, y}: ResourceSpawnerData) {
+  constructor(readonly material: Material, readonly worldImage: HTMLImageElement, {x, y}: ResourceSpawnerData) {
     this.x = x;
     this.y = y;
     this.width = worldImage.width;
@@ -27,11 +28,11 @@ export class ResourceSpawner implements Thing {
     });
   }
 
-  static async deserialize(data: ResourceSpawnerData, {room}: {room: Room}) {
+  static async deserialize(data: ResourceSpawnerData) {
     const material = materials[data.resourceType];
     if(!material) throw new Error(`Cannot find material with name ${data.resourceType}`);
     const image = await loadImage(material.worldImageUrl ?? material.inventoryImageUrl ?? PLACEHOLDER_IMAGE_URL);
-    return new ResourceSpawner(material, image, room, data);
+    return new ResourceSpawner(material, image, data);
   }
 
   serialize(): ResourceSpawnerData {
@@ -48,7 +49,7 @@ export class ResourceSpawner implements Thing {
       this.hudWindow.visible = false;
       return false;
     } 
-    if(!this.room.player?.canReach(this.x, this.y)) return false;
+    if(!this.room?.player?.canReach(this.x, this.y)) return false;
     this.hudWindow.x = this.x;
     this.hudWindow.y = this.y;
     this.hudWindow.visible = true;
@@ -56,7 +57,7 @@ export class ResourceSpawner implements Thing {
   }
 
   take() {
-    this.room.player?.takeMaterial(this.material);
+    this.room?.player?.takeMaterial(this.material);
   }
 
   isUnderPointer(x: number, y: number) {

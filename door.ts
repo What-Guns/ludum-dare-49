@@ -11,8 +11,9 @@ export class Door implements Thing {
   y: number;
   height: number;
   readonly target: [string, string, TransitionDirection];
+  room?: Room;
 
-  constructor(private readonly room: Room, {name, x, y, height, width, target}: DoorData) {
+  constructor({name, x, y, height, width, target}: DoorData) {
     this.name = name;
     this.x = x;
     this.y = y;
@@ -21,8 +22,8 @@ export class Door implements Thing {
     this.target = target;
   }
 
-  static deserialize(data: DoorData, {room}: {room: Room}) {
-    return Promise.resolve(new this(room, data));
+  static deserialize(data: DoorData) {
+    return Promise.resolve(new this(data));
   }
 
   serialize(): DoorData {
@@ -31,8 +32,8 @@ export class Door implements Thing {
 
   draw(ctx: CanvasRenderingContext2D) {
     if(!debug) return;
-    const floorSlope = (this.room.vanishingPoint.y - this.y) / (this.room.vanishingPoint.x - this.x);
-    const ceilingSlope = (this.room.vanishingPoint.y - (this.y - this.height)) / (this.room.vanishingPoint.x - this.x);
+    const floorSlope = (this.room!.vanishingPoint.y - this.y) / (this.room!.vanishingPoint.x - this.x);
+    const ceilingSlope = (this.room!.vanishingPoint.y - (this.y - this.height)) / (this.room!.vanishingPoint.x - this.x);
 
     ctx.fillStyle = 'brown';
     ctx.beginPath();
@@ -51,7 +52,7 @@ export class Door implements Thing {
   doClick(x: number, y: number) {
     if(!this.isUnderPointer(x, y)) return false;
 
-    const player = this.room.player;
+    const player = this.room!.player;
     if(!player?.canReach(this.x, this.y)) return false;
 
     window.game?.goToDoor(...this.target);
@@ -60,7 +61,7 @@ export class Door implements Thing {
 
   isUnderPointer(x: number, y: number) {
     if(Math.abs(x - this.x) > this.width / 2) return false;
-    const slope = (this.room.vanishingPoint.y - y) / (this.room.vanishingPoint.x - x);
+    const slope = (this.room!.vanishingPoint.y - y) / (this.room!.vanishingPoint.x - x);
     const adjustedY = y - slope * (x - this.x);
     if(adjustedY > this.y) return false;
     if(adjustedY < (this.y - this.height)) return false;
