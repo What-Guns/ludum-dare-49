@@ -187,7 +187,7 @@
           "x": 964,
           "y": 520,
           "z": 0,
-          "puzzleObjectType": "gravity-stone"
+          "puzzleObjectType": "radio"
         }
       ]
     },
@@ -246,7 +246,7 @@
           "x": 995,
           "y": 826,
           "z": 0,
-          "puzzleObjectType": "radio"
+          "puzzleObjectType": "gravity-stone"
         },{
           "@type": "Furnace",
           "@path": "./furnace.js",
