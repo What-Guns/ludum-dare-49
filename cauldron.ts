@@ -4,7 +4,7 @@ import {MaterialType} from './material.js';
 import {CauldronViewer} from './cauldron_viewer.js';
 
 
-@Serializable('./cauldron.ts')
+@Serializable('./cauldron.js')
 export class Cauldron implements Thing {
   
   public thingy: MaterialType = 'coin'
