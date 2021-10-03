@@ -1,9 +1,6 @@
 import {pointer} from './input.js';
-import {Player} from './player.js';
 import {Room, RoomData} from './room.js';
-import {Door} from './door.js';
 import {serialize, Serializable, deserialize} from './serialization.js';
-import {ofType} from './crap.js';
 import {debugTick} from './debug.js';
 import {TransitionDirection} from './door.js';
 import './audio.js';
@@ -108,7 +105,7 @@ export class Game {
   }
 
   goToFirstRoom() {
-    this.room = this.rooms.find(r => r.things.some(ofType(Player)))!;
+    this.room = this.rooms.find(r => r.player)!;
     this.room.activate();
   }
 
@@ -120,15 +117,15 @@ export class Game {
   private goToDoorImmediately(roomName: string, doorName: string, direction: TransitionDirection) {
     if(!this.room) throw new Error(`Cannot go through a door when we don't have a source room.`);
 
-    const player = this.room.things.find(ofType(Player));
+    const player = this.room.player;
     if(!player) throw new Error(`The player isn't in the current room!`);
 
     this.room.deactivate();
-    this.room.things.splice(this.room.things.indexOf(player), 1);
+    this.room.disown(player);
 
     const targetRoom = this.rooms.find(room => room.name === roomName);
     if(!targetRoom) throw new Error(`Couldn't find room named ${roomName}`);
-    const targetDoor = targetRoom.things.filter<Door>(ofType(Door)).find(d => d.name === doorName);
+    const targetDoor = targetRoom.doors.find(d => d.name === doorName);
     if(!targetDoor) throw new Error(`Couldn't find door named ${doorName}`);
 
     this.transition = {
@@ -143,7 +140,7 @@ export class Game {
     player.x = targetDoor.x;
     player.y = targetRoom.floorHeight;
     player.targetX = targetDoor.x;
-    targetRoom.things.push(player);
+    targetRoom.adoptThing(player);
     targetRoom.activate();
 
     this.save();

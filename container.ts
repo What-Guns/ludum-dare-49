@@ -1,7 +1,5 @@
 import {Serializable, pluck, deserialize, serialize} from './serialization.js';
 import {Thing} from './main.js';
-import {ofType} from './crap.js';
-import {Player} from './player.js';
 import {Room} from './room.js';
 import {debug} from './debug.js';
 import {ResourceSpawner, ResourceSpawnerData} from './resource-spawner.js';
@@ -23,14 +21,12 @@ export class Container implements Thing {
   doClick(x: number, y: number) {
     if(!this.isUnderPointer(x, y)) return false;
 
-    const player = this.room.things.find(ofType(Player));
+    const player = this.room.player;
     if(!player?.canReach(this.x, this.y)) return false;
 
-    this.room.things.push(...this.items);
+    for(const item of this.items) this.room.adoptThing(item);
     this.items.length = 0;
-    const index = this.room.things.indexOf(this);
-    if(index === -1) throw new Error(`Trying to remove the cupboard from a room that doesn't contain it.`);
-    this.room.things.splice(index, 1);
+    this.room.disown(this);
 
     window.game!.save();
 

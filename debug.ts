@@ -57,7 +57,7 @@ const debugFunctions = {
         "resourceType": resourceSelector!.value,
     };
     const spawner = await deserialize(data, {room: window.game!.room!});
-    window.game!.room!.things.push(spawner);
+    window.game!.room!.adoptThing(spawner);
   },
   save() {
     localStorage.setItem('game-state', JSON.stringify(window.game?.getState()));

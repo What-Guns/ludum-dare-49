@@ -2,8 +2,8 @@ import {Player} from './player.js';
 import {Thing} from './main.js';
 import {loadImage} from './loader.js';
 import {Serializable, serialize, isSerializable, deserialize, pluck} from './serialization.js';
-import {ofType} from './crap.js';
 import {pointer} from './input.js';
+import {Door} from './door.js';
 import {translateAndScalePopupContainer, resizePopupContainer} from './hud.js';
 
 @Serializable('./room.js')
@@ -11,10 +11,12 @@ export class Room {
   readonly name: string;
   readonly width: number;
   readonly height: number;
-  readonly things: Thing[] = [];
   readonly vanishingPoint: {x: number, y: number};
   readonly camera = {x: 0, scale: 1};
   readonly floorHeight: number;
+  readonly doors: Door[] = [];
+
+  private readonly things: Thing[] = [];
 
   pattern?: CanvasPattern;
 
@@ -31,9 +33,26 @@ export class Room {
   static async deserialize(roomData: RoomData) {
     const background = await loadImage(roomData.background);
     const room = new Room(background, roomData);
-    const loadedItems = await Promise.all(roomData.things.map(x => deserialize(x, {room}) as Promise<Thing>));
-    room.things.push(...loadedItems);
+    for(const thing of await Promise.all(roomData.things.map(x => deserialize(x, {room}) as Promise<Thing>))) {
+      room.adoptThing(thing);
+    }
     return Promise.resolve(room);
+  }
+
+  adoptThing(thing: Thing) {
+    this.things.push(thing);
+    if(thing instanceof Player) this.player = thing;
+    if(thing instanceof Door) this.doors.push(thing);
+  }
+
+  disown(thing: Thing) {
+    if(thing instanceof Door) {
+      throw new TypeError(`Cannot remove doors from rooms`);
+    }
+    if(thing === this.player) this.player = undefined;
+    const index = this.things.indexOf(thing);
+    if(index === -1) throw new Error(`Trying to get a room to disown something it doesn't own`);
+    this.things.splice(index, 1);
   }
 
   serialize(): RoomData {
@@ -75,7 +94,6 @@ export class Room {
 
   activate() {
     this.things.forEach(t => t.startDrawingDOM?.());
-    this.player = this.things.find(ofType(Player));
     resizePopupContainer(this);
   }
 

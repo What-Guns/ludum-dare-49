@@ -1,9 +1,7 @@
 import {Serializable, pluck} from './serialization.js';
 import {Room} from './room.js';
 import {Thing} from './main.js';
-import {Player} from './player.js';
 import {debug} from './debug.js';
-import {ofType} from './crap.js';
 
 @Serializable('./door.js')
 export class Door implements Thing {
@@ -53,7 +51,7 @@ export class Door implements Thing {
   doClick(x: number, y: number) {
     if(!this.isUnderPointer(x, y)) return false;
 
-    const player = this.room.things.find(ofType(Player));
+    const player = this.room.player;
     if(!player?.canReach(this.x, this.y)) return false;
 
     window.game?.goToDoor(...this.target);
