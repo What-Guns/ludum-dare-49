@@ -12,15 +12,15 @@ export class Player {
   private readonly hotbar = new HudItemHotbar();
   private materialInventorySize: number;
 
-  readonly heldMaterials: Material[];  
+  readonly heldMaterials: Material[] = [];
 
   constructor({x, y, heldMaterials = [], materialInventorySize}: PlayerData, private standingImage: HTMLImageElement, private walkingImage: HTMLImageElement) {
     this.x = x;
     this.y = y;
     this.targetX = x;
-    this.heldMaterials = heldMaterials.map(type => materials[type]);
     this.materialInventorySize = materialInventorySize ?? 5;
     this.hotbar.setCapacity(this.materialInventorySize);
+    for(const mat of heldMaterials) this.takeMaterial(materials[mat], true);
   }
 
   static async deserialize(playerData: PlayerData) {
@@ -66,7 +66,7 @@ export class Player {
     };
   }
 
-  takeMaterial(mat: Material) {
+  takeMaterial(mat: Material, silent = false) {
     if(this.heldMaterials.length >= this.materialInventorySize) {
       playSFX('bad-job-4');
       alert('You can’t hold that many things.');
@@ -77,7 +77,9 @@ export class Player {
       alert('You’ve already got one of those.');
       return;
     }
-    playSFX('great-jearb-06');
+    if(!silent) {
+      playSFX('great-jearb-06');
+    }
     this.heldMaterials.push(mat);
     this.hotbar.addItem({
       imageUrl: mat.inventoryImageUrl ?? mat.worldImageUrl ?? PLACEHOLDER_IMAGE_URL,
