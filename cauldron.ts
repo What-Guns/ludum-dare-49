@@ -1,8 +1,10 @@
-import {Thing} from './main.js';
-import {Serializable} from './serialization.js';
+import {CauldronViewer} from './cauldron-viewer.js';
 import {Material, MaterialType, getMaterialType, materials} from './material.js';
-import {toast} from './toast.js';
+import {Room} from './room.js';
+import {Serializable} from './serialization.js';
+import {Thing} from './main.js';
 import {debug} from './debug.js';
+import {toast} from './toast.js';
 
 
 @Serializable('./cauldron.js')
@@ -14,7 +16,8 @@ export class Cauldron implements Thing {
   height: number;
   readonly brewing: BrewingMaterial[];
   readonly ITEM_CAPACITY = 5;
-  private rotation = 0;
+  room?: Room;
+  private viewer?: CauldronViewer;
 
   constructor(data: CauldronData) {
     this.x = data.x;
@@ -29,10 +32,13 @@ export class Cauldron implements Thing {
   }
 
   tick(dt: number) {
-    this.rotation -= dt;
-    this.rotation = this.rotation % (2 * Math.PI);
     for(const item of this.brewing) {
       item.timeSpentInCauldron += dt;
+    }
+    // gross hack: room isn't set in the constructor, so create the cauldron viewer later
+    if(this.room && !this.viewer) {
+      this.viewer = new CauldronViewer(this);
+      this.room.adoptThing(this.viewer);
     }
   }
 
@@ -74,65 +80,6 @@ export class Cauldron implements Thing {
       ctx.fillStyle = 'black';
       ctx.fillRect(this.x - this.width/2, this.y - this.height/2, this.width, this.height);
     }
-
-    for(let i = 0; i < this.brewing.length; i++) {
-      const dir = 2 * Math.PI * (i/this.ITEM_CAPACITY) + this.rotation;
-      const x = Math.cos(dir) * this.width / 3 + this.x;
-      const y = Math.sin(dir) * this.width / 6 + this.y - this.height/2 - 50;
-      this.drawBrewingItem(ctx, this.brewing[i], x, y);
-    }
-  }
-
-  private drawBrewingItem(ctx: CanvasRenderingContext2D, {material, timeSpentInCauldron}: BrewingMaterial, x: number, y: number) {
-    const radius = 44;
-    ctx.textAlign = 'center';
-    ctx.font = '20px sans-serif';
-
-    // Here's my reasoning: all items should fill their rings at the same rate.
-    // If an item has a CRAZY brew time, we don't want all of the wedges to be too small, so clamp that to some arbitrary number.
-    const ringTime = Math.max(...this.brewing.map(b => Math.min(b.material.expireTime, 30)));
-    const brewTimePercentOfRingTime = material.brewTime / ringTime;
-    const expireTimePercentOfRingTime = Math.min(1, material.expireTime / ringTime);
-
-    // draw background
-    // draw "brewed" region
-    const fillColor = timeSpentInCauldron > material.expireTime
-      ? 'red'
-      : timeSpentInCauldron >= material.brewTime
-        ? 'green'
-        : 'black';
-
-    ctx.fillStyle = fillColor;
-    ctx.beginPath();
-    ctx.arc(x, y, radius + 2, 0, 2 * Math.PI, false);
-    ctx.fill();
-
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-    ctx.beginPath();
-    ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
-    ctx.fill();
-
-    const UP = -Math.PI / 2;
-    const tau = 2 * Math.PI;
-
-    // draw "good" region
-    ctx.fillStyle = 'green';
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.arc(x, y, radius, UP + tau * brewTimePercentOfRingTime, UP + tau * expireTimePercentOfRingTime, false);
-    ctx.lineTo(x, y);
-    ctx.fill();
-
-    // draw meter
-    const percent = timeSpentInCauldron / ringTime;
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = 'black';
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(x + radius * Math.sin(percent * tau), y - radius * Math.cos(percent * tau));
-    ctx.stroke();
-
-    ctx.drawImage(material.inventoryImage!, x - 20, y - 20, 40, 40);
   }
 
   debugResize(evt: WheelEvent) {
@@ -158,7 +105,7 @@ export class Cauldron implements Thing {
   }
 }
 
-interface BrewingMaterial {
+export interface BrewingMaterial {
   material: Material;
   timeSpentInCauldron: number;
 }
