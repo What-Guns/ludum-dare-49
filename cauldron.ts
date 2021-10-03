@@ -1,30 +1,28 @@
 import {Thing} from './main.js';
 import {Serializable} from './serialization.js';
-import {MaterialType} from './material.js';
-import {CauldronViewer} from './cauldron_viewer.js';
+import {Material, MaterialType} from './material.js';
 
 
 @Serializable('./cauldron.js')
 export class Cauldron implements Thing {
   
-  public thingy: MaterialType = 'coin'
   public timer = 0;
   public totalTime = 0;
   public timeOut = false;
-  readonly placedItems: MaterialType[] = ['coin'];
+  readonly placedItems: Material[] = [];
   public transformedItem: MaterialType | null = null;
   public hurryUp = this.totalTime / 3;
   readonly ITEM_CAPACITY = 5;
-  public cv :CauldronViewer
+  // public cv :CauldronViewer
 
   constructor(public x: number, public y: number, public width: number, public height: number) {
-    this.cv = new CauldronViewer(x, y, width, height, this)
+    // this.cv = new CauldronViewer(x, y, width, height, this)
   }
 
   tick(dt: number) {
     if (this.placedItems.length > 0) {
     this.timer -= dt;
-      if (this.timer <= this.hurryUp) //transform item
+      if (this.timer <= this.hurryUp) // transform item
       if (this.transformedItem != null){
         this.timer = this.timer - (dt * 1.25);
         if(this.timer <= 0){
@@ -63,12 +61,12 @@ export class Cauldron implements Thing {
     return Math.abs(x - this.x) < this.width / 2  && Math.abs(y - this.y) < this.height / 2;
   }
 
-  putItem(itm: MaterialType): boolean {
+  putItem(material: Material): boolean {
     if (this.placedItems.length >= this.ITEM_CAPACITY) {
       this.denyItem();
       return false;
     }
-    this.placedItems.push(itm)
+    this.placedItems.push(material)
     return true;
   }
 

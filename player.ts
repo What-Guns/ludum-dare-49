@@ -117,7 +117,7 @@ export class Player {
           return;
         }
 
-        if(!cauldron.putItem(getMaterialType(mat))) {
+        if(!cauldron.putItem(mat)) {
           return;
         }
         this.hotbar.removeItem(hotbarItem);
