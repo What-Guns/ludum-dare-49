@@ -27,7 +27,7 @@ export class Player {
     this.materialInventorySize = materialInventorySize ?? 5;
     this.hotbar.setCapacity(this.materialInventorySize);
     for(const mat of heldMaterials) this.takeMaterial(materials[mat], true);
-    for(const po of heldPuzzleObjects) this.takePuzzleObject(puzzleObjects[po]);
+    for(const po of heldPuzzleObjects) this.takePuzzleObject(puzzleObjects[po], true);
   }
 
   static async deserialize(playerData: PlayerData) {
@@ -78,9 +78,18 @@ export class Player {
     return this.heldPuzzleObjects.indexOf(obj) !== -1;
   }
 
-  takePuzzleObject(obj: PuzzleObject) {
+  takePuzzleObject(obj: PuzzleObject, silent: boolean) {
     this.heldPuzzleObjects.push(obj);
-    playSFX('chimes-002');
+    if(!silent) {
+      playSFX('chimes-002');
+    }
+    const hotbarItem = {
+      imageUrl: obj.inventoryImageUrl ?? obj.spawnerImageUrl ?? PLACEHOLDER_IMAGE_URL,
+      onActivate: () => {
+        toast('Cool key, yo');
+      }
+    };
+    this.hotbar.addItem(hotbarItem);
     window.game!.save();
   }
 

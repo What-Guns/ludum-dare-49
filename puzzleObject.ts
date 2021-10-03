@@ -70,7 +70,7 @@ export class PuzzleObjectSpawner implements Thing {
   }
 
   take() {
-    this.room?.player?.takePuzzleObject(this.puzzleObject);
+    this.room?.player?.takePuzzleObject(this.puzzleObject, false);
   }
 
   doClick(x: number, y: number) {
