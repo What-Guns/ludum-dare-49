@@ -11,7 +11,6 @@ export class RpgTextBox {
     document.body.appendChild(this.element);
 
     this._image.classList.add('rpgTextBoxPortrait');
-    this._image.setAttribute('src', 'portraits/cat.png');
     this.element.appendChild(this._image);
 
     this._text.classList.add('rpgTextBoxText');
@@ -34,6 +33,10 @@ export class RpgTextBox {
 
   get visible(): boolean {
     return this.element.style.getPropertyValue('visibility') === 'visible' ? true : false;
+  }
+
+  set imageSrc(src: string) {
+    this._image.setAttribute('src', src);
   }
 
   set textContent(text: string) {

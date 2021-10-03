@@ -8,8 +8,13 @@ export class Npc implements Thing {
     "CAT": { sample: 'meow', timeBetweenSamples: 150, variance: 1.2, shift: 0.8 },
     "GHOST": { sample: 'mahp', timeBetweenSamples: 150, variance: 1.2, shift: 0.8 },
   };
+  static readonly textBoxImages: {[k in NpcType]: string} = {
+    "CAT": 'https://static.tvtropes.org/pmwiki/pub/images/achewood_789.jpg',
+    "GHOST": 'https://static.wikia.nocookie.net/vsbattles/images/f/f6/6d0c7f35a66688f309ceedf4e94013dc.png',
+  }
   constructor(readonly x: number, readonly y: number, readonly width: number, readonly height: number, readonly npcType: NpcType) {
     this.textbox.visible = false;
+    this.textbox.imageSrc = Npc.textBoxImages[npcType];
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
