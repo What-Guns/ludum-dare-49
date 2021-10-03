@@ -60,6 +60,10 @@ const debugFunctions = {
     const spawner = await deserialize(data, {room: window.game!.room!});
     window.game!.room!.adoptThing(spawner);
   },
+  giveResource() {
+    const mat = materials[resourceSelector!.value]!;
+    window.game!.room!.player!.takeMaterial(mat, false);
+  },
   save() {
     localStorage.setItem('game-state', JSON.stringify(window.game?.getState()));
   },
