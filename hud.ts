@@ -116,6 +116,13 @@ export class HudItemHotbar {
     slots[this.items.length - 1].appendChild(img);
   }
 
+  removeItem(item: HotbarItem) {
+    const index = this.items.indexOf(item);
+    if(index === -1) throw new Error(`Trying to remove an item from the hotbar that's not there.`);
+    const slots = Array.from(this._itemList.querySelectorAll('li'));
+    slots[index].querySelector('img')!.remove();
+  }
+
   private clicked(clickedIndex: number) {
     this.items[clickedIndex]?.onActivate();
   }

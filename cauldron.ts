@@ -63,15 +63,17 @@ export class Cauldron implements Thing {
     return Math.abs(x - this.x) < this.width && Math.abs(y - this.y) < this.height;
   }
 
-  putItem(itm: MaterialType) {
+  putItem(itm: MaterialType): boolean {
     if (this.placedItems.length >= this.ITEM_CAPACITY) {
-      return this.denyItem();
+      this.denyItem();
+      return false;
     }
     this.placedItems.push(itm)
+    return true;
   }
 
   denyItem(){
-    console.log("I'm a cauldron not a storage unit!")
+    alert("I'm a cauldron not a storage unit!")
   }
 }
 

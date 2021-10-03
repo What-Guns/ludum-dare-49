@@ -4,6 +4,7 @@ import {loadImage} from './loader.js';
 import {Serializable, serialize, isSerializable, deserialize, pluck} from './serialization.js';
 import {pointer} from './input.js';
 import {Door} from './door.js';
+import {ofType, Type} from './crap.js';
 import {translateAndScalePopupContainer, resizePopupContainer} from './hud.js';
 
 @Serializable('./room.js')
@@ -107,6 +108,10 @@ export class Room {
     const transformedX = (pointer.x - this.camera.x) / this.camera.scale;
     const transformedY = pointer.y / this.camera.scale;
     return this.things.find(thing => thing.isUnderPointer?.(transformedX, transformedY));
+  }
+
+  getObjectsOfType<T extends Thing>(t: Type<T>) {
+    return this.things.filter(ofType(t));
   }
 
   private doCameraStuff(ctx: CanvasRenderingContext2D) {

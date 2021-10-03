@@ -3,12 +3,16 @@ import {loadImage} from './loader.js';
 import {Material, MaterialType, materials, getMaterialType} from './material.js';
 import {HudItemHotbar} from './hud.js';
 import {playSFX} from './audio.js';
+import {Room} from './room.js';
+import {Cauldron} from './cauldron.js';
 
 @Serializable('./player.js')
 export class Player {
-  public x: number;
-  public y: number;
-  public targetX: number;
+  x: number;
+  y: number;
+  targetX: number;
+  room?: Room;
+
   private readonly hotbar = new HudItemHotbar();
   private materialInventorySize: number;
   private readonly heldMaterials: Material[] = [];
@@ -80,12 +84,26 @@ export class Player {
       playSFX('great-jearb-06');
     }
     this.heldMaterials.push(mat);
-    this.hotbar.addItem({
+    const hotbarItem = {
       imageUrl: mat.inventoryImageUrl ?? mat.worldImageUrl ?? PLACEHOLDER_IMAGE_URL,
       onActivate: () => {
-        alert(`TODO: use ${mat.name}`);
+        const [cauldron] = this.room!.getObjectsOfType(Cauldron);
+        if(!cauldron) {
+          alert('This goes in a cauldron');
+          return;
+        }
+
+        if(!this.canReach(cauldron.x, cauldron.y)) {
+          alert('You cannot reach that');
+          return;
+        }
+
+        cauldron.putItem(getMaterialType(mat));
+        this.hotbar.removeItem(hotbarItem);
+        this.heldMaterials.splice(this.heldMaterials.indexOf(mat), 1);
       }
-    });
+    };
+    this.hotbar.addItem(hotbarItem);
     window.game!.save();
   }
 }
