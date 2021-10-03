@@ -43,8 +43,12 @@ export class Game {
     };
   }
 
-  save() {
+  getState() {
     return serialize(this);
+  }
+
+  save() {
+    localStorage.setItem('game-state', JSON.stringify(this.getState()));
   }
 
   tick(dt: number) {

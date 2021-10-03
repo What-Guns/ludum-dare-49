@@ -32,6 +32,8 @@ export class Container implements Thing {
     if(index === -1) throw new Error(`Trying to remove the cupboard from a room that doesn't contain it.`);
     this.room.things.splice(index, 1);
 
+    window.game!.save();
+
     return true;
   }
 

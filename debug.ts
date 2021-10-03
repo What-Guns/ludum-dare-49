@@ -60,9 +60,11 @@ const debugFunctions = {
     window.game!.room!.things.push(spawner);
   },
   save() {
-    navigator.clipboard.writeText(JSON.stringify(window.game!.save(), null, 2));
+    localStorage.setItem('game-state', JSON.stringify(window.game?.getState()));
+  },
+  copy() {
+    navigator.clipboard.writeText(JSON.stringify(window.game!.getState(), null, 2));
     alert('copied!');
-
   }
 };
 

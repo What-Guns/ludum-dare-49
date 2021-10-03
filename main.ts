@@ -13,11 +13,21 @@ declare global {
 
 addEventListener('load', async () => {
   const canvas = document.querySelector('canvas')!;
+  const continueButton = document.getElementById('continue-button') as HTMLButtonElement;
   init(canvas);
-  const gameData = await loadObject('./rooms.json');
-  const game = await deserialize(gameData, {canvas}) as Game;
 
-  requestAnimationFrame(main);
+  document.getElementById('new-game-button')!.addEventListener('click', async () => {
+    localStorage.clear();
+    const gameData = await loadObject('./rooms.json');
+    await startGame(gameData, canvas);
+  });
+
+  continueButton.disabled = !localStorage.getItem('game-state');
+
+  continueButton.addEventListener('click', async () => {
+    const gameData = JSON.parse(localStorage.getItem('game-state')!);
+    await startGame(gameData, canvas);
+  });
 
   addEventListener('resize', resizeCanvas);
 
@@ -25,13 +35,18 @@ addEventListener('load', async () => {
     const {width, height} = canvas.getBoundingClientRect();
     canvas.width = width;
     canvas.height = height;
-    if(game?.room) resizePopupContainer(game.room);
+    if(window?.game?.room) resizePopupContainer(window.game.room);
   }
 
   resizeCanvas();
 
-  let lastTick: number;
+});
 
+async function startGame(gameData: any, canvas: HTMLCanvasElement) {
+  document.getElementById('welcome')!.remove();
+  const game = await deserialize(gameData, {canvas}) as Game;
+
+  let lastTick: number;
   function main(timestamp: number) {
     if(lastTick) {
       const dt = (timestamp - lastTick) / 1000;
@@ -42,8 +57,9 @@ addEventListener('load', async () => {
     lastTick = timestamp;
     requestAnimationFrame(main);
   }
-});
 
+  requestAnimationFrame(main);
+}
 
 export interface Thing {
   x: number;
