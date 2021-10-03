@@ -36,34 +36,8 @@ const sfxGainNode = audioContext.createGain();
 sfxGainNode.gain.value = 0.5;
 sfxGainNode.connect(audioContext.destination);
 
-interface PlayingBgm {
-  name: string;
-  sourceNode: AudioBufferSourceNode;
-}
-
-let currentlyPlayingBGM: PlayingBgm|null = null;
-
 async function loadSound(name: string, url: string) {
   soundMap.set(name, await loadAudio(url, audioContext));
-}
-
-export function switchToBGM(name: keyof typeof bgm) {
-  const buffer = soundMap.get(name);
-  if(!buffer) {
-    console.error(`BGM track ${name} is not loaded`)
-    return;
-  }
-  if(currentlyPlayingBGM?.name === name) return;
-  currentlyPlayingBGM?.sourceNode.stop();
-  const sound = audioContext.createBufferSource();
-  sound.buffer = buffer;
-  sound.connect(bgmGainNode);
-  sound.loop = true;
-  sound.start(0);
-  currentlyPlayingBGM = {
-    sourceNode: sound,
-    name
-  };
 }
 
 export function playSFX(name: SfxName) {
@@ -167,5 +141,4 @@ export class AudioHUD {
 
 new AudioHUD();
 
-(window as any).switchToBGM = switchToBGM;
 (window as any).playSpeech = playSpeech;
