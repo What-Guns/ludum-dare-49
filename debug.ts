@@ -58,6 +58,11 @@ const debugFunctions = {
     };
     const spawner = await deserialize(data);
     window.game!.room!.things.push(spawner);
+  },
+  save() {
+    navigator.clipboard.writeText(JSON.stringify(window.game!.save(), null, 2));
+    alert('copied!');
+
   }
 };
 
