@@ -11,6 +11,7 @@ export interface Potion {
   applyTo?: PuzzleObjectType | MaterialType,
   inventoryImageUrl?: string;
   inventoryImage?: HTMLImageElement;
+  turnsInto?: PuzzleObjectType | MaterialType;
 }
 
 export const potion: {[key: string]: Potion} = {
@@ -19,37 +20,42 @@ export const potion: {[key: string]: Potion} = {
     recipe: ['mouse-whisker'],
     color: '#4e79de',
     applyTo: 'key',
+    turnsInto: 'small-key',
   },
   'embiggening': {
     name: 'Potion of Embiggening',
     recipe: ['mouse-whisker', 'anti-dote'],
     color: '#ff7417',
-    applyTo: 'key'
+    applyTo: 'key',
+    turnsInto: 'big-key',
   },
   'temp-transmutation-metal': {
     name: 'Temporary Potion of Metal Transmutation',
     recipe:  ['transmuters-draught', 'coin', 'morning-dew'],
     color: '#ada168',
-    applyTo: 'hushroom'
+    applyTo: 'hushroom',
+    turnsInto: 'metal-hushroom',
   },
   'temp-transmutation-wood': {
     name: 'Temporary Potion of Wood Transmutation',
     recipe: ['transmuters-draught', 'firewood', 'morning-dew'],
     color: '#785a26',
-    applyTo: 'hushroom'
+    applyTo: 'hushroom',
+    turnsInto: 'wooden-hushroom',
   },
   'energy': {
     name: 'Potion of Energy',
     recipe: ['hushroom', 'anti-dote'],
     color: '#080fcc',
     inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/coin_1fa99.png',
-    applyTo: 'radio'
+    applyTo: 'broken-radio',
+    turnsInto: 'fixed-radio',
   },
   'fiery-flight': {
     name: 'Enduring Potion of Fiery Flight',
     recipe: ['doused-phoenix-feather','morning-dew','anti-dote'],
     color: '#ff0000',
-    applyTo: 'hot-gravity-stone'
+    applyTo: 'hot-gravity-stone',
   },
   'ghostly': {
     name: 'Ghostly Potion',
