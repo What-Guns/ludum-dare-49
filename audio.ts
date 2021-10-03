@@ -119,7 +119,8 @@ export class AudioHUD {
     this._bgmSlider.setAttribute('min', '0');
     this._bgmSlider.setAttribute('max', '1');
     this._bgmSlider.setAttribute('step', 'any');
-    this._bgmSlider.addEventListener('change', ev => bgmGainNode.gain.value = Number((ev.target! as HTMLInputElement).value));
+    this._bgmSlider.value = bgmGainNode.gain.value.toString();
+    this._bgmSlider.addEventListener('input', ev => bgmGainNode.gain.value = Number((ev.target! as HTMLInputElement).value));
     bgmControls.appendChild(this._bgmSlider);
 
     const sfxControls = document.createElement('div');
@@ -134,7 +135,8 @@ export class AudioHUD {
     this._sfxSlider.setAttribute('min', '0');
     this._sfxSlider.setAttribute('max', '1');
     this._sfxSlider.setAttribute('step', 'any');
-    this._sfxSlider.addEventListener('change', ev => sfxGainNode.gain.value = Number((ev.target! as HTMLInputElement).value));
+    this._sfxSlider.value = sfxGainNode.gain.value.toString();
+    this._sfxSlider.addEventListener('input', ev => sfxGainNode.gain.value = Number((ev.target! as HTMLInputElement).value));
     sfxControls.appendChild(this._sfxSlider);
   }
 }
