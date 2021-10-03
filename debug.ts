@@ -56,7 +56,7 @@ const debugFunctions = {
         "y": window.game!.room!.vanishingPoint.y,
         "resourceType": resourceSelector!.value,
     };
-    const spawner = await deserialize(data);
+    const spawner = await deserialize(data, {room: window.game!.room!});
     window.game!.room!.things.push(spawner);
   },
   save() {
