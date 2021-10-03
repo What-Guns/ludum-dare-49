@@ -25,8 +25,9 @@ export class Toast {
     ctx.globalAlpha = 1 - (this.fadeTime / this.maxFadeTime);
     const offset = (1 - Math.max(this.fadeTime / this.maxFadeTime, 0)) * this.fadeTransitionLength;
     ctx.strokeStyle = 'black';
-    ctx.fillStyle = 'gold';
-    ctx.font = "20px 'Yusei Magic'";
+    ctx.lineWidth = 2;
+    ctx.fillStyle = 'white';
+    ctx.font = "48px 'Yusei Magic'";
     ctx.fillText(this.message, this.x, this.y - offset);
     ctx.strokeText(this.message, this.x, this.y - offset);
     ctx.globalAlpha = oldAlpha;
