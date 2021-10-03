@@ -98,10 +98,7 @@ export class HudItemHotbar {
   setCapacity(capacity: number) {
     while (this._itemList.firstChild) this._itemList.removeChild(this._itemList.firstChild);
     for(let i = 0; i < capacity; i++) {
-      const li = document.createElement('li');
-      li.classList.add('hudHotbarItem');
-      li.addEventListener('click', () => this.clicked(i));
-      this._itemList.appendChild(li);
+      this.createSlot();
     }
   }
 
@@ -119,11 +116,21 @@ export class HudItemHotbar {
   removeItem(item: HotbarItem) {
     const index = this.items.indexOf(item);
     if(index === -1) throw new Error(`Trying to remove an item from the hotbar that's not there.`);
+    this.items.splice(index, 1);
     const slots = Array.from(this._itemList.querySelectorAll('li'));
-    slots[index].querySelector('img')!.remove();
+    slots[index].remove();
+    this.createSlot();
   }
 
-  private clicked(clickedIndex: number) {
+  private createSlot() {
+    const li = document.createElement('li');
+    li.classList.add('hudHotbarItem');
+    li.addEventListener('click', () => this.clicked(li));
+    this._itemList.appendChild(li);
+  }
+
+  private clicked(li: HTMLLIElement) {
+    const clickedIndex = Array.from(li.parentElement!.querySelectorAll('li')).indexOf(li);
     this.items[clickedIndex]?.onActivate();
   }
 

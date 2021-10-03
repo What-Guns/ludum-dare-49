@@ -98,7 +98,9 @@ export class Player {
           return;
         }
 
-        cauldron.putItem(getMaterialType(mat));
+        if(!cauldron.putItem(getMaterialType(mat))) {
+          return;
+        }
         this.hotbar.removeItem(hotbarItem);
         this.heldMaterials.splice(this.heldMaterials.indexOf(mat), 1);
       }
