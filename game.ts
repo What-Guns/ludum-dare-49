@@ -150,6 +150,8 @@ export class Game {
     player.targetX = targetDoor.x;
     targetRoom.things.push(player);
     targetRoom.activate();
+
+    this.save();
   }
 }
 
