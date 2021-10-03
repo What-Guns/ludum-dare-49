@@ -8,18 +8,21 @@ export interface Potion {
   recipe?: MaterialType[]
   color: string;
   applyTo?: PuzzleObjectType | MaterialType,
-  inventoryImageUrl?: string;
+  inventoryImageUrl: string;
   inventoryImage?: HTMLImageElement;
   turnsInto?: PuzzleObjectType | MaterialType;
 }
 
-export const potion: {[key: string]: Potion} = {
+const PLACEHOLDER_IMAGE_URL = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";
+
+export const potions: {[key: string]: Potion} = {
   'ensmallening': {
     name: 'Potion of Ensmallening',
     recipe: ['mouse-whisker'],
     color: '#4e79de',
     applyTo: 'key',
     turnsInto: 'small-key',
+    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
   },
   'embiggening': {
     name: 'Potion of Embiggening',
@@ -27,6 +30,7 @@ export const potion: {[key: string]: Potion} = {
     color: '#ff7417',
     applyTo: 'key',
     turnsInto: 'big-key',
+    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
   },
   'temp-transmutation-metal': {
     name: 'Temporary Potion of Metal Transmutation',
@@ -34,6 +38,7 @@ export const potion: {[key: string]: Potion} = {
     color: '#ada168',
     applyTo: 'hushroom',
     turnsInto: 'metal-hushroom',
+    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
   },
   'temp-transmutation-wood': {
     name: 'Temporary Potion of Wood Transmutation',
@@ -41,6 +46,7 @@ export const potion: {[key: string]: Potion} = {
     color: '#785a26',
     applyTo: 'hushroom',
     turnsInto: 'wooden-hushroom',
+    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
   },
   'energy': {
     name: 'Potion of Energy',
@@ -55,22 +61,25 @@ export const potion: {[key: string]: Potion} = {
     recipe: ['doused-phoenix-feather','morning-dew','anti-dote'],
     color: '#ff0000',
     applyTo: 'hot-gravity-stone',
+    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
   },
   'ghostly': {
     name: 'Ghostly Potion',
     recipe: ['gravity-stone-piece', 'anti-dote','ghost-tears','morning-dew'],
-    color: '#a6339c'
+    color: '#a6339c',
     //applyTo: You look in a mirror and question... Am I a Player? Am I just a Thing? 
     //         Or I am the final puzzele object waiting to be solved....
+    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
   },
   'unstable': {
     name: 'Unstable Potion',
-    color: '#1be339'
+    color: '#1be339',
+    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
   }
 };
 
 export async function preloadPotionImages() {
-  await Promise.all(Object.values(potion).map(loadPotion));
+  await Promise.all(Object.values(potions).map(loadPotion));
 }
 
 async function loadPotion(potion: Potion) {
@@ -80,14 +89,12 @@ async function loadPotion(potion: Potion) {
 }
 
 
-export function getMaterialType(potion: Potion) {
-  const entry = Object.entries(potion).find(([_, pot]) => pot === potion);
+export function getPotionType(potion: Potion) {
+  const entry = Object.entries(potions).find(([_, pot]) => pot === potion);
   if(!entry) {
-    throw new Error(`Material not found.`);
+    throw new Error(`Potion ${potion.name} not found.`);
   }
   return entry![0];
 }
 
-export type PotionType = keyof typeof potion;
-
-
+export type PotionType = keyof typeof potions;

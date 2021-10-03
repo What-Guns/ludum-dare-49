@@ -58,7 +58,7 @@ export class HudItemWindow {
 }
 
 const _hudItemWindow = new HudItemWindow();
-export function makeHudItemWindow({onTake, onToss, onPlace, ...params}: HudItemWindowParams): HudItemWindow {
+export function makeHudItemWindow({onTake, onToss, onPlace, onApply, ...params}: HudItemWindowParams): HudItemWindow {
   _hudItemWindow.image = params.image;
   _hudItemWindow.itemName = params.name;
   _hudItemWindow.traitsList = params.traits;
@@ -100,6 +100,17 @@ export function makeHudItemWindow({onTake, onToss, onPlace, ...params}: HudItemW
     })
     buttonContainer.appendChild(tossButton);
   }
+
+  if(onApply) {
+    const placeButton = document.createElement('button');
+    placeButton.innerText = 'Apply';
+    placeButton.setAttribute('data-place-item', '');
+    placeButton.addEventListener('click', () => {
+      onApply();
+      _hudItemWindow.visible = false;
+    })
+    buttonContainer.appendChild(placeButton);
+  }
   return _hudItemWindow;
 }
 export function hideHudItemWindow() { _hudItemWindow.visible = false }
@@ -112,6 +123,7 @@ interface HudItemWindowParams {
   onTake?: () => void;
   onToss?: () => void;
   onPlace?: () => void;
+  onApply?: () => void;
 }
 
 export class HudItemHotbar {

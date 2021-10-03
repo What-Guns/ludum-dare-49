@@ -1,6 +1,7 @@
 import {Serializable} from './serialization.js';
 import {loadImage} from './loader.js';
 import {Material, MaterialType, materials, getMaterialType} from './material.js';
+import {Potion, PotionType, getPotionType, potions} from './potions.js';
 import {HudItemHotbar, makeHudItemWindow} from './hud.js';
 import {playSFX} from './audio.js';
 import {Room} from './room.js';
@@ -8,7 +9,7 @@ import {Cauldron} from './cauldron.js';
 import { toast } from './toast.js';
 import { getPuzzleObjectType, PuzzleObject, puzzleObjects, PuzzleObjectType } from './puzzleObject.js';
 import { Furnace } from './furnace.js';
-import { Potion } from './potions.js';
+import {removeFromArray} from './crap.js';
 
 @Serializable('./player.js')
 export class Player {
@@ -18,19 +19,21 @@ export class Player {
   targetX: number;
   room?: Room;
 
+  private inventorySize: number;
   private readonly hotbar = new HudItemHotbar();
-  private materialInventorySize: number;
   private readonly heldMaterials: Material[] = [];
   private readonly heldPuzzleObjects: PuzzleObject[] = [];
+  private readonly heldPotions: Potion[] = [];
 
-  constructor({x, y, heldMaterials = [], materialInventorySize, heldPuzzleObjects = []}: PlayerData, private standingImage: HTMLImageElement, private walkingImage: HTMLImageElement) {
+  constructor({x, y, heldMaterials = [], materialInventorySize, heldPuzzleObjects = [], heldPotions = []}: PlayerData, private standingImage: HTMLImageElement, private walkingImage: HTMLImageElement) {
     this.x = x;
     this.y = y;
     this.targetX = x;
-    this.materialInventorySize = materialInventorySize ?? 5;
-    this.hotbar.setCapacity(this.materialInventorySize);
+    this.inventorySize = materialInventorySize ?? 5;
+    this.hotbar.setCapacity(this.inventorySize);
     for(const mat of heldMaterials) this.takeMaterial(materials[mat], true);
     for(const po of heldPuzzleObjects) this.takePuzzleObject(puzzleObjects[po], true);
+    for(const p of heldPotions) this.takePotion(p, true);
   }
 
   static async deserialize(playerData: PlayerData) {
@@ -73,7 +76,8 @@ export class Player {
       y: this.y,
       heldMaterials: this.heldMaterials.map(getMaterialType),
       heldPuzzleObjects: this.heldPuzzleObjects.map(getPuzzleObjectType),
-      materialInventorySize: this.materialInventorySize,
+      heldPotions: this.heldPotions.map(getPotionType),
+      materialInventorySize: this.inventorySize,
     };
   }
 
@@ -82,8 +86,13 @@ export class Player {
   }
 
   tossPuzzleObject(obj: PuzzleObject) {
-    this.heldPuzzleObjects.splice(this.heldPuzzleObjects.indexOf(obj), 1);
+    removeFromArray(this.heldPuzzleObjects, obj);
     this.hotbar.removeItemByName(obj.name);
+  }
+
+  tossPotion(potion: Potion) {
+    removeFromArray(this.heldPotions, potion);
+    this.hotbar.removeItemByName(potion.name);
   }
 
   placePuzzleObject(obj: PuzzleObject) {
@@ -99,6 +108,8 @@ export class Player {
   }
 
   takePuzzleObject(obj: PuzzleObject, isInitializing: boolean) {
+    if(!this.checkInventorySize()) return;
+
     this.heldPuzzleObjects.push(obj);
     if(!isInitializing) {
       playSFX('chimes-002');
@@ -134,18 +145,12 @@ export class Player {
   }
 
   takeMaterial(mat: Material, isInitializing = false) {
-    if(this.heldMaterials.length >= this.materialInventorySize) {
-      playSFX('bad-job-4');
-      toast('You can’t hold that many things.');
-      return;
-    }
+    if(!this.checkInventorySize()) return;
+
     if(this.hasMaterial(mat)) {
       playSFX('bad-job-4');
       toast('You’ve already got one of those.');
       return;
-    }
-    if(!isInitializing) {
-      playSFX('great-jearb-06');
     }
     this.heldMaterials.push(mat);
     const hotbarItem = {
@@ -173,6 +178,38 @@ export class Player {
     };
     this.hotbar.addItem(hotbarItem);
     if(!isInitializing) {
+      playSFX('great-jearb-06');
+      window.game!.save();
+    }
+  }
+
+  takePotion(potionType: PotionType, isInitializing = false) {
+    if(!this.checkInventorySize()) return;
+    const potion = potions[potionType];
+    this.heldPotions.push(potion);
+
+    this.hotbar.addItem({
+      imageUrl: potion.inventoryImageUrl,
+      name: potion.name,
+      onActivate: () => {
+        const hudItemWindow = makeHudItemWindow({
+          name: potion.name,
+          image: potion.inventoryImageUrl,
+          traits: [],
+          description: 'a potion',
+          onToss: () => this.tossPotion(potion),
+          onApply: () => { alert(`i would like to apply, please, this potion of ${potion.name}`); },
+        });
+        const { height } = hudItemWindow.element.getBoundingClientRect();
+        const { top, left } = this.hotbar._itemList.getBoundingClientRect();
+        hudItemWindow.y = top - height - 20;
+        hudItemWindow.x = left;
+        hudItemWindow.visible = true;
+      },
+    });
+
+    if(!isInitializing) {
+      playSFX('great-jearb-06');
       window.game!.save();
     }
   }
@@ -194,6 +231,16 @@ export class Player {
     }
     return false;
   }
+
+  checkInventorySize() {
+    const heldItems = this.heldMaterials.length + this.heldPuzzleObjects.length + this.heldPotions.length;
+    if(heldItems >= this.inventorySize) {
+      playSFX('bad-job-4');
+      toast('You can’t hold that many things.');
+      return false;
+    }
+    return true;
+  }
 }
 
 interface PlayerData {
@@ -201,6 +248,7 @@ interface PlayerData {
   y: number;
   heldMaterials: MaterialType[];
   heldPuzzleObjects: PuzzleObjectType[];
+  heldPotions: PotionType[];
   materialInventorySize?: number;
 }
 
