@@ -4,7 +4,11 @@ import { RpgTextBox } from "./rpgTextBox.js";
 
 export class Npc implements Thing {
   readonly textbox: RpgTextBox = new RpgTextBox(this.textboxDone.bind(this));
-  constructor(readonly x: number, readonly y: number, readonly width: number, readonly height: number) {
+  static readonly speechParams: {[k in NpcType]: SpeechParams} = {
+    "CAT": { sample: 'meow', timeBetweenSamples: 150, variance: 1.2, shift: 0.8 },
+    "GHOST": { sample: 'mahp', timeBetweenSamples: 150, variance: 1.2, shift: 0.8 },
+  };
+  constructor(readonly x: number, readonly y: number, readonly width: number, readonly height: number, readonly npcType: NpcType) {
     this.textbox.visible = false;
   }
 
@@ -28,7 +32,8 @@ export class Npc implements Thing {
     this.textbox.textContent = "I'm an NPC! I may look like an ordinary purple square, but I'm actually ... a monster? Of some kind?";
     
     stopSpeech();
-    startSpeech('mahp', 150, 1.2, 0.8);
+    const { sample, timeBetweenSamples, variance, shift } = Npc.speechParams[this.npcType];
+    startSpeech(sample, timeBetweenSamples, variance, shift);
     return true;
   }
   
@@ -42,8 +47,8 @@ export class Npc implements Thing {
     stopSpeech();
   }
 
-  static deserialize({x, y, width, height}: NpcData) {
-    return new Npc(x, y, width, height);
+  static deserialize({x, y, width, height, type}: NpcData) {
+    return new Npc(x, y, width, height, type);
   }
 }
 
@@ -52,4 +57,14 @@ interface NpcData {
   y: number,
   width: number,
   height: number,
+  type: NpcType,
 }
+
+interface SpeechParams {
+  sample: string,
+  timeBetweenSamples: number,
+  variance: number,
+  shift: number
+}
+
+type NpcType = "CAT" | "GHOST";
