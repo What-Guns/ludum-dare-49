@@ -1,4 +1,4 @@
-import { startSpeech, stopSpeech } from "./audio.js";
+import { startSpeech, stopSpeech, SfxName } from "./audio.js";
 import { Thing } from "./main.js";
 import { getDialog } from "./progressManager.js";
 import { RpgTextBox } from "./rpgTextBox.js";
@@ -77,7 +77,7 @@ interface NpcData {
 }
 
 interface SpeechParams {
-  sample: string,
+  sample: SfxName,
   timeBetweenSamples: number,
   variance: number,
   shift: number

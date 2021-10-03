@@ -1,14 +1,29 @@
 import { loadAudio } from './loader.js';
 
-const bgm: {[k in string]: AudioTrack} = {};
-const sfx: {[k in string]: AudioTrack} = {};
-type AudioTrack = {
-  url: string,
-  buffer: AudioBuffer,
+const soundMap = new Map<string, AudioBuffer>();
+export const audioContext = new AudioContext();
+
+export type BgmTrackName = keyof typeof bgm;
+export type SfxName = keyof typeof sfx;
+
+const bgm = {
+  'crystal':'audio/The_Scientists_Crystalarium.mp3', 
+  'banjo': 'audio/Banjo_Kablooie.mp3',
+};
+
+const sfx = {
+  'splat': 'audio/splat.ogg',
+  'meow': 'audio/Meow_9.ogg',
+  'mahp': 'audio/mahp.ogg',
+  'great-jearb-06': 'audio/great-jearb-06.wav',
+  'chimes-002': 'audio/Chimes-002.wav',
+  'bad-job-4': 'audio/bad-job-4.wav',
+};
+
+for(const [name, url] of Object.entries({...bgm, ...sfx})) {
+  loadSound(name, url);
 }
 
-
-export const audioContext = new AudioContext();
 
 const bgmGainNode = audioContext.createGain();
 bgmGainNode.gain.value = 0.5;
@@ -18,56 +33,48 @@ const sfxGainNode = audioContext.createGain();
 sfxGainNode.gain.value = 0.5;
 sfxGainNode.connect(audioContext.destination);
 
-let currentlyPlayingBGM: AudioBufferSourceNode = audioContext.createBufferSource();
-currentlyPlayingBGM.start();
-
-async function loadBGM(name:string, url: string) {
-  async function loadIt() {
-    const buffer = await loadAudio(url, audioContext);
-    bgm[name] = {
-      url,
-      buffer,
-    };
-  }
-  await loadIt();
+interface PlayingBgm {
+  name: string;
+  sourceNode: AudioBufferSourceNode;
 }
 
-async function loadSFX(name:string, url: string) {
-  async function loadIt() {
-    const buffer = await loadAudio(url, audioContext);
-    sfx[name] = {
-      url,
-      buffer,
-    };
-  }
-  await loadIt();
+let currentlyPlayingBGM: PlayingBgm|null = null;
+
+async function loadSound(name: string, url: string) {
+  soundMap.set(name, await loadAudio(url, audioContext));
 }
 
-export function playBGM(name: string) {
-  if (!bgm[name]) {
+export function switchToBGM(name: keyof typeof bgm) {
+  const buffer = soundMap.get(name);
+  if(!buffer) {
     console.error(`BGM track ${name} is not loaded`)
     return;
   }
-  currentlyPlayingBGM.stop();
+  if(currentlyPlayingBGM?.name === name) return;
+  currentlyPlayingBGM?.sourceNode.stop();
   const sound = audioContext.createBufferSource();
-  sound.buffer = bgm[name].buffer;
+  sound.buffer = buffer;
   sound.connect(bgmGainNode);
   sound.loop = true;
   sound.start(0);
-  currentlyPlayingBGM = sound;
+  currentlyPlayingBGM = {
+    sourceNode: sound,
+    name
+  };
 }
 
-export function playSFX(name: string) {
+export function playSFX(name: SfxName) {
   return playSFXPitchShifted(name, 1);
 }
 
-export function playSFXPitchShifted(name: string, shift: number) {
-  if (!sfx[name]) {
+export function playSFXPitchShifted(name: SfxName, shift: number) {
+  const buffer = soundMap.get(name);
+  if(!buffer) {
     console.error(`SFX track ${name} is not loaded`)
     return;
   }
   const sound = audioContext.createBufferSource();
-  sound.buffer = sfx[name].buffer;
+  sound.buffer = buffer;
   sound.connect(sfxGainNode);
   sound.playbackRate.value = shift;
   sound.loop = false;
@@ -76,16 +83,8 @@ export function playSFXPitchShifted(name: string, shift: number) {
 }
 
 
-loadBGM('crystal', 'audio/The_Scientists_Crystalarium.mp3');
-loadBGM('banjo', 'audio/Banjo_Kablooie.mp3');
-loadSFX('splat', 'audio/splat.ogg');
-loadSFX('meow', 'audio/Meow_9.ogg');
-loadSFX('mahp', 'audio/mahp.ogg');
-loadSFX('great-jearb-06', 'audio/great-jearb-06.wav');
-loadSFX('chimes-002', 'audio/Chimes-002.wav');
-loadSFX('bad-job-4', 'audio/bad-job-4.wav');
 
-export async function playSpeech(sampleName: string, numberOfSamples: number, timeBetweenSamples: number, variance: number, shift: number) {
+export async function playSpeech(sampleName: SfxName, numberOfSamples: number, timeBetweenSamples: number, variance: number, shift: number) {
   for (let x=0; x<numberOfSamples; x++) {
     setTimeout(() => {
       const netShift = variance ** ((Math.random() * 2) - 1) * shift;
@@ -97,7 +96,7 @@ export async function playSpeech(sampleName: string, numberOfSamples: number, ti
 
 let currentSpeech = 0;
 let speechEmergencyTimeout = 0;
-export async function startSpeech(sampleName: string, timeBetweenSamples: number, variance: number, shift: number) {
+export async function startSpeech(sampleName: SfxName, timeBetweenSamples: number, variance: number, shift: number) {
   currentSpeech++;
   let validSpeech = currentSpeech;
   speechEmergencyTimeout = setTimeout(() => currentSpeech++, 5000);
@@ -165,5 +164,5 @@ export class AudioHUD {
 
 new AudioHUD();
 
-(window as any).playBGM = playBGM;
+(window as any).switchToBGM = switchToBGM;
 (window as any).playSpeech = playSpeech;
