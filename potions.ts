@@ -1,4 +1,3 @@
-import { Game } from './game.js';
 import {loadImage} from './loader.js';
 import { MaterialType } from './material.js';
 import {PuzzleObjectType} from './puzzleObject.js'
