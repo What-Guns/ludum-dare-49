@@ -135,7 +135,7 @@ export class Game {
 
     const targetRoom = this.rooms.find(room => room.name === roomName);
     if(!targetRoom) throw new Error(`Couldn't find room named ${roomName}`);
-    const targetDoor = targetRoom.doors.find(d => d.name === doorName);
+    const targetDoor = targetRoom.portals.find(d => d.name === doorName);
     if(!targetDoor) throw new Error(`Couldn't find door named ${doorName}`);
 
     this.transition = {

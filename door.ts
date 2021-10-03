@@ -3,15 +3,19 @@ import {Room} from './room.js';
 import {Thing} from './main.js';
 import {debug} from './debug.js';
 
-@Serializable('./door.js')
-export class Door implements Thing {
-  readonly name: string;
+export abstract class Portal implements Thing {
   x: number;
-  width: number;
   y: number;
+  width: number;
   height: number;
+  readonly name: string;
   readonly target: [string, string, TransitionDirection];
   room?: Room;
+
+  debugResize(evt: WheelEvent) {
+    this.height -= evt.deltaY / 100;
+    this.width += evt.deltaX / 100;
+  }
 
   constructor({name, x, y, height, width, target}: DoorData) {
     this.name = name;
@@ -23,13 +27,28 @@ export class Door implements Thing {
   }
 
   static deserialize(data: DoorData) {
-    return Promise.resolve(new this(data));
+    return Promise.resolve(new (this as any)(data));
   }
 
   serialize(): DoorData {
     return pluck(this, 'x', 'y', 'height', 'width', 'target', 'name');
   }
 
+  doClick(x: number, y: number) {
+    if(!this.isUnderPointer(x, y)) return false;
+
+    const player = this.room!.player;
+    if(!player?.canReach(this.x, this.y)) return false;
+
+    window.game?.goToDoor(...this.target);
+    return true;
+  }
+
+  abstract isUnderPointer(x: number, y: number): boolean;
+}
+
+@Serializable('./door.js')
+export class Door extends Portal {
   draw(ctx: CanvasRenderingContext2D) {
     if(!debug) return;
     const floorSlope = (this.room!.vanishingPoint.y - this.y) / (this.room!.vanishingPoint.x - this.x);
@@ -49,17 +68,7 @@ export class Door implements Thing {
     ctx.fillText(this.target.join(', '), this.x, this.y - this.height / 2);
   }
 
-  doClick(x: number, y: number) {
-    if(!this.isUnderPointer(x, y)) return false;
-
-    const player = this.room!.player;
-    if(!player?.canReach(this.x, this.y)) return false;
-
-    window.game?.goToDoor(...this.target);
-    return true;
-  }
-
-  isUnderPointer(x: number, y: number) {
+  override isUnderPointer(x: number, y: number) {
     if(Math.abs(x - this.x) > this.width / 2) return false;
     const slope = (this.room!.vanishingPoint.y - y) / (this.room!.vanishingPoint.x - x);
     const adjustedY = y - slope * (x - this.x);
@@ -68,19 +77,15 @@ export class Door implements Thing {
     return true;
   }
 
-  debugResize(evt: WheelEvent) {
-    this.height -= evt.deltaY / 100;
-    this.width += evt.deltaX / 100;
-  }
 }
 
 @Serializable('./door.js')
-export class Ladder extends Door {
+export class Ladder extends Portal {
   override isUnderPointer(x: number, y: number) {
     return Math.abs(x - this.x) < this.width && y < this.y && y > this.y - this.height;
   }
 
-  override draw(ctx: CanvasRenderingContext2D) {
+  draw(ctx: CanvasRenderingContext2D) {
     if(!debug) return;
     ctx.fillStyle = 'brown';
     ctx.beginPath();

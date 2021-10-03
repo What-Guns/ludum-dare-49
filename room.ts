@@ -1,4 +1,4 @@
-import {Door} from './door.js';
+import {Portal} from './door.js';
 import {Player} from './player.js';
 import {Serializable, serialize, isSerializable, deserialize, pluck} from './serialization.js';
 import {Thing} from './main.js';
@@ -16,7 +16,7 @@ export class Room {
   readonly vanishingPoint: {x: number, y: number};
   readonly camera = {x: 0, scale: 1};
   readonly floorHeight: number;
-  readonly doors: Door[] = [];
+  readonly portals: Portal[] = [];
 
   private readonly things: Thing[] = [];
 
@@ -45,11 +45,11 @@ export class Room {
     this.things.push(thing);
     thing.room = this;
     if(thing instanceof Player) this.player = thing;
-    if(thing instanceof Door) this.doors.push(thing);
+    if(thing instanceof Portal) this.portals.push(thing);
   }
 
   disown(thing: Thing) {
-    if(thing instanceof Door) {
+    if(thing instanceof Portal) {
       throw new TypeError(`Cannot remove doors from rooms`);
     }
     if(thing === this.player) this.player = undefined;
