@@ -7,6 +7,7 @@ import {Room} from './room.js';
 import {Cauldron} from './cauldron.js';
 import { toast } from './toast.js';
 import { getPuzzleObjectType, PuzzleObject, puzzleObjects, PuzzleObjectType } from './puzzleObject.js';
+import { Furnace } from './furnace.js';
 
 @Serializable('./player.js')
 export class Player {
@@ -85,8 +86,15 @@ export class Player {
   }
 
   placePuzzleObject(obj: PuzzleObject) {
-    console.log('Any cauldrons for this ' + obj.name + ' to go into?');
-    console.log(this.room?.getObjectsOfType(Cauldron));
+    if (this.room) {
+      const furnaces = this.room?.getObjectsOfType(Furnace);
+      if (furnaces[0]) {
+        if (furnaces[0].putObjectIn(obj)) {
+          this.tossPuzzleObject(obj);
+        }
+      }
+      else toast('Nowhere to put it');
+    }
   }
 
   takePuzzleObject(obj: PuzzleObject, isInitializing: boolean) {

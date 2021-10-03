@@ -50,8 +50,9 @@ export class Furnace implements Thing {
   }
 
   finishCooking() {
+    this.finishedCooking = true;
     this.contents = puzzleObjects['hot-gravity-stone'];
-    console.log('done cooking ' + this.contents?.name);
+    toast('done cooking ' + this.contents?.name); // heh heh, toast
   }
 
   static async deserialize(data: FurnaceData) {
@@ -63,7 +64,8 @@ export class Furnace implements Thing {
     if (!this.contents) {
       toast("It's a furnace")
     } else {
-      this.room?.player?.takeMaterial(this.contents as Material);
+      this.room?.player?.takePuzzleObject(this.contents as PuzzleObject, false);
+      this.contents = undefined;
     }
     return true;
   }
