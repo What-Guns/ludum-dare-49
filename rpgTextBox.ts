@@ -6,7 +6,7 @@ export class RpgTextBox {
   private invisibleText = document.createElement('span');
   private _dismissButton = document.createElement('button');
 
-  constructor() {
+  constructor(readonly onTextFinish: Function) {
     this.element.classList.add('rpgTextBox');
     document.body.appendChild(this.element);
 
@@ -42,6 +42,7 @@ export class RpgTextBox {
   }
 
   clickDismiss() {
+    this.onTextFinish();
     if (this.invisibleText.innerText.length !== 0) {
       this.visibleText.innerText = this.visibleText.innerText + this.invisibleText.innerText;
       this.invisibleText.innerText = "";
@@ -60,5 +61,6 @@ export class RpgTextBox {
     const letter = this.invisibleText.innerText.slice(0, 2);
     this.invisibleText.innerText = this.invisibleText.innerText.slice(letters);
     this.visibleText.innerText = this.visibleText.innerText + letter;
+    if (this.invisibleText.innerText.length === 0) this.onTextFinish();
   }
 }

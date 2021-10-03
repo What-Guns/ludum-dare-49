@@ -92,6 +92,28 @@ export async function playSpeech(sampleName: string, numberOfSamples: number, ti
   }
 }
 
+let currentSpeech = 0;
+let speechEmergencyTimeout = 0;
+export async function startSpeech(sampleName: string, timeBetweenSamples: number, variance: number, shift: number) {
+  currentSpeech++;
+  let validSpeech = currentSpeech;
+  speechEmergencyTimeout = setTimeout(() => currentSpeech++, 5000);
+  while (currentSpeech === validSpeech) {
+    await new Promise((res, _rej) => {
+      const netShift = variance ** ((Math.random() * 2) - 1) * shift;
+
+      playSFXPitchShifted(sampleName, netShift);
+      setTimeout(() => res(null), timeBetweenSamples);
+    });
+  }
+  clearTimeout(speechEmergencyTimeout);
+}
+
+export function stopSpeech() {
+  currentSpeech++;
+  clearTimeout(speechEmergencyTimeout);
+}
+
 export class AudioHUD {
   private element = document.createElement('div');
   private _muteBgm = document.createElement('span');
