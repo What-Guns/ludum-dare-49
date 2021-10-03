@@ -2,9 +2,8 @@ import {Thing} from './main.js';
 import {Serializable} from './serialization.js';
 import {ResourceSpawner} from './resource-spawner.js';
 
-@Serializable('./cauldron_hud.ts')
+@Serializable('./cauldron.js')
 export class Cauldron implements Thing {
-
   public timer = 0;
   public totalTime = 0;
   public timeOut = false;
@@ -19,7 +18,6 @@ export class Cauldron implements Thing {
   }
 
   tick(dt: number) {
-
     if (this.placedItems.length > 0) {
     this.timer -= dt;
       if (this.timer <= this.hurryUp) //transform item
@@ -33,6 +31,7 @@ export class Cauldron implements Thing {
       }
     }
   }
+
   static deserialize({x, y, width, height}: CauldronData) {
     return Promise.resolve(new Cauldron(x, y, width, height));
   }
@@ -72,16 +71,9 @@ export class Cauldron implements Thing {
   }
 }
 
-
-
-
 interface CauldronData {
   x: number;
   y: number;
   width: number;
   height: number;
 }
-
-
-
-
