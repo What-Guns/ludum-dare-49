@@ -33,12 +33,12 @@ export type Effect =
 export const materials: {[key: string]: Material} = {
   'mouse-whisker': {
     name: 'Mouse Whisker',
-    description: 'Mice grow these on their faces, they help the mice to know whether holes are big enough for them to squeeze through! This whisker fell off of a mouse, I didn\'t have to pluck it out (that would be cruel).',
+    description: 'Mice grow these on their faces, they help the mice to know whether holes are big enough for them to squeeze through! This whisker fell off of a mouse, I didn’t have to pluck it out (that would be cruel).',
     effect: 'smaller',
   },
   'gunpowder': {
     name: 'Gunpowder',
-    description: 'Mixing sulfur, saltpeter, and charcoal makes an explosive powder! Please be careful with this stuff, there\'s a great deal of power stored here.',
+    description: 'Mixing sulfur, saltpeter, and charcoal makes an explosive powder! Please be careful with this stuff, there’s a great deal of power stored here.',
     effect: 'strong'
   },
   'morning-dew': {
@@ -55,7 +55,7 @@ export const materials: {[key: string]: Material} = {
   },
   'firewood': {
     name: 'Firewood',
-    description: 'The best wood for making a fire is dry dead wood! Firewood is lightweight, rigid, and relatively flammable compared to live wood, or wood that\'s been rained on.',
+    description: 'The best wood for making a fire is dry dead wood! Firewood is lightweight, rigid, and relatively flammable compared to live wood, or wood that’s been rained on.',
     effect: 'wooden',
   },
   'anti-dote': {
@@ -65,7 +65,7 @@ export const materials: {[key: string]: Material} = {
   },
   'hushroom': {
     name: 'Hushroom',
-    description: 'This little mushroom will wilt if exposed to bright lights or loud sounds. Chill times and good vibes are this mushroom\'s specialty!',
+    description: 'This little mushroom will wilt if exposed to bright lights or loud sounds. Chill times and good vibes are this mushroom’s specialty!',
     effect: 'relaxed',
   },
   'ghost-tears': {
@@ -75,7 +75,7 @@ export const materials: {[key: string]: Material} = {
   },
   'gravity-stone': {
     name: 'Gravity Stone',
-    description: 'This rock is made out of some very heavy minerals and metals! It\'s also really slippery, and it feels like it might fall from your grasp. Watch your toes!',
+    description: 'This rock is made out of some very heavy minerals and metals! It’s also really slippery, and it feels like it might fall from your grasp. Watch your toes!',
     effect: 'heavy'
   },
   'transmuters-draught': {
