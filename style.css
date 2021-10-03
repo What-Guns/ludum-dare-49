@@ -47,7 +47,7 @@ body.debug #debug-controls {
 .hudWindow {
   user-select: none;
   position: absolute;
-  font-size: x-small;
+  font-size: medium;
   pointer-events: initial;
 }
 
