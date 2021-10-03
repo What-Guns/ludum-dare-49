@@ -21,6 +21,20 @@ canvas, #popup-window-container {
   transform-origin: top left;
 }
 
+#debug-controls {
+  display: none;
+  z-index: 2;
+  border: 1px solid black;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border: 8px dashed magenta;
+}
+
+body.debug #debug-controls {
+  display: inline-block;
+}
+
 .hudWindow {
   user-select: none;
   position: absolute;
