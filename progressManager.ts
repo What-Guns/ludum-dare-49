@@ -6,10 +6,16 @@ const progressData = [
     catDialog: 'Welcome to the cottage! Try, idk, picking things up.',
     ghostDialog: 'You definitely should not be in the attic yet',
     unlockedDoors: ['left']
-  }
+  },
+  {
+    level: 1,
+    catDialog: 'You\'ve reached the next level! I am so very proud of you.',
+    ghostDialog: 'I\'m serious dude, get out of the attic',
+    unlockedDoors: ['left', 'right', 'ladder']
+  },
 ]
 
-let currentLevel = 0;
+let currentLevel = 1;
 let currentLevelData = progressData.find(d => d.level === currentLevel)!;
 
 export function setProgressLevel(level: number) {
@@ -18,6 +24,8 @@ export function setProgressLevel(level: number) {
   currentLevel = level;
   currentLevelData = newData;
 }
+
+(window as any).setProgressLevel = setProgressLevel;
 
 export function isDoorUnlocked(doorName: string): boolean {
   return currentLevelData.unlockedDoors.includes(doorName);
