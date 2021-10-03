@@ -103,7 +103,21 @@ export const materials: {[key: string]: Material} = {
     effect: 'transmuted',
     brewTime: 5,
     expireTime: 10,
-  }
+  },
+  'feather': {
+    name: 'Feather',
+    description: 'Birds for 2000. Birds of a this flock together. What is feather?',
+    effect: 'hovering',
+    brewTime: 5,
+    expireTime: 10,
+  },
+  'fire-salts': {
+    name: 'Fire Salts™',
+    description: 'Take a hot bath with Fire Salts™',
+    effect: 'hot',
+    brewTime: 5,
+    expireTime: 10,
+  },
 };
 
 export async function preloadMaterialImages() {
