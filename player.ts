@@ -122,6 +122,7 @@ export class Player {
         }
         this.hotbar.removeItem(hotbarItem);
         this.heldMaterials.splice(this.heldMaterials.indexOf(mat), 1);
+        window.game!.save();
       }
     };
     this.hotbar.addItem(hotbarItem);

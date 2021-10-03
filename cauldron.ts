@@ -1,22 +1,30 @@
 import {Thing} from './main.js';
 import {Serializable} from './serialization.js';
-import {Material, MaterialType} from './material.js';
+import {Material, MaterialType, getMaterialType, materials} from './material.js';
 
 
 @Serializable('./cauldron.js')
 export class Cauldron implements Thing {
   
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  readonly placedItems: Material[];
   public timer = 0;
   public totalTime = 0;
   public timeOut = false;
-  readonly placedItems: Material[] = [];
   public transformedItem: MaterialType | null = null;
   public hurryUp = this.totalTime / 3;
   readonly ITEM_CAPACITY = 5;
-  // public cv :CauldronViewer
+  private rotation = 0;
 
-  constructor(public x: number, public y: number, public width: number, public height: number) {
-    // this.cv = new CauldronViewer(x, y, width, height, this)
+  constructor(data: CauldronData) {
+    this.x = data.x;
+    this.y = data.y;
+    this.height = data.height;
+    this.width = data.width;
+    this.placedItems = (data.placedItems ?? []).map(matType => materials[matType]);
   }
 
   tick(dt: number) {
@@ -32,10 +40,12 @@ export class Cauldron implements Thing {
          }
       }
     }
+    this.rotation += dt / 10000;
+    this.rotation = this.rotation % (2 * Math.PI);
   }
 
-  static deserialize({x, y, width, height}: CauldronData) {
-    return Promise.resolve(new Cauldron(x, y, width, height));
+  static async deserialize(data: CauldronData) {
+    return new Cauldron(data);
   }
 
   serialize(): CauldronData {
@@ -44,12 +54,20 @@ export class Cauldron implements Thing {
       y: this.y,
       width: this.width,
       height: this.height,
+      placedItems: this.placedItems.map(getMaterialType),
     };
   }
 
   draw(ctx: CanvasRenderingContext2D) {
     ctx.fillStyle = 'black';
     ctx.fillRect(this.x - this.width/2, this.y - this.height/2, this.width, this.height);
+
+    for(let i = 0; i < this.placedItems.length; i++) {
+      const dir = 2 * Math.PI * (i/this.ITEM_CAPACITY) + this.rotation;
+      const x = Math.cos(dir) * this.width / 2 + this.x;
+      const y = Math.sin(dir) * this.width / 5 + this.y - this.height/2 - 100;
+      ctx.drawImage(this.placedItems[i].inventoryImage!, x - 20, y - 20, 40, 40);
+    }
   }
 
   debugResize(evt: WheelEvent) {
@@ -80,4 +98,5 @@ interface CauldronData {
   y: number;
   width: number;
   height: number;
+  placedItems?: MaterialType[];
 }
