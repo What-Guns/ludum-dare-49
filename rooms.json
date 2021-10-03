@@ -20,9 +20,29 @@
           "@path": "./cauldron.js",
           "x": 651,
           "y": 637,
+          "z": -1,
           "width": 242,
           "height": 152,
-          "placedItems": []
+          "brewing": []
+        },
+        {
+          "@type": "Container",
+          "@path": "./container.js",
+          "x": 822,
+          "y": 205,
+          "z": -1,
+          "width": 235,
+          "height": 179,
+          "items": [
+            {
+              "@type": "ResourceSpawner",
+              "@path": "./resource-spawner.js",
+              "x": 872,
+              "y": 257,
+              "z": 0,
+              "resourceType": "coin"
+            }
+          ]
         },
         {
           "@type": "Door",
@@ -51,23 +71,6 @@
             "up"
           ],
           "name": "ladder"
-        },
-        {
-          "@type": "Container",
-          "@path": "./container.js",
-          "x": 822,
-          "y": 205,
-          "width": 235,
-          "height": 179,
-          "items": [
-            {
-              "@type": "ResourceSpawner",
-              "@path": "./resource-spawner.js",
-              "x": 872,
-              "y": 257,
-              "resourceType": "coin"
-            }
-          ]
         },
         {
           "@type": "Player",
@@ -126,6 +129,7 @@
           "@path": "./npc.js",
           "x": 600,
           "y": 400,
+          "z": 0,
           "width": 100,
           "height": 100,
           "type": "CAT"
@@ -135,6 +139,7 @@
           "@path": "./puzzleObject.js",
           "x": 400,
           "y": 400,
+          "z": 0,
           "puzzleObjectType": "key"
         }
       ]
@@ -171,6 +176,7 @@
           "@path": "./npc.js",
           "x": 600,
           "y": 400,
+          "z": 0,
           "width": 100,
           "height": 100,
           "type": "GHOST"
@@ -180,8 +186,7 @@
           "@path": "./puzzleObject.js",
           "x": 964,
           "y": 520,
-          "width": 100,
-          "height": 100,
+          "z": 0,
           "puzzleObjectType": "gravity-stone"
         }
       ]
@@ -232,6 +237,7 @@
           "@path": "./resource-spawner.js",
           "x": 356,
           "y": 759,
+          "z": 0,
           "resourceType": "hushroom"
         },
         {
@@ -239,8 +245,7 @@
           "@path": "./puzzleObject.js",
           "x": 995,
           "y": 826,
-          "width": 100,
-          "height": 100,
+          "z": 0,
           "puzzleObjectType": "radio"
         }
       ]

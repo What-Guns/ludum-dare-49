@@ -8,6 +8,7 @@ import {ResourceSpawner, ResourceSpawnerData} from './resource-spawner.js';
 export class Container implements Thing {
   x: number;
   y: number;
+  z: number;
   width: number;
   height: number;
   room?: Room;
@@ -15,6 +16,7 @@ export class Container implements Thing {
   constructor(private readonly items: ResourceSpawner[], data: ContainerData) {
     this.x = data.x;
     this.y = data.y;
+    this.z = data.z ?? -1;
     this.width = data.width;
     this.height = data.height;
   }
@@ -53,7 +55,7 @@ export class Container implements Thing {
 
   serialize(): ContainerData {
     return {
-      ...pluck(this, 'x', 'y', 'width', 'height'),
+      ...pluck(this, 'x', 'y', 'z', 'width', 'height'),
       items: this.items.map(serialize),
     };
   }
@@ -64,4 +66,4 @@ export class Container implements Thing {
   }
 }
 
-type ContainerData = Pick<Container, 'x'|'y'|'width'|'height'>&{items: ResourceSpawnerData[]}
+type ContainerData = Pick<Container, 'x'|'y'|'z'|'width'|'height'>&{items: ResourceSpawnerData[]}

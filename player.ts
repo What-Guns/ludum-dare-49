@@ -12,6 +12,7 @@ import { getPuzzleObjectType, PuzzleObject, puzzleObjects, PuzzleObjectType } fr
 export class Player {
   x: number;
   y: number;
+  z = 1;
   targetX: number;
   room?: Room;
 

@@ -7,9 +7,9 @@ import {debug} from './debug.js';
 
 @Serializable('./cauldron.js')
 export class Cauldron implements Thing {
-  
   x: number;
   y: number;
+  z: number;
   width: number;
   height: number;
   readonly brewing: BrewingMaterial[];
@@ -19,6 +19,7 @@ export class Cauldron implements Thing {
   constructor(data: CauldronData) {
     this.x = data.x;
     this.y = data.y;
+    this.z = data.z ?? -1;
     this.height = data.height;
     this.width = data.width;
     this.brewing = (data.brewing ?? []).map(({materialType, timeSpentInCauldron}) => ({
@@ -58,6 +59,7 @@ export class Cauldron implements Thing {
     return {
       x: this.x,
       y: this.y,
+      z: this.z,
       width: this.width,
       height: this.height,
       brewing: this.brewing.map(({material, timeSpentInCauldron}) => ({
@@ -164,6 +166,7 @@ interface BrewingMaterial {
 interface CauldronData {
   x: number;
   y: number;
+  z: number;
   width: number;
   height: number;
   brewing?: BrewingMaterialData[];

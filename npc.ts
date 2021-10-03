@@ -15,7 +15,7 @@ export class Npc implements Thing {
     "CAT": 'https://static.tvtropes.org/pmwiki/pub/images/achewood_789.jpg',
     "GHOST": 'https://static.wikia.nocookie.net/vsbattles/images/f/f6/6d0c7f35a66688f309ceedf4e94013dc.png',
   }
-  constructor(readonly x: number, readonly y: number, readonly width: number, readonly height: number, readonly npcType: NpcType) {
+  constructor(readonly x: number, readonly y: number, readonly z: number, readonly width: number, readonly height: number, readonly npcType: NpcType) {
     this.textbox.visible = false;
     this.textbox.imageSrc = Npc.textBoxImages[npcType];
   }
@@ -55,24 +55,25 @@ export class Npc implements Thing {
     stopSpeech();
   }
 
-  static async deserialize({x, y, width, height, type}: NpcData) {
-    return new Npc(x, y, width, height, type);
+  static async deserialize({x, y, z, width, height, type}: NpcData) {
+    return new Npc(x, y, z ?? 0, width, height, type);
   }
 
   serialize(): NpcData {
     return {
-      ...pluck(this, 'x', 'y', 'width', 'height'),
+      ...pluck(this, 'x', 'y', 'z', 'width', 'height'),
       type: this.npcType,
     };
   }
 }
 
 interface NpcData {
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-  type: NpcType,
+  x: number;
+  y: number;
+  z: number;
+  width: number;
+  height: number;
+  type: NpcType;
 }
 
 interface SpeechParams {

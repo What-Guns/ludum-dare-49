@@ -5,7 +5,7 @@ export class SpeechBubble implements Thing {
   private visibleText = document.createElement('span');
   private invisibleText = document.createElement('span');
 
-  constructor(public x: number, public y: number) {
+  constructor(public x: number, public y: number, public z: number) {
     this.div.style.setProperty('position', 'absolute');
     this.div.style.setProperty('left', '500px');
     this.div.style.setProperty('top', '300px')
@@ -60,8 +60,8 @@ export class SpeechBubble implements Thing {
     this.revealLetter();
   }
 
-  static deserialize({x, y}: SpeechBubbleData) {
-    return Promise.resolve(new SpeechBubble(x, y));
+  static deserialize({x, y, z}: SpeechBubbleData) {
+    return Promise.resolve(new SpeechBubble(x, y, z));
   }
 
   stopDrawingDOM() {
@@ -76,6 +76,7 @@ export class SpeechBubble implements Thing {
 }
 
 interface SpeechBubbleData {
-  x: number,
-  y: number,
+  x: number;
+  y: number;
+  z: number;
 }

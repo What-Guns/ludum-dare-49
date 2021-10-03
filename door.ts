@@ -6,6 +6,7 @@ import {debug} from './debug.js';
 export abstract class Portal implements Thing {
   x: number;
   y: number;
+  z = 0;
   width: number;
   height: number;
   readonly name: string;

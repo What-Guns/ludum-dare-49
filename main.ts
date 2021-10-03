@@ -69,6 +69,7 @@ async function startGame(gameData: any, canvas: HTMLCanvasElement) {
 export interface Thing {
   x: number;
   y: number;
+  z: number;
   room?: Room;
 
   draw?(ctx: CanvasRenderingContext2D): void;

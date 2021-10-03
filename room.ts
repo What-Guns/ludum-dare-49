@@ -55,6 +55,7 @@ export class Room {
 
   adoptThing(thing: Thing) {
     this.things.push(thing);
+    this.things.sort(byZIndex);
     thing.room = this;
     if(thing instanceof Player) this.player = thing;
     if(thing instanceof Portal) this.portals.push(thing);
@@ -162,4 +163,16 @@ export interface RoomData {
   height: number;
   vanishingPoint: {x: number, y: number};
   floorHeight: number;
+}
+
+function byZIndex(a: Thing, b: Thing) {
+  if(a.z == null) {
+    console.error(`Thing ${a} has no z coordinate`);
+    return 0;
+  }
+  if(b.z == null) {
+    console.error(`Thing ${b} has no z coordinate`);
+    return 0;
+  }
+  return a.z - b.z;
 }

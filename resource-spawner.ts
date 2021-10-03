@@ -8,13 +8,15 @@ import { materials, MaterialType, Material} from './material.js';
 export class ResourceSpawner implements Thing {
   x: number;
   y: number;
+  z: number;
   readonly width: number;
   readonly height: number;
   room?: Room;
 
-  constructor(readonly material: Material, readonly worldImage: HTMLImageElement, {x, y}: ResourceSpawnerData) {
+  constructor(readonly material: Material, readonly worldImage: HTMLImageElement, {x, y, z}: ResourceSpawnerData) {
     this.x = x;
     this.y = y;
+    this.z = z ?? 0;
     this.width = worldImage.width;
     this.height = worldImage.height;
   }
@@ -31,6 +33,7 @@ export class ResourceSpawner implements Thing {
     return {
       x: this.x,
       y: this.y,
+      z: this.z,
       resourceType,
     };
   }
@@ -74,6 +77,7 @@ export class ResourceSpawner implements Thing {
 export interface ResourceSpawnerData {
   x: number;
   y: number;
+  z: number;
   resourceType: MaterialType;
 }
 

@@ -58,13 +58,15 @@ export type PuzzleObjectType = keyof typeof puzzleObjects;
 export class PuzzleObjectSpawner implements Thing {
   x: number;
   y: number;
+  z: number;
   readonly width: number;
   readonly height: number;
   room?: Room;
 
-  constructor(readonly puzzleObject: PuzzleObject, readonly worldImage: HTMLImageElement, {x, y}: PuzzleObjectData) {
+  constructor(readonly puzzleObject: PuzzleObject, readonly worldImage: HTMLImageElement, {x, y, z}: PuzzleObjectData) {
     this.x = x;
     this.y = y;
+    this.z = z ?? 0;
     this.width = worldImage.width;
     this.height = worldImage.height;
   }
@@ -81,6 +83,7 @@ export class PuzzleObjectSpawner implements Thing {
     return {
       x: this.x,
       y: this.y,
+      z: this.z,
       puzzleObjectType,
     };
   }
@@ -128,6 +131,7 @@ export class PuzzleObjectSpawner implements Thing {
 export interface PuzzleObjectData {
   x: number;
   y: number;
+  z?: number;
   puzzleObjectType: PuzzleObjectType;
 }
 
