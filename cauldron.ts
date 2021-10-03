@@ -55,8 +55,6 @@ export class Cauldron implements Thing {
     if(isSuccessful) {
       const ingredients = this.brewing.map(bm => getMaterialType(bm.material)).sort();
       const createdPotion = Object.values(potion).find(p => p.recipe?.sort().every((ing, index) => ing === ingredients[index]));
-      console.log(ingredients)
-      console.log(potion['ensmallening'].recipe)
       if (createdPotion) {
         console.log('You made a ' + createdPotion.name);
       } else {
