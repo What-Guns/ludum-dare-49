@@ -17,6 +17,7 @@ export class Music {
   private plantGain: GainNode;
   private plantPan: PannerNode;
   private plantFilter: BiquadFilterNode;
+  private atticGain: GainNode;
 
   constructor(private readonly bgm: LoadedBgm) {
     this.overworldGain = this.startTrack('overworld', bgmGainNode);
@@ -27,6 +28,7 @@ export class Music {
     this.plantPan.panningModel = 'HRTF';
     this.plantPan.positionY.setValueAtTime(1, 0);
     this.plantGain = this.startTrack('plants', this.plantPan);
+    this.atticGain = this.startTrack('attic', bgmGainNode);
     this.roomChanged('hall', true);
   }
 
@@ -42,12 +44,14 @@ export class Music {
       this.plantGain.gain.setValueAtTime(state.plantGain, now);
       this.plantPan.positionX.setValueAtTime(state.plantPan, now);
       this.plantFilter.frequency.setValueAtTime(state.plantFilter, now);
+      this.atticGain.gain.setValueAtTime(state.atticGain, now);
     } else {
       const then = audioContext.currentTime + (immediate ? 0 : 1);
       this.fadeParam(this.overworldGain.gain, state.overworldGain, now, then);
       this.fadeParam(this.plantGain.gain, state.plantGain, now, then);
       this.fadeParam(this.plantPan.positionX, state.plantPan, now, then);
       this.fadeParam(this.plantFilter.frequency, state.plantFilter, now, then);
+      this.fadeParam(this.atticGain.gain, state.atticGain, now, then);
     }
   }
 
@@ -76,24 +80,28 @@ const musicState: {[key: string]: MusicState} = {
     plantGain: 1,
     plantPan: -1,
     plantFilter: 600,
+    atticGain: 0,
   },
   'greenhouse': {
     overworldGain: 1,
     plantGain: 1,
     plantPan: 0,
     plantFilter: 24000,
+    atticGain: 0,
   },
   'attic': {
     overworldGain: 0,
     plantGain: 0,
     plantPan: 0,
     plantFilter: 1000,
+    atticGain: 1,
   },
   'cellar': {
     overworldGain: 0,
-    plantGain: 0.1,
+    plantGain: 0.4,
     plantPan: 0,
     plantFilter: 400,
+    atticGain: 0,
   },
 };
 
@@ -102,6 +110,7 @@ interface MusicState {
   plantPan: number;
   plantFilter: number;
   overworldGain: number;
+  atticGain: number;
 }
 
 type LoadedBgm = {[key in TrackName]: AudioBuffer};
