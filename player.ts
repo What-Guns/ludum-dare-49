@@ -6,6 +6,7 @@ import {playSFX} from './audio.js';
 import {Room} from './room.js';
 import {Cauldron} from './cauldron.js';
 import { toast } from './toast.js';
+import { getPuzzleObjectType, PuzzleObject, puzzleObjects, PuzzleObjectType } from './puzzleObject.js';
 
 @Serializable('./player.js')
 export class Player {
@@ -17,14 +18,16 @@ export class Player {
   private readonly hotbar = new HudItemHotbar();
   private materialInventorySize: number;
   private readonly heldMaterials: Material[] = [];
+  private readonly heldPuzzleObjects: PuzzleObject[] = [];
 
-  constructor({x, y, heldMaterials = [], materialInventorySize}: PlayerData, private standingImage: HTMLImageElement, private walkingImage: HTMLImageElement) {
+  constructor({x, y, heldMaterials = [], materialInventorySize, heldPuzzleObjects = []}: PlayerData, private standingImage: HTMLImageElement, private walkingImage: HTMLImageElement) {
     this.x = x;
     this.y = y;
     this.targetX = x;
     this.materialInventorySize = materialInventorySize ?? 5;
     this.hotbar.setCapacity(this.materialInventorySize);
     for(const mat of heldMaterials) this.takeMaterial(materials[mat], true);
+    for(const po of heldPuzzleObjects) this.takePuzzleObject(puzzleObjects[po]);
   }
 
   static async deserialize(playerData: PlayerData) {
@@ -66,8 +69,22 @@ export class Player {
       x: this.x,
       y: this.y,
       heldMaterials: this.heldMaterials.map(getMaterialType),
+      heldPuzzleObjects: this.heldPuzzleObjects.map(getPuzzleObjectType),
       materialInventorySize: this.materialInventorySize,
     };
+  }
+
+  hasPuzzleObject(obj: PuzzleObject) {
+    return this.heldPuzzleObjects.indexOf(obj) !== -1;
+  }
+
+  takePuzzleObject(obj: PuzzleObject) {
+    this.heldPuzzleObjects.push(obj);
+    window.game!.save();
+  }
+
+  hasMaterial(mat: Material): boolean {
+    return this.heldMaterials.indexOf(mat) !== -1;
   }
 
   takeMaterial(mat: Material, silent = false) {
@@ -76,7 +93,7 @@ export class Player {
       toast('You can’t hold that many things.');
       return;
     }
-    if(this.heldMaterials.indexOf(mat) !== -1) {
+    if(this.hasMaterial(mat)) {
       playSFX('bad-job-4');
       toast('You’ve already got one of those.');
       return;
@@ -115,6 +132,7 @@ interface PlayerData {
   x: number;
   y: number;
   heldMaterials: MaterialType[];
+  heldPuzzleObjects: PuzzleObjectType[];
   materialInventorySize?: number;
 }
 

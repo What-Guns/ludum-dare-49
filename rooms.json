@@ -88,6 +88,7 @@
           "x": 790.5,
           "y": 781,
           "heldMaterials": [],
+          "heldPuzzleObjects": [],
           "materialInventorySize": 5
         }
       ]
@@ -127,6 +128,15 @@
           "width": 100,
           "height": 100,
           "type": "CAT"
+        },
+        {
+          "@type": "PuzzleObjectSpawner",
+          "@path": "./puzzleObject.js",
+          "x": 400,
+          "y": 400,
+          "width": 100,
+          "height": 100,
+          "puzzleObjectType": "key"
         }
       ]
     },
