@@ -22,13 +22,13 @@ export const puzzleObjects: {[key: string]: PuzzleObject} = {
     name: 'Broken Radio',
     description: 'This radio is looking fine, but it won\'t play any tunes! It seems like it has been drained of power, and just needs some energy to start playing again.',
     inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/radio_1f4fb.png',
-    spawnerImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/radio_1f4fb.png,'
+    spawnerImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/radio_1f4fb.png',
   },
   'gravity-stone': {
     name: 'Gravity Stone',
     description: 'This rock is made out of some very heavy minerals and metals! It’s also really slippery, and it feels like it might fall from your grasp. Watch your toes!',
     inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/rock_1faa8.png',
-    spawnerImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/rock_1faa8.png,'
+    spawnerImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/rock_1faa8.png',
   },
 }
 
