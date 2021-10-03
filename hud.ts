@@ -121,7 +121,7 @@ export class HudItemHotbar {
   private _selectedIndex = 0;
 
   private element = document.createElement('div');
-  private _itemList = document.createElement('ul');
+  readonly _itemList = document.createElement('ul');
 
   constructor() {
     this.element.classList.add('hudWindow', 'hudItemHotbar');

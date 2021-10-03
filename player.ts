@@ -106,6 +106,10 @@ export class Player {
           onToss: () => { this.tossPuzzleObject(obj) },
           onPlace: () => { this.placePuzzleObject(obj) },
         });
+        const { height } = hudItemWindow.element.getBoundingClientRect();
+        const { top, left } = this.hotbar._itemList.getBoundingClientRect();
+        hudItemWindow.y = top - height - 20;
+        hudItemWindow.x = left;
         hudItemWindow.visible = true;
       }
     };

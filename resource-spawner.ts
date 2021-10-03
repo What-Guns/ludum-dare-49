@@ -51,6 +51,9 @@ export class ResourceSpawner implements Thing {
     });
     hudWindow.x = this.x;
     hudWindow.y = this.y;
+    const { height } = hudWindow.element.getBoundingClientRect();
+    const hotbarTop = document.querySelector('.hudItemHotbar')?.getBoundingClientRect().top;
+    if (hotbarTop && hudWindow.y + height > hotbarTop) hudWindow.y = hotbarTop - height - 50;
     hudWindow.visible = true;
     return true;
   }
