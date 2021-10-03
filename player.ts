@@ -2,6 +2,7 @@ import {Serializable} from './serialization.js';
 import {loadImage} from './loader.js';
 import {Material, MaterialType, materials, getMaterialType} from './material.js';
 import {HudItemHotbar} from './hud.js';
+import {playSFX} from './audio.js';
 
 @Serializable('./player.js')
 export class Player {
@@ -67,13 +68,16 @@ export class Player {
 
   takeMaterial(mat: Material) {
     if(this.heldMaterials.length >= this.materialInventorySize) {
+      playSFX('bad-job-4');
       alert('You can’t hold that many things.');
       return;
     }
     if(this.heldMaterials.indexOf(mat) !== -1) {
+      playSFX('bad-job-4');
       alert('You’ve already got one of those.');
       return;
     }
+    playSFX('great-jearb-06');
     this.heldMaterials.push(mat);
     this.hotbar.addItem({
       imageUrl: mat.inventoryImageUrl ?? mat.worldImageUrl ?? PLACEHOLDER_IMAGE_URL,
