@@ -95,6 +95,11 @@ export class Player {
     this.hotbar.removeItemByName(potion.name);
   }
 
+  tossMaterial(material: Material) {
+    removeFromArray(this.heldMaterials, material);
+    this.hotbar.removeItemByName(material.name);
+  }
+
   placePuzzleObject(obj: PuzzleObject) {
     if (this.room) {
       const furnaces = this.room?.getObjectsOfType(Furnace);
@@ -107,7 +112,7 @@ export class Player {
     }
   }
 
-  takePuzzleObject(obj: PuzzleObject, isInitializing: boolean) {
+  takePuzzleObject(obj: PuzzleObject, isInitializing = false) {
     if(!this.checkInventorySize()) return;
 
     this.heldPuzzleObjects.push(obj);
@@ -198,7 +203,11 @@ export class Player {
           traits: [],
           description: 'a potion',
           onToss: () => this.tossPotion(potion),
-          onApply: () => this.applyPotion(potion),
+          onApply: () => {
+            if (!this.applyPotion(potion)) {
+              toast(`You don’t have anything to apply that to.`);
+            }
+          },
         });
         const { height } = hudItemWindow.element.getBoundingClientRect();
         const { top, left } = this.hotbar._itemList.getBoundingClientRect();
@@ -221,12 +230,16 @@ export class Player {
     if (materialToApplyTo) {
       const { turnsInto } = potion;
       const newMaterial = materials[turnsInto as MaterialType];
-      this.heldMaterials.splice(this.heldMaterials.indexOf(materialToApplyTo), 1, newMaterial);
+      this.tossMaterial(materialToApplyTo);
+      this.tossPotion(potion);
+      this.takeMaterial(newMaterial);
       return true;
     } else if (puzzleObjectToApplyTo) {
       const { turnsInto } = potion;
       const newPuzzleObject = puzzleObjects[turnsInto as PuzzleObjectType];
-      this.heldPuzzleObjects.splice(this.heldPuzzleObjects.indexOf(puzzleObjectToApplyTo), 1, newPuzzleObject);
+      this.tossPotion(potion);
+      this.tossPuzzleObject(puzzleObjectToApplyTo);
+      this.takePuzzleObject(newPuzzleObject);
       return true;
     }
     return false;
