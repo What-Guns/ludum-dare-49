@@ -5,6 +5,7 @@ import {Serializable} from './serialization.js';
 import {Thing} from './main.js';
 import {debug} from './debug.js';
 import {toast} from './toast.js';
+import { potion } from './potions.js';
 
 
 @Serializable('./cauldron.js')
@@ -52,7 +53,15 @@ export class Cauldron implements Thing {
     const isSuccessful = this.brewing.every(({timeSpentInCauldron, material}) => 
       timeSpentInCauldron < material.expireTime && timeSpentInCauldron > material.brewTime);
     if(isSuccessful) {
-      toast('hooray');
+      const ingredients = this.brewing.map(bm => getMaterialType(bm.material)).sort();
+      const createdPotion = Object.values(potion).find(p => p.recipe?.sort().every((ing, index) => ing === ingredients[index]));
+      console.log(ingredients)
+      console.log(potion['ensmallening'].recipe)
+      if (createdPotion) {
+        console.log('You made a ' + createdPotion.name);
+      } else {
+        console.log('You made something dubious')
+      }
     } else {
       toast('oh no');
     }
