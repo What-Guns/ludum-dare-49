@@ -7,7 +7,7 @@ import './audio.js';
 import { toast, Toast } from './toast.js';
 import './toast.js';
 import './progressManager.js';
-import { isDoorUnlocked } from './progressManager.js';
+import { getProgressLevel, isDoorUnlocked, setProgressLevel } from './progressManager.js';
 
 @Serializable('./game.js')
 export class Game {
@@ -29,6 +29,7 @@ export class Game {
   static async deserialize(data: GameData, {canvas}: GameExtras)  {
     const game = new Game(canvas);
     const rooms = (await Promise.all(data.rooms.map(deserialize))) as Room[];
+    setProgressLevel(data.currentProgressLevel);
     game.rooms.push(...rooms as Room[]);
     game.goToFirstRoom();
     return Promise.resolve(game);
@@ -36,7 +37,8 @@ export class Game {
 
   serialize(): GameData {
     return {
-      rooms: this.rooms.map(room => serialize<Room, RoomData>(room))
+      rooms: this.rooms.map(room => serialize<Room, RoomData>(room)),
+      currentProgressLevel: getProgressLevel(),
     };
   }
 
@@ -156,7 +158,8 @@ export class Game {
 }
 
 interface GameData {
-  rooms: RoomData[]
+  rooms: RoomData[],
+  currentProgressLevel: number,
 }
 
 interface GameExtras {

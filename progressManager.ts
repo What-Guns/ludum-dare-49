@@ -25,6 +25,8 @@ export function setProgressLevel(level: number) {
   currentLevelData = newData;
 }
 
+export function getProgressLevel() { return currentLevel };
+
 (window as any).setProgressLevel = setProgressLevel;
 
 export function isDoorUnlocked(doorName: string): boolean {
