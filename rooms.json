@@ -70,7 +70,6 @@
               "@path": "./resource-spawner.js",
               "x": 872,
               "y": 257,
-              "brewTime":500,
               "resourceType": "coin"
             }
           ]

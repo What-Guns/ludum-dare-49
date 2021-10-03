@@ -11,14 +11,12 @@ export class ResourceSpawner implements Thing {
   y: number;
   readonly width: number;
   readonly height: number;
-  brewTime: number;
 
-  constructor(readonly material: Material, readonly worldImage: HTMLImageElement, {x, y, brewTime}: ResourceSpawnerData) {
+  constructor(readonly material: Material, readonly worldImage: HTMLImageElement, {x, y}: ResourceSpawnerData) {
     this.x = x;
     this.y = y;
     this.width = worldImage.width;
     this.height = worldImage.height;
-    this.brewTime = brewTime;
     this.hudWindow = new HudItemWindow();
     this.hudWindow.image = worldImage.src;
     this.hudWindow.itemName = material.name;
@@ -38,7 +36,6 @@ export class ResourceSpawner implements Thing {
     return {
       x: this.x,
       y: this.y,
-      brewTime: this.brewTime,
       resourceType,
     };
   }
@@ -66,7 +63,6 @@ export class ResourceSpawner implements Thing {
 export interface ResourceSpawnerData {
   x: number;
   y: number;
-  brewTime: number;
   resourceType: MaterialType;
 }
 

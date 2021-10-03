@@ -53,7 +53,7 @@ export const materials: {[key: string]: Material} = {
     inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/coin_1fa99.png',
     worldImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/coin_1fa99.png',
   },
-  'firewrood': {
+  'firewood': {
     name: 'Firewood',
     description: 'combustable dead trees',
     effect: 'wooden',
