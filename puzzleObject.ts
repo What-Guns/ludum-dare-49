@@ -1,4 +1,4 @@
-import { HudItemWindow } from "./hud.js";
+import { hideHudItemWindow, makeHudItemWindow } from "./hud.js";
 import { loadImage } from "./loader.js";
 import { Thing } from "./main.js";
 import { Room } from "./room.js";
@@ -56,7 +56,6 @@ export type PuzzleObjectType = keyof typeof puzzleObjects;
 
 @Serializable('./puzzleObject.js')
 export class PuzzleObjectSpawner implements Thing {
-  private hudWindow: HudItemWindow;
   x: number;
   y: number;
   readonly width: number;
@@ -68,13 +67,6 @@ export class PuzzleObjectSpawner implements Thing {
     this.y = y;
     this.width = worldImage.width;
     this.height = worldImage.height;
-    this.hudWindow = new HudItemWindow({
-      image: worldImage.src,
-      name: puzzleObject.name,
-      traits: [],
-      description: puzzleObject.description,
-      onTake: () => this.take(),
-    });
   }
   
   static async deserialize(data: PuzzleObjectData) {
@@ -99,14 +91,21 @@ export class PuzzleObjectSpawner implements Thing {
 
   doClick(x: number, y: number) {
     if(!this.isUnderPointer(x, y)) {
-      this.hudWindow.visible = false;
+      hideHudItemWindow();
       return false;
     }
     if (!this.isVisible()) return false;
     if(!this.room?.player?.canReach(this.x, this.y)) return false;
-    this.hudWindow.x = this.x;
-    this.hudWindow.y = this.y;
-    this.hudWindow.visible = true;
+    const hudWindow = makeHudItemWindow({
+      image: this.puzzleObject.inventoryImageUrl!,
+      name: this.puzzleObject.name,
+      traits: [],
+      description: this.puzzleObject.description,
+      onTake: () => this.take(),
+    });
+    hudWindow.x = this.x;
+    hudWindow.y = this.y;
+    hudWindow.visible = true;
     return true;
   }
 

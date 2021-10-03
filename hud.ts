@@ -12,7 +12,7 @@ export function resizePopupContainer(room: Room) {
 }
 
 export class HudItemWindow {
-  private element: HTMLElement;
+  element: HTMLElement;
 
   set traitsList(list: string[]) {
     const traitsList = this.element.querySelector('ul')!;
@@ -50,25 +50,31 @@ export class HudItemWindow {
     this.element.style.visibility = isVisible ? 'visible' : 'hidden';
   }
 
-  constructor({onTake, ...params}: HudItemWindowParams) {
+  constructor() {
     const template = document.getElementById('hud-window') as HTMLTemplateElement;
     this.element = template.content.firstElementChild!.cloneNode(true) as HTMLDivElement;
-    this.image = params.image;
-    this.itemName = params.name;
-    this.traitsList = params.traits;
-    this.itemDescription = params.description;
-    const takeButton = this.element.querySelector('[data-take-item]') as HTMLButtonElement;
-    if(onTake) {
-      takeButton.addEventListener('click', () => {
-        onTake();
-        this.visible = false;
-      })
-    } else {
-      takeButton.style.display = 'none';
-    }
     popupContainer.appendChild(this.element);
   }
 }
+
+const _hudItemWindow = new HudItemWindow();
+export function makeHudItemWindow({onTake, ...params}: HudItemWindowParams): HudItemWindow {
+  _hudItemWindow.image = params.image;
+  _hudItemWindow.itemName = params.name;
+  _hudItemWindow.traitsList = params.traits;
+  _hudItemWindow.itemDescription = params.description;
+  const takeButton = _hudItemWindow.element.querySelector('[data-take-item]') as HTMLButtonElement;
+  if(onTake) {
+    takeButton.addEventListener('click', () => {
+      onTake();
+      _hudItemWindow.visible = false;
+    })
+  } else {
+    takeButton.style.display = 'none';
+  }
+  return _hudItemWindow;
+}
+export function hideHudItemWindow() { _hudItemWindow.visible = false }
 
 interface HudItemWindowParams {
   image: string;

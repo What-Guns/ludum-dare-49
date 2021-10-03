@@ -1,12 +1,11 @@
 import {Room} from './room.js';
 import {Thing} from './main.js';
 import {Serializable} from './serialization.js';
-import { HudItemWindow } from './hud.js';
+import { hideHudItemWindow, makeHudItemWindow } from './hud.js';
 import { materials, MaterialType, Material} from './material.js';
 
 @Serializable('./resource-spawner.js')
 export class ResourceSpawner implements Thing {
-  private hudWindow: HudItemWindow;
   x: number;
   y: number;
   readonly width: number;
@@ -18,13 +17,6 @@ export class ResourceSpawner implements Thing {
     this.y = y;
     this.width = worldImage.width;
     this.height = worldImage.height;
-    this.hudWindow = new HudItemWindow({
-      image: worldImage.src,
-      name: material.name,
-      traits: [material.effect],
-      description: material.description,
-      onTake: () => this.take(),
-    });
   }
 
   static async deserialize(data: ResourceSpawnerData) {
@@ -45,13 +37,20 @@ export class ResourceSpawner implements Thing {
 
   doClick(x: number, y: number) {
     if(!this.isUnderPointer(x, y)) {
-      this.hudWindow.visible = false;
+      hideHudItemWindow();
       return false;
     } 
     if(!this.room?.player?.canReach(this.x, this.y)) return false;
-    this.hudWindow.x = this.x;
-    this.hudWindow.y = this.y;
-    this.hudWindow.visible = true;
+    const hudWindow = makeHudItemWindow({
+      image: this.material.inventoryImageUrl!,
+      name: this.material.name,
+      traits: [this.material.effect],
+      description: this.material.description,
+      onTake: () => this.take(),
+    });
+    hudWindow.x = this.x;
+    hudWindow.y = this.y;
+    hudWindow.visible = true;
     return true;
   }
 
