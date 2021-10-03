@@ -1,6 +1,6 @@
 import { NpcType } from "./npc.js";
 
-const progressData = [
+export const progressData = [
   {
     level: 0,
     catDialog: 'Welcome to the cottage! Try, idk, picking things up.',
@@ -15,7 +15,7 @@ const progressData = [
   },
 ]
 
-let currentLevel = 1;
+let currentLevel = 0;
 let currentLevelData = progressData.find(d => d.level === currentLevel)!;
 
 export function setProgressLevel(level: number) {

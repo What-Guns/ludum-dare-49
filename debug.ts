@@ -1,6 +1,7 @@
 import {pointer} from './input.js';
 import {Thing} from './main.js';
 import {materials} from './material.js';
+import { getProgressLevel, progressData, setProgressLevel } from './progressManager.js';
 import {deserialize} from './serialization.js';
 
 export let debug = false;
@@ -82,3 +83,15 @@ for(const material of Object.keys(materials)) {
   option.selected = true;
   resourceSelector.appendChild(option);
 }
+
+const progressSelector = document.getElementById('progress-level-selector') as HTMLSelectElement;
+for (const level of progressData.map(d => d.level)) {
+  const option = document.createElement('option');
+  option.textContent = `${level}: ${progressData.find(d => d.level === level)!.unlockedDoors.toString()}`;
+  console.log('Checking progress level: ' + getProgressLevel() + ' vs ' + level)
+  if(getProgressLevel() === level) option.selected = true;
+  progressSelector.appendChild(option);
+}
+progressSelector.addEventListener('change', ev => {
+  setProgressLevel((ev.target as HTMLSelectElement).selectedIndex);
+});
