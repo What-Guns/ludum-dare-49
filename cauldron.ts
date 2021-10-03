@@ -1,20 +1,24 @@
 import {Thing} from './main.js';
 import {Serializable} from './serialization.js';
-import {ResourceSpawner} from './resource-spawner.js';
+import {MaterialType} from './material.js';
+import {CauldronViewer} from './cauldron_viewer.js';
 
-@Serializable('./cauldron.js')
+
+@Serializable('./cauldron.ts')
 export class Cauldron implements Thing {
+  
+  public thingy: MaterialType = 'coin'
   public timer = 0;
   public totalTime = 0;
   public timeOut = false;
-  readonly placedItems: ResourceSpawner[] = [];
-  public transformedItem: ResourceSpawner | null = null;
+  readonly placedItems: MaterialType[] = ['coin'];
+  public transformedItem: MaterialType | null = null;
   public hurryUp = this.totalTime / 3;
-
   readonly ITEM_CAPACITY = 5;
+  public cv :CauldronViewer
 
   constructor(public x: number, public y: number, public width: number, public height: number) {
-   
+    this.cv = new CauldronViewer(x, y, width, height, this)
   }
 
   tick(dt: number) {
@@ -59,7 +63,7 @@ export class Cauldron implements Thing {
     return Math.abs(x - this.x) < this.width && Math.abs(y - this.y) < this.height;
   }
 
-  putItem(itm: ResourceSpawner) {
+  putItem(itm: MaterialType) {
     if (this.placedItems.length >= this.ITEM_CAPACITY) {
       return this.denyItem();
     }
