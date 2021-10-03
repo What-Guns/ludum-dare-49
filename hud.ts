@@ -58,19 +58,47 @@ export class HudItemWindow {
 }
 
 const _hudItemWindow = new HudItemWindow();
-export function makeHudItemWindow({onTake, ...params}: HudItemWindowParams): HudItemWindow {
+export function makeHudItemWindow({onTake, onToss, onPlace, ...params}: HudItemWindowParams): HudItemWindow {
   _hudItemWindow.image = params.image;
   _hudItemWindow.itemName = params.name;
   _hudItemWindow.traitsList = params.traits;
   _hudItemWindow.itemDescription = params.description;
-  const takeButton = _hudItemWindow.element.querySelector('[data-take-item]') as HTMLButtonElement;
+  const buttonContainer = document.querySelector('#buttonContainer')!;
+  while(buttonContainer.firstChild) {
+    buttonContainer.removeChild(buttonContainer.firstChild);
+  }
+
   if(onTake) {
+    const takeButton = document.createElement('button');
+    takeButton.innerText = 'Take';
+    takeButton.setAttribute('data-take-item', '');
     takeButton.addEventListener('click', () => {
       onTake();
       _hudItemWindow.visible = false;
     })
-  } else {
-    takeButton.style.display = 'none';
+    buttonContainer.appendChild(takeButton);
+  }
+  
+  if(onPlace) {
+    const placeButton = document.createElement('button');
+    placeButton.innerText = 'Place';
+    placeButton.setAttribute('data-place-item', '');
+    placeButton.addEventListener('click', () => {
+      onPlace();
+      _hudItemWindow.visible = false;
+    })
+    buttonContainer.appendChild(placeButton);
+  }
+  
+  if(onToss) {
+    const tossButton = document.createElement('button');
+    tossButton.innerText = 'Toss';
+    tossButton.setAttribute('data-toss-item', '');
+    tossButton.addEventListener('click', () => {
+      onToss();
+      _hudItemWindow.visible = false;
+    })
+    buttonContainer.appendChild(tossButton);
   }
   return _hudItemWindow;
 }
@@ -82,6 +110,8 @@ interface HudItemWindowParams {
   traits: string[];
   description: string;
   onTake?: () => void;
+  onToss?: () => void;
+  onPlace?: () => void;
 }
 
 export class HudItemHotbar {
@@ -119,6 +149,11 @@ export class HudItemHotbar {
     slots[this.items.length - 1].appendChild(img);
   }
 
+  removeItemByName(name: string) {
+    const item = this.items.find(i => i.name === name);
+    if (item) this.removeItem(item);
+  }
+
   removeItem(item: HotbarItem) {
     const index = this.items.indexOf(item);
     if(index === -1) throw new Error(`Trying to remove an item from the hotbar that's not there.`);
@@ -152,5 +187,6 @@ export class HudItemHotbar {
 
 interface HotbarItem {
   imageUrl: string;
+  name: string,
   onActivate: () => void;
 }

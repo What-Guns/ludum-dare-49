@@ -1,7 +1,7 @@
 import {Serializable} from './serialization.js';
 import {loadImage} from './loader.js';
 import {Material, MaterialType, materials, getMaterialType} from './material.js';
-import {HudItemHotbar} from './hud.js';
+import {HudItemHotbar, makeHudItemWindow} from './hud.js';
 import {playSFX} from './audio.js';
 import {Room} from './room.js';
 import {Cauldron} from './cauldron.js';
@@ -78,15 +78,30 @@ export class Player {
     return this.heldPuzzleObjects.indexOf(obj) !== -1;
   }
 
+  tossPuzzleObject(obj: PuzzleObject) {
+    this.heldPuzzleObjects.splice(this.heldPuzzleObjects.indexOf(obj), 1);
+    this.hotbar.removeItemByName(obj.name);
+  }
+
   takePuzzleObject(obj: PuzzleObject, silent: boolean) {
     this.heldPuzzleObjects.push(obj);
     if(!silent) {
       playSFX('chimes-002');
     }
+    const imageUrl = obj.inventoryImageUrl ?? obj.spawnerImageUrl ?? PLACEHOLDER_IMAGE_URL;
     const hotbarItem = {
-      imageUrl: obj.inventoryImageUrl ?? obj.spawnerImageUrl ?? PLACEHOLDER_IMAGE_URL,
+      imageUrl,
+      name: obj.name,
       onActivate: () => {
-        toast('Cool key, yo');
+        const hudItemWindow = makeHudItemWindow({
+          image: imageUrl,
+          name: obj.name,
+          traits: [],
+          description: obj.description,
+          onToss: () => { this.tossPuzzleObject(obj) },
+          onPlace: () => { console.log('tried to place ' + obj.name)},
+        });
+        hudItemWindow.visible = true;
       }
     };
     this.hotbar.addItem(hotbarItem);
@@ -114,6 +129,7 @@ export class Player {
     this.heldMaterials.push(mat);
     const hotbarItem = {
       imageUrl: mat.inventoryImageUrl ?? mat.worldImageUrl ?? PLACEHOLDER_IMAGE_URL,
+      name: mat.name,
       onActivate: () => {
         const [cauldron] = this.room!.getObjectsOfType(Cauldron);
         if(!cauldron) {
