@@ -6,6 +6,7 @@ import {TransitionDirection} from './door.js';
 import './audio.js';
 import { Toast } from './toast.js';
 import './toast.js';
+import './progressManager.js';
 
 @Serializable('./game.js')
 export class Game {

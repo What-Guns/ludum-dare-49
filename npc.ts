@@ -1,5 +1,6 @@
 import { startSpeech, stopSpeech } from "./audio.js";
 import { Thing } from "./main.js";
+import { getDialog } from "./progressManager.js";
 import { RpgTextBox } from "./rpgTextBox.js";
 import {Serializable, pluck} from './serialization.js';
 
@@ -36,7 +37,7 @@ export class Npc implements Thing {
   doClick(x: number, y: number): boolean {
     if (!this.isUnderPointer(x, y)) return false;
     this.textbox.visible = true;
-    this.textbox.textContent = "I'm an NPC! I may look like an ordinary purple square, but I'm actually ... a monster? Of some kind?";
+    this.textbox.textContent = getDialog(this.npcType);
     
     stopSpeech();
     const { sample, timeBetweenSamples, variance, shift } = Npc.speechParams[this.npcType];
@@ -81,4 +82,4 @@ interface SpeechParams {
   shift: number
 }
 
-type NpcType = "CAT" | "GHOST";
+export type NpcType = "CAT" | "GHOST";
