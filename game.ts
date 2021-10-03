@@ -20,6 +20,7 @@ export class Game {
   private nextRoom: [string, string, TransitionDirection]|null = null;
   private wasPointerActive = false;
   private transition: Transition|null = null;
+  private needsToSave = false;
 
   constructor(public readonly canvas: HTMLCanvasElement) {
     this.ctx = canvas.getContext('2d')!;
@@ -47,7 +48,12 @@ export class Game {
   }
 
   save() {
+    this.needsToSave = true;
+  }
+
+  private saveImmediately() {
     localStorage.setItem('game-state', JSON.stringify(this.getState()));
+    this.needsToSave = false;
   }
 
   tick(dt: number) {
@@ -66,6 +72,7 @@ export class Game {
         this.nextRoom = null;
       }
     }
+    if(this.needsToSave) this.saveImmediately();
   }
 
   draw() {

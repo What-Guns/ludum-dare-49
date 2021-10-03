@@ -88,9 +88,9 @@ export class Player {
     console.log(this.room?.getObjectsOfType(Cauldron));
   }
 
-  takePuzzleObject(obj: PuzzleObject, silent: boolean) {
+  takePuzzleObject(obj: PuzzleObject, isInitializing: boolean) {
     this.heldPuzzleObjects.push(obj);
-    if(!silent) {
+    if(!isInitializing) {
       playSFX('chimes-002');
     }
     const imageUrl = obj.inventoryImageUrl ?? obj.spawnerImageUrl ?? PLACEHOLDER_IMAGE_URL;
@@ -110,14 +110,16 @@ export class Player {
       }
     };
     this.hotbar.addItem(hotbarItem);
-    window.game!.save();
+    if(!isInitializing) {
+      window.game!.save();
+    }
   }
 
   hasMaterial(mat: Material): boolean {
     return this.heldMaterials.indexOf(mat) !== -1;
   }
 
-  takeMaterial(mat: Material, silent = false) {
+  takeMaterial(mat: Material, isInitializing = false) {
     if(this.heldMaterials.length >= this.materialInventorySize) {
       playSFX('bad-job-4');
       toast('You can’t hold that many things.');
@@ -128,7 +130,7 @@ export class Player {
       toast('You’ve already got one of those.');
       return;
     }
-    if(!silent) {
+    if(!isInitializing) {
       playSFX('great-jearb-06');
     }
     this.heldMaterials.push(mat);
@@ -156,7 +158,9 @@ export class Player {
       }
     };
     this.hotbar.addItem(hotbarItem);
-    window.game!.save();
+    if(!isInitializing) {
+      window.game!.save();
+    }
   }
 }
 
