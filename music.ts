@@ -100,6 +100,7 @@ export class Music {
     const gain = audioContext.createGain();
     source.connect(gain);
     gain.connect(destination);
+    source.loop = true;
     source.start(0);
     return gain;
   }
