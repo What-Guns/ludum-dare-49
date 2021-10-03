@@ -203,12 +203,50 @@ ul {
   }
 }
 
-.welcomeFooter {
+#welcome {
+  background-color: #F6F6F6;
+}
+
+.welcome-footer {
   position: absolute;
   bottom: 15px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#welcome-links {
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  font-family: 'Yusei Magic', sans-serif;
+  font-size: medium;
+  color: #212121;
+  align-self: center;
+  margin-right: 5px;
 }
+
+.welcome-button-container {
+  width: 100%;
+  text-align: center;
+}
+
+.title-button {
+  all: unset;
+  font-family: 'Yusei Magic', sans-serif;
+  display: block;
+  font-size: xxx-large;
+  margin: auto;
+  color: #212121;
+}
+
+.title-button:hover {
+  color: #6D9886;
+}
+
+.title-button:disabled {
+  color: #D9CAB3;
+}
+
+
