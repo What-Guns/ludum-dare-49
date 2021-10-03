@@ -1,20 +1,25 @@
 import {Serializable} from './serialization.js';
 import {loadImage} from './loader.js';
 import {Material, MaterialType, materials, getMaterialType} from './material.js';
+import {HudItemHotbar} from './hud.js';
 
 @Serializable('./player.js')
 export class Player {
   public x: number;
   public y: number;
   public targetX: number;
+  private readonly hotbar = new HudItemHotbar();
+  private materialInventorySize: number;
 
   readonly heldMaterials: Material[];  
 
-  constructor({x, y, heldMaterials = []}: PlayerData, private standingImage: HTMLImageElement, private walkingImage: HTMLImageElement) {
+  constructor({x, y, heldMaterials = [], materialInventorySize}: PlayerData, private standingImage: HTMLImageElement, private walkingImage: HTMLImageElement) {
     this.x = x;
     this.y = y;
     this.targetX = x;
     this.heldMaterials = heldMaterials.map(type => materials[type]);
+    this.materialInventorySize = materialInventorySize ?? 5;
+    this.hotbar.setCapacity(this.materialInventorySize);
   }
 
   static async deserialize(playerData: PlayerData) {
@@ -56,12 +61,26 @@ export class Player {
       x: this.x,
       y: this.y,
       heldMaterials: this.heldMaterials.map(getMaterialType),
+      materialInventorySize: this.materialInventorySize,
     };
   }
 
   takeMaterial(mat: Material) {
-    if(this.heldMaterials.indexOf(mat) !== -1) return;
+    if(this.heldMaterials.length >= this.materialInventorySize) {
+      alert('You can’t hold that many things.');
+      return;
+    }
+    if(this.heldMaterials.indexOf(mat) !== -1) {
+      alert('You’ve already got one of those.');
+      return;
+    }
     this.heldMaterials.push(mat);
+    this.hotbar.addItem({
+      imageUrl: mat.inventoryImageUrl ?? mat.worldImageUrl ?? PLACEHOLDER_IMAGE_URL,
+      onActivate: () => {
+        alert(`TODO: use ${mat.name}`);
+      }
+    });
     window.game!.save();
   }
 }
@@ -70,4 +89,7 @@ interface PlayerData {
   x: number;
   y: number;
   heldMaterials: MaterialType[];
+  materialInventorySize?: number;
 }
+
+const PLACEHOLDER_IMAGE_URL = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";

@@ -102,26 +102,27 @@ body.debug #debug-controls {
 }
 
 .hudItemHotbarList {
-  display: inline;
+  display: inline-grid;
   list-style-type: none;
-  padding: 0px;
+  padding: 5px;
+  gap: 5px;
+  grid-auto-flow: column;
+  grid-template-rows: 40px;
+  grid-auto-columns: 40px;
+  background-color: darkblue;
 }
 
 .hudHotbarItem {
-  display: inline;
+  display: inline-block;
   list-style-type: none;
   margin-right: 0px;
+  background-color: darkgray;
+  position: relative;
 }
 
 .hudHotbarItem > img {
-  border-left: 5px darkblue solid;
-  border-top: 5px darkblue solid;
-  border-bottom: 5px darkblue solid;
-  background-color: darkgray;
-}
-
-.hudHotbarItem:last-of-type > img {
-  border-right: 5px darkblue solid;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .hudHotbarItem.selected > img {

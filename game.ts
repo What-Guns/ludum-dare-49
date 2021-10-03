@@ -1,6 +1,5 @@
 import {pointer} from './input.js';
 import {Player} from './player.js';
-import { HudItemHotbar } from './hud.js';
 import {Room, RoomData} from './room.js';
 import {Door} from './door.js';
 import {serialize, Serializable, deserialize} from './serialization.js';
@@ -16,17 +15,13 @@ export class Game {
 
   room: Room|null = null;
   private ctx: CanvasRenderingContext2D;
-  hotbar = new HudItemHotbar();
   private nextRoom: [string, string, TransitionDirection]|null = null;
   private wasPointerActive = false;
   private transition: Transition|null = null;
 
   constructor(canvas: HTMLCanvasElement) {
     this.ctx = canvas.getContext('2d')!;
-    this.hotbar.imgSrcList = HudItemHotbar.defaultList;
-    this.hotbar.redrawItems();
     window.game = this;
-    (window as any).hotbar = this.hotbar;
   }
 
   static async deserialize(data: GameData, {canvas}: GameExtras)  {

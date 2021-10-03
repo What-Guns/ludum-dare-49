@@ -1,4 +1,3 @@
-import { playBGM, playSFX, playSpeech } from "./audio.js";
 import {Room} from './room.js';
 
 const popupContainer = document.getElementById('popup-window-container') as HTMLDivElement;
@@ -12,7 +11,7 @@ export function resizePopupContainer(room: Room) {
   popupContainer.style.height = room.height+'px';
 }
 
-class HudItemWindow {
+export class HudItemWindow {
   private element: HTMLElement;
 
   set traitsList(list: string[]) {
@@ -79,69 +78,48 @@ interface HudItemWindowParams {
   onTake?: () => void;
 }
 
-class HudItemHotbar {
+export class HudItemHotbar {
   readonly itemWidth = '40px';
   readonly itemHeight = '40px';
-  private _capacity = 5;
+  private readonly items: HotbarItem[] = [];
   private _selectedIndex = 0;
 
   private element = document.createElement('div');
   private _itemList = document.createElement('ul');
-  private _imageSrcList: string[] = [];
 
   constructor() {
     this.element.classList.add('hudWindow', 'hudItemHotbar');
 
     this._itemList.classList.add('hudItemHotbarList');
     this.element.appendChild(this._itemList);
-    this.element.addEventListener('mousedown', ev => {
-      ev.stopPropagation();
-      const clickedItem = ev.composedPath()[1];
-      const clickedIndex = Array.from(this._itemList.childNodes).findIndex(el => el === clickedItem);
-      if (clickedIndex > -1) this.selectedIndex = clickedIndex;
-      if (clickedIndex === 0) playBGM('banjo');
-      if (clickedIndex === 1) playBGM('crystal');
-      if (clickedIndex === 2) playSpeech('meow', 12, 130, 1.15, 1.1);
-      if (clickedIndex === 3) playSFX('splat');
-    })
     document.body.appendChild(this.element);
   }
 
-  redrawItems() {
+  setCapacity(capacity: number) {
     while (this._itemList.firstChild) this._itemList.removeChild(this._itemList.firstChild);
-    for(let i=0; i<this._capacity; i++) {
+    for(let i = 0; i < capacity; i++) {
       const li = document.createElement('li');
       li.classList.add('hudHotbarItem');
-      if (i == this.selectedIndex) {
-        li.classList.add('selected');
-      }
+      li.addEventListener('click', () => this.clicked(i));
       this._itemList.appendChild(li);
-
-      const img = document.createElement('img');
-      img.setAttribute('height', this.itemHeight);
-      img.setAttribute('width', this.itemWidth);
-      if (i < this._imageSrcList.length) {
-        img.setAttribute('src', this._imageSrcList[i]);
-      }
-      li.appendChild(img);
-    } 
+    }
   }
 
-  set capacity(c: number) {
-    this._capacity = c;
-    this.redrawItems();
+  addItem(item: HotbarItem) {
+    this.items.push(item);
+    const slots = Array.from(this._itemList.querySelectorAll('li'));
+    if(this.items.length > slots.length) {
+      throw new Error(`Overencumbered!`);
+    }
+    const img = document.createElement('img');
+    img.src = item.imageUrl;
+    slots[this.items.length - 1].appendChild(img);
   }
 
-  set imgSrcList(srcList: string[]) {
-    this._imageSrcList = srcList;
-    this.redrawItems();
+  private clicked(clickedIndex: number) {
+    this.items[clickedIndex]?.onActivate();
   }
 
-  setImageAt(index: number, src: string) {
-    this._imageSrcList[index] = src;
-    this.redrawItems();
-  }
-  
   set selectedIndex(index: number) {
     this._selectedIndex = index;
     console.log(`Selecting ${this._selectedIndex} in hotbar`);
@@ -150,13 +128,9 @@ class HudItemHotbar {
       if (index == i) element.classList.add('selected');
     });
   }
-
-  static defaultList = [
-    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/banjo_1fa95.png",
-    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/crystal-ball_1f52e.png",
-    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/cat_1f408.png",
-    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/jack-o-lantern_1f383.png",
-  ]
-
 }
-export { HudItemWindow, HudItemHotbar }
+
+interface HotbarItem {
+  imageUrl: string;
+  onActivate: () => void;
+}
