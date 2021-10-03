@@ -11,8 +11,7 @@ export class Player {
   public targetX: number;
   private readonly hotbar = new HudItemHotbar();
   private materialInventorySize: number;
-
-  readonly heldMaterials: Material[] = [];
+  private readonly heldMaterials: Material[] = [];
 
   constructor({x, y, heldMaterials = [], materialInventorySize}: PlayerData, private standingImage: HTMLImageElement, private walkingImage: HTMLImageElement) {
     this.x = x;
