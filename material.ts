@@ -1,5 +1,5 @@
 /** A thing that goes in your pocket, or in a cauldron. Cannot exist in the world. */
-interface Material {
+export interface Material {
   name: string;
   effect: Effect;
   description: string;

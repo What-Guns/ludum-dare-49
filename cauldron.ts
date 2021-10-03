@@ -2,15 +2,13 @@ import {Thing} from './main.js';
 import {Serializable} from './serialization.js';
 import {ResourceSpawner} from './resource-spawner.js';
 
-
 @Serializable('./cauldron_hud.ts')
 export class Cauldron implements Thing {
-  thingy = new ResourceSpawner(50,50,32,32,500,'coin');
 
   public timer = 0;
   public totalTime = 0;
   public timeOut = false;
-  readonly placedItems: ResourceSpawner[] = [this.thingy];
+  readonly placedItems: ResourceSpawner[] = [];
   public transformedItem: ResourceSpawner | null = null;
   public hurryUp = this.totalTime / 3;
 

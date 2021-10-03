@@ -1,33 +1,45 @@
 import {Thing} from './main.js';
 import {Serializable} from './serialization.js';
+import {loadImage} from './loader.js';
 import { HudItemWindow } from './hud.js';
-import { materials } from './material.js';
+import { materials, MaterialType, Material} from './material.js';
 
 @Serializable('./resource-spawner.js')
 export class ResourceSpawner implements Thing {
   private hudWindow: HudItemWindow;
-  constructor(public x: number, public y: number, public width: number, public height: number, public brewTime: number, public resource: keyof typeof materials) {
-    const material = materials[resource];
-    if(!material) throw new Error(`Cannot find material with name ${resource}`);
+  x: number;
+  y: number;
+  readonly width: number;
+  readonly height: number;
+  brewTime: number;
+
+  constructor(readonly material: Material, readonly worldImage: HTMLImageElement, {x, y, brewTime}: ResourceSpawnerData) {
+    this.x = x;
+    this.y = y;
+    this.width = worldImage.width;
+    this.height = worldImage.height;
+    this.brewTime = brewTime;
     this.hudWindow = new HudItemWindow();
-    this.hudWindow.image = material.worldImageUrl ?? "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";
+    this.hudWindow.image = worldImage.src;
     this.hudWindow.itemName = material.name;
     this.hudWindow.traitsList = [material.effect];
     this.hudWindow.itemDescription = material.description;
   }
 
-  static async deserialize({x, y, width, height, brewTime, resource}: ResourceSpawnerData) {
-    return Promise.resolve(new ResourceSpawner(x, y, width, height, brewTime, resource));
+  static async deserialize(data: ResourceSpawnerData) {
+    const material = materials[data.resourceType];
+    if(!material) throw new Error(`Cannot find material with name ${data.resourceType}`);
+    const image = await loadImage(material.worldImageUrl ?? material.inventoryImageUrl ?? PLACEHOLDER_IMAGE_URL);
+    return new ResourceSpawner(material, image, data);
   }
 
   serialize(): ResourceSpawnerData {
+    const resourceType = Object.entries(materials).find(([_key, value]) => value === this.material)![0];
     return {
       x: this.x,
       y: this.y,
-      width: this.width,
-      height: this.height,
       brewTime: this.brewTime,
-      resource: this.resource,
+      resourceType,
     };
   }
 
@@ -47,21 +59,15 @@ export class ResourceSpawner implements Thing {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    ctx.fillStyle = 'blue';
-    ctx.fillRect(this.x - this.width/2, this.y - this.height/2, this.width, this.height);
-  }
-
-  debugResize(evt: WheelEvent) {
-    this.width += evt.deltaX / 50;
-    this.height -= evt.deltaY / 50;
+    ctx.drawImage(this.worldImage, this.x - this.width / 2, this.y - this.height/2);
   }
 }
 
 export interface ResourceSpawnerData {
   x: number;
   y: number;
-  width: number;
-  height: number;
   brewTime: number;
-  resource: keyof typeof materials;
+  resourceType: MaterialType;
 }
+
+const PLACEHOLDER_IMAGE_URL = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";
