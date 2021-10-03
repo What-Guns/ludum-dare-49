@@ -94,12 +94,8 @@ export async function preloadMaterialImages() {
 }
 
 async function loadMaterial(material: Material) {
-  if(material.inventoryImageUrl) {
-    material.inventoryImage = await loadImage(material.inventoryImageUrl);
-  }
-  if(material.worldImageUrl) {
-    material.worldImage = await loadImage(material.worldImageUrl);
-  }
+  material.inventoryImage = await loadImage(material.inventoryImageUrl ?? PLACEHOLDER_IMAGE_URL);
+  material.worldImage = await loadImage(material.worldImageUrl ?? PLACEHOLDER_IMAGE_URL);
 }
 
 export const oppositeEffects: {[key in Effect]: Effect} = {
@@ -135,3 +131,5 @@ export function getMaterialType(material: Material) {
 }
 
 export type MaterialType = keyof typeof materials;
+
+const PLACEHOLDER_IMAGE_URL = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";

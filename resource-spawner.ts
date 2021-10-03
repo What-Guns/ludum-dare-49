@@ -1,7 +1,6 @@
 import {Room} from './room.js';
 import {Thing} from './main.js';
 import {Serializable} from './serialization.js';
-import {loadImage} from './loader.js';
 import { HudItemWindow } from './hud.js';
 import { materials, MaterialType, Material} from './material.js';
 
@@ -31,7 +30,7 @@ export class ResourceSpawner implements Thing {
   static async deserialize(data: ResourceSpawnerData) {
     const material = materials[data.resourceType];
     if(!material) throw new Error(`Cannot find material with name ${data.resourceType}`);
-    const image = material.worldImage ?? material.inventoryImage ?? await loadImage(PLACEHOLDER_IMAGE_URL);
+    const image = material.worldImage!;
     return new ResourceSpawner(material, image, data);
   }
 
@@ -74,5 +73,3 @@ export interface ResourceSpawnerData {
   y: number;
   resourceType: MaterialType;
 }
-
-const PLACEHOLDER_IMAGE_URL = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";
