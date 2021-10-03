@@ -4,6 +4,8 @@ import {serialize, Serializable, deserialize} from './serialization.js';
 import {debugTick} from './debug.js';
 import {TransitionDirection} from './door.js';
 import './audio.js';
+import { Toast } from './toast.js';
+import './toast.js';
 
 @Serializable('./game.js')
 export class Game {
@@ -11,6 +13,7 @@ export class Game {
   now = 0;
 
   room: Room|null = null;
+  toast?: Toast;
   private ctx: CanvasRenderingContext2D;
   private nextRoom: [string, string, TransitionDirection]|null = null;
   private wasPointerActive = false;
@@ -52,6 +55,7 @@ export class Game {
     }
     this.wasPointerActive = pointer.active;
     this.room?.tick(dt);
+    this.toast?.tick(dt);
     if(this.nextRoom) {
       try {
         this.goToDoorImmediately(...this.nextRoom)
@@ -95,6 +99,7 @@ export class Game {
     }
 
     this.room?.draw(this.ctx);
+    this.toast?.draw(this.ctx);
 
     if(pointer.active) {
       this.ctx.fillRect(pointer.x - 4, pointer.y - 1, 8, 2);

@@ -5,6 +5,7 @@ import {HudItemHotbar} from './hud.js';
 import {playSFX} from './audio.js';
 import {Room} from './room.js';
 import {Cauldron} from './cauldron.js';
+import { toast } from './toast.js';
 
 @Serializable('./player.js')
 export class Player {
@@ -72,12 +73,12 @@ export class Player {
   takeMaterial(mat: Material, silent = false) {
     if(this.heldMaterials.length >= this.materialInventorySize) {
       playSFX('bad-job-4');
-      alert('You can’t hold that many things.');
+      toast('You can’t hold that many things.');
       return;
     }
     if(this.heldMaterials.indexOf(mat) !== -1) {
       playSFX('bad-job-4');
-      alert('You’ve already got one of those.');
+      toast('You’ve already got one of those.');
       return;
     }
     if(!silent) {
@@ -89,12 +90,12 @@ export class Player {
       onActivate: () => {
         const [cauldron] = this.room!.getObjectsOfType(Cauldron);
         if(!cauldron) {
-          alert('This goes in a cauldron');
+          toast('This goes in a cauldron');
           return;
         }
 
         if(!this.canReach(cauldron.x, cauldron.y)) {
-          alert('You cannot reach that');
+          toast('You cannot reach that');
           return;
         }
 
