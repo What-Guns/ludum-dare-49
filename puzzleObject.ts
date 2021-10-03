@@ -30,6 +30,12 @@ export const puzzleObjects: {[key: string]: PuzzleObject} = {
     inventoryImageUrl: 'https://static.wikia.nocookie.net/zelda/images/0/09/Boss_Key_%28Ocarina_of_Time%29.png',
     spawnerImageUrl: 'https://static.wikia.nocookie.net/zelda/images/0/09/Boss_Key_%28Ocarina_of_Time%29.png',
   },
+  'hushroom': {
+    name: 'Hushroom',
+    description: 'This little mushroom will wilt if exposed to bright lights or loud sounds. Chill times and good vibes are this mushroom’s specialty!',
+    inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/radio_1f4fb.png',
+    spawnerImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/radio_1f4fb.png',
+  },
   'radio': {
     name: 'Broken Radio',
     description: 'This radio is looking fine, but it won\'t play any tunes! It seems like it has been drained of power, and just needs some energy to start playing again.',

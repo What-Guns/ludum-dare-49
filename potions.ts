@@ -28,23 +28,27 @@ export const potion: {[key: string]: Potion} = {
   'temp-transmutation-metal': {
     name: 'Temporary Potion of Metal Transmutation',
     recipe:  ['transmuters-draught', 'coin', 'morning-dew'],
-    color: '#ada168'
+    color: '#ada168',
+    applyTo: 'hushroom'
   },
   'temp-transmutation-wood': {
     name: 'Temporary Potion of Wood Transmutation',
     recipe: ['transmuters-draught', 'firewood', 'morning-dew'],
-    color: '#785a26'
+    color: '#785a26',
+    applyTo: 'hushroom'
   },
   'energy': {
     name: 'Potion of Energy',
     recipe: ['hushroom', 'anti-dote'],
     color: '#080fcc',
     inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/coin_1fa99.png',
+    applyTo: 'radio'
   },
   'fiery-flight': {
     name: 'Enduring Potion of Fiery Flight',
     recipe: ['doused-phoenix-feather','morning-dew','anti-dote'],
-    color: '#ff0000'
+    color: '#ff0000',
+    applyTo: 'hot-gravity-stone'
   },
   'ghostly': {
     name: 'Ghostly Potion',
