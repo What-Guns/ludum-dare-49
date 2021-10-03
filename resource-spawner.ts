@@ -41,8 +41,9 @@ export class ResourceSpawner implements Thing {
       return false;
     } 
     if(!this.room?.player?.canReach(this.x, this.y)) return false;
+    const image = this.material.inventoryImageUrl ?? this.material.worldImageUrl ?? PLACEHOLDER_IMAGE_URL;
     const hudWindow = makeHudItemWindow({
-      image: this.material.inventoryImageUrl!,
+      image,
       name: this.material.name,
       traits: [this.material.effect],
       description: this.material.description,
@@ -72,3 +73,5 @@ export interface ResourceSpawnerData {
   y: number;
   resourceType: MaterialType;
 }
+
+const PLACEHOLDER_IMAGE_URL = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";

@@ -87,6 +87,8 @@ export const materials: {[key: string]: Material} = {
     effect: 'relaxed',
     brewTime: 10,
     expireTime: 20,
+    inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/mushroom_1f344.png',
+    worldImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/mushroom_1f344.png',
   },
   'ghost-tears': {
     name: 'Ghost Tears',

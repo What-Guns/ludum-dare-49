@@ -96,8 +96,9 @@ export class PuzzleObjectSpawner implements Thing {
     }
     if (!this.isVisible()) return false;
     if(!this.room?.player?.canReach(this.x, this.y)) return false;
+    const image = this.puzzleObject.inventoryImageUrl ?? this.puzzleObject.spawnerImageUrl ?? PLACEHOLDER_IMAGE_URL
     const hudWindow = makeHudItemWindow({
-      image: this.puzzleObject.inventoryImageUrl!,
+      image: image,
       name: this.puzzleObject.name,
       traits: [],
       description: this.puzzleObject.description,
