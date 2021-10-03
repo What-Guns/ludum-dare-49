@@ -198,7 +198,7 @@ export class Player {
           traits: [],
           description: 'a potion',
           onToss: () => this.tossPotion(potion),
-          onApply: () => { alert(`i would like to apply, please, this potion of ${potion.name}`); },
+          onApply: () => this.applyPotion(potion),
         });
         const { height } = hudItemWindow.element.getBoundingClientRect();
         const { top, left } = this.hotbar._itemList.getBoundingClientRect();
