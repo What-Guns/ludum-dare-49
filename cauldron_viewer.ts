@@ -12,12 +12,6 @@ export class CauldronViewer implements Thing {
   constructor(public x: number, public y: number, public width: number, public height: number, public readonly cauldron: Cauldron) {
     this.viewItems = cauldron.placedItems
   }
-  // public async loadThem() {
-  //   const theImages = await Promise.all(someImageUrls.map(async url => loadImage(url)))
-  // }
-  //  static async load() {
-  //     CauldronViewer.IMAGES = await Promise.all(CauldronViewer.urlArray(this.viewItems).map(loadImage));
-  // }
 
    urlArray (itm: MaterialType[]){
     return itm.map(x=>materials[x].inventoryImageUrl)

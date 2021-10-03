@@ -31,7 +31,7 @@ export class ResourceSpawner implements Thing {
   static async deserialize(data: ResourceSpawnerData) {
     const material = materials[data.resourceType];
     if(!material) throw new Error(`Cannot find material with name ${data.resourceType}`);
-    const image = await loadImage(material.worldImageUrl ?? material.inventoryImageUrl ?? PLACEHOLDER_IMAGE_URL);
+    const image = material.worldImage ?? material.inventoryImage ?? await loadImage(PLACEHOLDER_IMAGE_URL);
     return new ResourceSpawner(material, image, data);
   }
 
