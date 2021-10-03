@@ -1,11 +1,13 @@
 import {loadImage} from './loader.js';
 import { MaterialType } from './material.js';
+import {PuzzleObjectType} from './puzzleObject.js'
 
 /** A thing that goes in your pocket and applied to puzzle object, player, and possibly an NPC. Cannot exist in the world. */
 export interface Potion {
   name: string;
   recipe?: MaterialType[]
   color: string;
+  applyTo?: PuzzleObjectType,
   inventoryImageUrl?: string;
   inventoryImage?: HTMLImageElement;
 }
@@ -14,12 +16,14 @@ export const potion: {[key: string]: Potion} = {
   'ensmallening': {
     name: 'Potion of Ensmallening',
     recipe: ['mouse-whisker'],
-    color: '#4e79de'
+    color: '#4e79de',
+    applyTo: 'key',
   },
   'embiggening': {
     name: 'Potion of Embiggening',
     recipe: ['mouse-whisker', 'anti-dote'],
-    color: '#ff7417'
+    color: '#ff7417',
+    applyTo: 'key'
   },
   'temp-transmutation-metal': {
     name: 'Temporary Potion of Metal Transmutation',
