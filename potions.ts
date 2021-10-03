@@ -1,13 +1,14 @@
+import { Game } from './game.js';
 import {loadImage} from './loader.js';
 import { MaterialType } from './material.js';
 import {PuzzleObjectType} from './puzzleObject.js'
 
-/** A thing that goes in your pocket and applied to puzzle object, player, and possibly an NPC. Cannot exist in the world. */
+/** A thing that goes in your pocket and applied to puzzle object, material, or player. Cannot exist in the world. */
 export interface Potion {
   name: string;
   recipe?: MaterialType[]
   color: string;
-  applyTo?: PuzzleObjectType,
+  applyTo?: PuzzleObjectType | MaterialType,
   inventoryImageUrl?: string;
   inventoryImage?: HTMLImageElement;
 }
@@ -54,6 +55,8 @@ export const potion: {[key: string]: Potion} = {
     name: 'Ghostly Potion',
     recipe: ['gravity-stone-piece', 'anti-dote','ghost-tears','morning-dew'],
     color: '#a6339c'
+    //applyTo: You look in a mirror and question... Am I a Player? Am I just a Thing? 
+    //         Or I am the final puzzele object waiting to be solved....
   },
   'unstable': {
     name: 'Unstable Potion',
