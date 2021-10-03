@@ -40,6 +40,10 @@ canvas, #popup-window-container {
   bottom: 0;
 }
 
+#audio-fieldset label {
+  display: block;
+}
+
 body.debug #debug-controls {
   display: inline-block;
 }
