@@ -51,6 +51,7 @@ addEventListener('load', async () => {
 async function startGame(gameData: any, canvas: HTMLCanvasElement) {
   document.getElementById('welcome')!.remove();
   const game = await deserialize(gameData, {canvas}) as Game;
+  document.getElementById('loading')!.remove();
 
   let lastTick: number;
   function main(timestamp: number) {
