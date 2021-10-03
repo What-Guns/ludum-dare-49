@@ -206,6 +206,20 @@
           "name": "ladder"
         },
         {
+          "@type": "TrapDoor",
+          "@path": "./door.js",
+          "x": 809,
+          "y": 207,
+          "height": 129,
+          "width": 146,
+          "target": [
+            "greenhouse",
+            "floor",
+            "up"
+          ],
+          "name": "ladder"
+        },
+        {
           "@type": "ResourceSpawner",
           "@path": "./resource-spawner.js",
           "x": 356,
