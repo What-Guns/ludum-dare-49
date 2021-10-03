@@ -44,13 +44,6 @@ export const materials: {[key: string]: Material} = {
     brewTime: 5,
     expireTime: 10,
   },
-  'gunpowder': {
-    name: 'Gunpowder',
-    description: 'Mixing sulfur, saltpeter, and charcoal makes an explosive powder! Please be careful with this stuff, there’s a great deal of power stored here.',
-    effect: 'strong',
-    brewTime: 5,
-    expireTime: 10,
-  },
   'morning-dew': {
     name: 'Morning Dew',
     description: 'Overnight, water condenses on grass and leaves. Early in the morning, you can feel this water, but it will evaporate before long!',
@@ -104,20 +97,22 @@ export const materials: {[key: string]: Material} = {
     brewTime: 5,
     expireTime: 10,
   },
-  'feather': {
-    name: 'Feather',
-    description: 'Birds for 2000. Birds of a this flock together. What is feather?',
+  'doused-phoenix-feather': {
+    name: 'Doused Phoenix Feather',
+    description: 'A feather than has fallen up from the ashes',
     effect: 'hovering',
     brewTime: 5,
     expireTime: 10,
   },
-  'fire-salts': {
-    name: 'Fire Salts™',
-    description: 'Take a hot bath with Fire Salts™',
-    effect: 'hot',
+  'gravity-stone-piece': {
+    name: 'Gravity Stone Piece',
+    effect: 'heavy',
+    description: 'After floating up the flue the Enduring Potion of Fiery Flight wore off the Gravity Stone sending it crashing on the ground, breaking it to pieces. The pieces are still really heavy and so you need to time to recover picking each one up.',
+    inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/rock_1faa8.png',
+    worldImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/rock_1faa8.png',
     brewTime: 5,
-    expireTime: 10,
-  },
+    expireTime: 10
+  }
 };
 
 export async function preloadMaterialImages() {
