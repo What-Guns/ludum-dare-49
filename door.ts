@@ -54,7 +54,7 @@ export class Door extends Portal {
     const floorSlope = (this.room!.vanishingPoint.y - this.y) / (this.room!.vanishingPoint.x - this.x);
     const ceilingSlope = (this.room!.vanishingPoint.y - (this.y - this.height)) / (this.room!.vanishingPoint.x - this.x);
 
-    ctx.fillStyle = 'brown';
+    ctx.fillStyle =  'brown';
     ctx.beginPath();
     ctx.moveTo(this.x - this.width / 2, this.y - floorSlope * (this.width / 2));
     ctx.lineTo(this.x + this.width / 2, this.y + floorSlope * (this.width / 2));
@@ -76,7 +76,6 @@ export class Door extends Portal {
     if(adjustedY < (this.y - this.height)) return false;
     return true;
   }
-
 }
 
 @Serializable('./door.js')
@@ -103,6 +102,36 @@ export class Ladder extends Portal {
   }
 }
 
+@Serializable('./door.js')
+export class TrapDoor extends Portal {
+  draw(ctx: CanvasRenderingContext2D) {
+    if(!debug) return;
+    const leftSlope = (this.room!.vanishingPoint.y - this.y) / (this.room!.vanishingPoint.x - (this.x - this.width / 2));
+    const rightSlope = (this.room!.vanishingPoint.y - this.y) / (this.room!.vanishingPoint.x - (this.x + this.width / 2));
+
+    ctx.fillStyle = 'brown';
+    ctx.beginPath();
+    ctx.moveTo(this.x - this.width / 2 - (1/leftSlope) * (this.height/2), this.y - this.height / 2);
+    ctx.lineTo(this.x + this.width / 2 - (1/rightSlope) * (this.height/2), this.y - this.height / 2);
+    ctx.lineTo(this.x + this.width / 2 + (1/rightSlope) * (this.height/2), this.y + this.height / 2);
+    ctx.lineTo(this.x - this.width / 2 + (1/leftSlope) * (this.height/2), this.y + this.height / 2);
+    ctx.fill();
+
+    ctx.fillStyle = 'lime';
+    ctx.textAlign = 'center';
+    ctx.font = '24px sans-serif';
+    ctx.fillText(this.target.join(', '), this.x, this.y);
+  }
+
+  override isUnderPointer(x: number, y: number) {
+    if(Math.abs(y - this.y) > this.height / 2) return false;
+    const slope = (this.room!.vanishingPoint.y - y) / (this.room!.vanishingPoint.x - x);
+    const adjustedX = x - (1/slope) * (y - this.y);
+    return Math.abs(adjustedX - this.x) < this.width / 2;
+  }
+}
+
 type DoorData = Pick<Door, 'x'|'y'|'height'|'width'|'target'|'name'>;
 
 export type TransitionDirection = 'right'|'left'|'up'|'down';
+

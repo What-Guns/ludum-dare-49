@@ -38,20 +38,6 @@
           "name": "west"
         },
         {
-          "@type": "Door",
-          "@path": "./door.js",
-          "x": 1128,
-          "y": 781,
-          "height": 522,
-          "width": 150,
-          "target": [
-            "cellar",
-            "ladder",
-            "down"
-          ],
-          "name": "east"
-        },
-        {
           "@type": "Ladder",
           "@path": "./door.js",
           "x": 427,
@@ -119,6 +105,20 @@
             "right"
           ],
           "name": "east"
+        },
+        {
+          "@type": "TrapDoor",
+          "@path": "./door.js",
+          "x": 497,
+          "y": 871,
+          "height": 99,
+          "width": 239,
+          "target": [
+            "cellar",
+            "ladder",
+            "down"
+          ],
+          "name": "floor"
         },
         {
           "@type": "Npc",
@@ -199,8 +199,8 @@
           "height": 569,
           "width": 100,
           "target": [
-            "hall",
-            "east",
+            "greenhouse",
+            "floor",
             "up"
           ],
           "name": "ladder"
