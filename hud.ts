@@ -1,6 +1,6 @@
 import {Room} from './room.js';
 import {Thing} from './main.js';
-import { getFilterFromColor, HSBColor } from './crap.js';
+import { getFilterFromColor, HSBColor, fractionalize } from './crap.js';
 
 const popupContainer = document.getElementById('popup-window-container') as HTMLDivElement;
 
@@ -25,7 +25,7 @@ export class HudItemWindow {
   }
 
   set brewTime(time: {min: number, max: number}|undefined) {
-    this.element.querySelector('.hudItemBrewTime')!.textContent = time ? `Brew time: between ${time.min} and ${time.max} seconds.` : '';
+    this.element.querySelector('.hudItemBrewTime')!.textContent = time ? `Brew time: between ${fractionalize(time.min)} and ${fractionalize(time.max)} seconds.` : '';
   }
 
   set itemName(name: string) {

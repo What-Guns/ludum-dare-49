@@ -23,3 +23,11 @@ export type HSBColor = {
 export function getFilterFromColor(color: HSBColor) {
   return `hue-rotate(${color.hue}deg) saturate(${color.saturation}%) brightness(${color.brightness}%)`
 }
+
+export function fractionalize(n: number) {
+  if(n === 0.5) return '½';
+  if(n === 2.5) return '2½';
+  if(n === 0.25) return '¼';
+  if(n === .75) return '¾';
+  return n.toString();
+}
