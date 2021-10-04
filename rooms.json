@@ -372,12 +372,17 @@
           "type": "GHOST"
         },
         {
-          "@type": "PuzzleObjectSpawner",
-          "@path": "./puzzleObject.js",
-          "x": 1009,
-          "y": 622,
+          "@type": "AnimatedObject",
+          "@path": "./animated-object.js",
+          "x": 955,
+          "y": 780,
           "z": 0,
-          "puzzleObjectType": "broken-radio"
+          "animating": true,
+          "frameRate": 5,
+          "visible": true,
+          "frames": [
+            "sprites/Radio.png"
+          ]
         },
         {
           "@type": "ResourceSpawner",
