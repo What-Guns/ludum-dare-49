@@ -3,6 +3,7 @@ import {Thing} from './main.js';
 import {materials} from './material.js';
 import { getProgressLevel, progressData, setProgressLevel } from './progressManager.js';
 import {deserialize, isSerializable, serialize} from './serialization.js';
+import {puzzleObjects} from './puzzleObject.js';
 
 export let debug = false;
 export let held: Held|null = null;
@@ -74,6 +75,10 @@ const debugFunctions = {
     const mat = materials[resourceSelector!.value]!;
     window.game!.room!.player!.takeMaterial(mat, false);
   },
+  givePuzzleObject() {
+    const p = puzzleObjects[puzzleObjectSelector.value]!;
+    window.game!.room!.player!.takePuzzleObject(p, false);
+  },
   save() {
     localStorage.setItem('game-state', JSON.stringify(window.game?.getState()));
   },
@@ -96,6 +101,14 @@ for(const material of Object.keys(materials)) {
   option.textContent = option.value = material;
   option.selected = true;
   resourceSelector.appendChild(option);
+}
+
+const puzzleObjectSelector = document.getElementById('puzzle-object-selector') as HTMLSelectElement;
+for(const puzzleObject of Object.keys(puzzleObjects)) {
+  const option = document.createElement('option');
+  option.textContent = option.value = puzzleObject;
+  option.selected = true;
+  puzzleObjectSelector.appendChild(option);
 }
 
 const progressSelector = document.getElementById('progress-level-selector') as HTMLSelectElement;
