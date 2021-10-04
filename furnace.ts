@@ -17,7 +17,8 @@ export class Furnace implements Thing {
   height: number;
   contents?: PuzzleObject | Material;
   room?: Room;
-  furnaceTime = 0;
+  requiredTime = 0;
+  remainingTime = 0;
   finishedCooking = true;
 
   constructor(data: FurnaceData) {
@@ -37,11 +38,11 @@ export class Furnace implements Thing {
       toast('The ' + obj.name + ' melts into a puddle!');
     } else if (obj === puzzleObjects['gravity-stone']) {
       this.contents = obj;
-      this.furnaceTime = 5;
+      this.requiredTime = this.remainingTime = 5;
       this.finishedCooking = false;
     } else if (obj === puzzleObjects['hot-gravity-stone']) {
       this.contents = obj;
-      this.furnaceTime = 0.5;
+      this.requiredTime = this.remainingTime = 0.5;
       this.finishedCooking = false;
     } else if (obj === puzzleObjects['hot-floating-gravity-stone']) {
       toast('The stone floated up the flue! Maybe it\'s upstairs...');
@@ -49,7 +50,7 @@ export class Furnace implements Thing {
     } else if (obj === puzzleObjects['hot-temporarily-floating-gravity-stone']) {
       toast('The stone starts to rise up the flue!');
       this.contents = obj;
-      this.furnaceTime = 2;
+      this.requiredTime = this.remainingTime = 2;
       this.finishedCooking = false;
     } else {
       toast('The ' + obj.name + ' burns to ash!')
@@ -60,8 +61,8 @@ export class Furnace implements Thing {
   tick(dt: number) {
     if (!this.contents) return;
     if (this.finishedCooking) return;
-    this.furnaceTime -= dt;
-    if (this.furnaceTime < 0) this.finishCooking();
+    this.remainingTime -= dt;
+    if (this.remainingTime < 0) this.finishCooking();
   }
 
   finishCooking() {
@@ -117,6 +118,18 @@ export class Furnace implements Thing {
     if(debug) {
       ctx.fillStyle = 'darkred';
       ctx.fillRect(this.x - this.width/2, this.y - this.height/2, this.width, this.height);
+    }
+
+    if(!this.finishedCooking) {
+      const amount = this.remainingTime / this.requiredTime;
+      const UP = -Math.PI / 2;
+      const TAU = 2 * Math.PI;
+      ctx.fillStyle = 'orange';
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y);
+      ctx.arc(this.x, this.y, 64, UP, UP + TAU * (1-amount), false);
+      ctx.lineTo(this.x, this.y);
+      ctx.fill();
     }
   }
 
