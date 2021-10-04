@@ -5,7 +5,7 @@ export const progressData = [
     name: 'initial',
     catDialog: 'Welcome to the cottage! Try, idk, picking things up.',
     ghostDialog: 'You definitely should not be in the attic yet',
-    unlockedRooms: ['foyer', 'greenhouse', 'hall']
+    unlockedRooms: ['foyer', 'greenhouse', 'hall', 'locked']
   },
   {
     name: 'got-key',

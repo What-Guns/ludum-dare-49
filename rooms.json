@@ -481,7 +481,40 @@
       },
       "floorHeight": 920,
       "background": ["./backgrounds/lockedroom1.png", "./backgrounds/lockedroom2.png"],
-      "things": []
+      "things": [
+        {
+          "@type": "PuzzleObjectSpawner",
+          "@path": "./puzzleObject.js",
+          "x": 905,
+          "y": 707,
+          "z": -1,
+          "puzzleObjectType": "key"
+        },
+        {
+          "@type": "Door",
+          "@path": "./door.js",
+          "x": 220,
+          "y": 926,
+          "height": 522,
+          "width": 150,
+          "target": [
+            "hall",
+            "north",
+            "left"
+          ],
+          "name": "left"
+        },
+        {
+          "@type": "Npc",
+          "@path": "./npc.js",
+          "x": 652,
+          "y": 666,
+          "z": 0,
+          "width": 100,
+          "height": 100,
+          "type": "RUTABAGA"
+        }
+      ]
     }
   ],
   "currentProgressLevel": 0
