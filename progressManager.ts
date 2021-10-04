@@ -83,6 +83,7 @@ export const progressData = [
     name: 'drank-ghostly-potion',
     catDialog: 'Look at you, you\'re transparent! Quick, go through the locked door before it wears off!',
     ghostDialog: 'hee hee you look like me, thats awesome',
+    rutabagaDialog: 'Goodness, where did you come from? Please use that potion over there to transform me back!',
     unlockedRooms: ['foyer', 'greenhouse', 'hall', 'cellar', 'attic', 'locked']
   },
 ]
