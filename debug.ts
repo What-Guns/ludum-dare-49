@@ -114,7 +114,7 @@ for(const puzzleObject of Object.keys(puzzleObjects)) {
 const progressSelector = document.getElementById('progress-level-selector') as HTMLSelectElement;
 for (let level = 0; level < progressData.length; level++) {
   const option = document.createElement('option');
-  option.textContent = `${level}: ${progressData[level].unlockedRooms.toString()}`;
+  option.textContent = `${progressData[level].name}: ${progressData[level].unlockedRooms.toString()}`;
   if(getProgressLevel() === level) option.selected = true;
   progressSelector.appendChild(option);
 }

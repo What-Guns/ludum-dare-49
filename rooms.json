@@ -240,6 +240,15 @@
             "sprites/Kindaopenhatch.png",
             "sprites/Closedhatch.png"
           ]
+        },
+        {
+          "@type": "ResourceSpawner",
+          "@path": "./resource-spawner.js",
+          "x": 1442,
+          "y": 669,
+          "z": -2,
+          "resourceType": "hushroom",
+          "minimumLevel": 9
         }
       ]
     },

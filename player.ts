@@ -10,7 +10,7 @@ import { toast } from './toast.js';
 import { getPuzzleObjectType, PuzzleObject, puzzleObjects, PuzzleObjectType } from './puzzleObject.js';
 import { Furnace } from './furnace.js';
 import {removeFromArray} from './crap.js';
-import { increaseProgressLevel } from './progressManager.js';
+import { increaseProgressLevelName } from './progressManager.js';
 
 @Serializable('./player.js')
 export class Player {
@@ -120,7 +120,7 @@ export class Player {
     if(!isInitializing) {
       playSFX('chimes-002');
     }
-    if (obj.progressLevel) increaseProgressLevel(obj.progressLevel);
+    if (obj.progressLevelName) increaseProgressLevelName(obj.progressLevelName);
     const imageUrl = obj.inventoryImageUrl ?? obj.spawnerImageUrl ?? PLACEHOLDER_IMAGE_URL;
     const hotbarItem = {
       imageUrl,

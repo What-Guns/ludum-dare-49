@@ -8,7 +8,7 @@ import './audio.js';
 import { toast, Toast } from './toast.js';
 import './toast.js';
 import './progressManager.js';
-import { getProgressLevel, isRoomUnlocked, increaseProgressLevel } from './progressManager.js';
+import { getProgressLevel, isRoomUnlocked, increaseProgressLevel, increaseProgressLevelName } from './progressManager.js';
 import { materials } from './material.js';
 import { puzzleObjects } from './puzzleObject.js';
 
@@ -180,7 +180,7 @@ export class Game {
       if (item === 'hushroom' && player.hasMaterial(materials['hushroom'])) {
         player.tossMaterial(materials['hushroom']);
         toast('The hushroom withers from the loud music!');
-        increaseProgressLevel(8);
+        increaseProgressLevelName('destroyed-hushroom');
       } else if (item === 'gravity-stone' && player.hasPuzzleObject(puzzleObjects['gravity-stone'])) {
         player.tossPuzzleObject(puzzleObjects['gravity-stone']);
         toast('The gravity stone is too heavy to carry up a ladder!');
@@ -195,10 +195,10 @@ export class Game {
         // TODO increase progress level
       } else if (item === 'wooden-hushroom' && player.hasMaterial(materials['wooden-hushroom'])) {
         player.tossMaterial(materials['wooden-hushroom']);
-        increaseProgressLevel(9);
+        increaseProgressLevelName('recovered-hushroom');
       } else if (item === 'metal-hushroom' && player.hasMaterial(materials['metal-hushroom'])) {
         player.tossMaterial(materials['metal-hushroom']);
-        increaseProgressLevel(9);
+        increaseProgressLevelName('recovered-hushroom');
       } 
     })
   }

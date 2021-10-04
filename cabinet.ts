@@ -5,7 +5,7 @@ import {Room} from './room.js';
 import {ResourceSpawner, ResourceSpawnerData} from './resource-spawner.js';
 import {puzzleObjects} from './puzzleObject.js';
 import {loadImage} from './loader.js';
-import { increaseProgressLevel } from './progressManager.js';
+import { increaseProgressLevelName } from './progressManager.js';
 
 // the left edge of the cabinet is transparent.
 const CLICKABLE_WIDTH = 128;
@@ -45,7 +45,7 @@ export class Cabinet implements Thing {
       if(player.hasPuzzleObject(puzzleObjects['small-key'])) {
         this.room!.adoptThing(this.bottomItem);
         this.bottomItem = null;
-        increaseProgressLevel(6);
+        increaseProgressLevelName('unlocked-bottom-cabinet');
         window.game!.save();
       } else if(player.hasPuzzleObject(puzzleObjects['key'])) {
         toast('This key is too big!')
@@ -59,7 +59,7 @@ export class Cabinet implements Thing {
       if (player.hasPuzzleObject(puzzleObjects['big-key'])) {
         this.room?.adoptThing(this.topItem);
         this.topItem = null;
-        increaseProgressLevel(7);
+        increaseProgressLevelName('unlocked-top-cabinet');
         window.game!.save();
       } else if(player.hasPuzzleObject(puzzleObjects['key'])) {
         toast('This key is too small!')
