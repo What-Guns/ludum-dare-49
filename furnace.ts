@@ -5,6 +5,7 @@ import {Thing} from './main.js';
 import {debug} from './debug.js';
 import {toast} from './toast.js';
 import { PuzzleObject, puzzleObjects } from './puzzleObject.js';
+import { increaseProgressLevelName } from './progressManager.js';
 
 
 @Serializable('./furnace.js')
@@ -44,7 +45,7 @@ export class Furnace implements Thing {
       this.finishedCooking = false;
     } else if (obj.name === 'Hot Floating Gravity Stone') {
       toast('The stone floated up the flue! Maybe it\'s upstairs...');
-      // TODO progress
+      increaseProgressLevelName('recovered-gravity-stone');
     } else {
       toast('The ' + obj.name + ' burns to ash!')
     }

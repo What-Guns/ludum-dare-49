@@ -51,8 +51,32 @@ export const progressData = [
   },
   {
     name: 'returned-radio',
-    catDialog: 'Something about the gravity stone, I bet',
-    ghostDialog: 'welcome to the spooooooooky attic! ha ha i mean its spooky because i live here. can i interest you in some ghost tears',
+    catDialog: 'To finish your potion, you\'ll need a Gravity Stone. There are some in the cellar, but it\'ll be tough to lift out of there...',
+    ghostDialog: 'welcome to the spooooooooky attic, ha ha i mean its spooky because i live here, can i interest you in some ghost tears',
+    unlockedRooms: ['foyer', 'greenhouse', 'hall', 'cellar', 'attic']
+  },
+  {
+    name: 'dropped-gravity-stone',
+    catDialog: 'No luck? I think you\'ll need to use the furnace down there; certain potions only work on really, really hot items',
+    ghostDialog: 'do you want more of my tears, no no i assure you its no trouble',
+    unlockedRooms: ['foyer', 'greenhouse', 'hall', 'cellar', 'attic']
+  },
+  {
+    name: 'heated-gravity-stone',
+    catDialog: 'I know there\'s a potion you can make to make that hot rock as light as a feather! If you make it, the rock should be no trouble.',
+    ghostDialog: 'do you want more of my tears, no no i assure you its no trouble',
+    unlockedRooms: ['foyer', 'greenhouse', 'hall', 'cellar', 'attic']
+  },
+  {
+    name: 'heated-floating-gravity-stone',
+    catDialog: 'Once the gravity stone is floating, put it back in the furnace and it should float up the flue!',
+    ghostDialog: 'do you want more of my tears, no no i assure you its no trouble',
+    unlockedRooms: ['foyer', 'greenhouse', 'hall', 'cellar', 'attic']
+  },
+  {
+    name: 'recovered-gravity-stone',
+    catDialog: 'That\'s fantastic! You should now have all of the ingredients you need to finish the last potion on the list!',
+    ghostDialog: 'do you want more of my tears, no no i assure you its no trouble',
     unlockedRooms: ['foyer', 'greenhouse', 'hall', 'cellar', 'attic']
   },
 ]

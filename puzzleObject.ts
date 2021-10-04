@@ -63,12 +63,14 @@ export const puzzleObjects: {[key: string]: PuzzleObject} = {
     description: 'This rock is smokin\' hot! Yeow! Also: still very very heavy!',
     inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/rock_1faa8.png',
     spawnerImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/rock_1faa8.png',
+    progressLevelName: 'heated-gravity-stone',
   },
   'hot-floating-gravity-stone': {
     name: 'Hot Floating Gravity Stone',
     description: 'This rock is smokin\' hot, and lighter than air! Put it back in the furnace and it will travel up the flue!',
     inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/rock_1faa8.png',
     spawnerImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/rock_1faa8.png',
+    progressLevelName: 'heated-floating-gravity-stone',
   },
 }
 
