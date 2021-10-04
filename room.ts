@@ -5,7 +5,7 @@ import {Player} from './player.js';
 import {Serializable, serialize, isSerializable, deserialize, pluck} from './serialization.js';
 import {Thing} from './main.js';
 import {debug} from './debug.js';
-import {loadImage} from './loader.js';
+import {loadImages} from './loader.js';
 import {ofType, Type} from './crap.js';
 import {pointer} from './input.js';
 import {translateAndScalePopupContainer, resizePopupContainer} from './hud.js';
@@ -28,6 +28,8 @@ export class Room {
   readonly pointer = {x: pointer.x, y: pointer.y};
 
   private _cursor = 'default';
+  private _animationTimer = 0;
+  private _animationIndex = 0;
 
   get cursor() {
     return this._cursor;
@@ -44,7 +46,7 @@ export class Room {
 
   player?: Player;
 
-  constructor(private readonly background: CanvasImageSource, private readonly roomData: RoomData) {
+  constructor(private readonly background: CanvasImageSource[], private readonly roomData: RoomData) {
     this.name = roomData.name;
     this.width = roomData.width;
     this.height = roomData.height;
@@ -54,7 +56,7 @@ export class Room {
   }
 
   static async deserialize(roomData: RoomData) {
-    const background = await loadImage(roomData.background);
+    const background = await loadImages(roomData.background);
     const room = new this(background, roomData);
     for(const thing of await Promise.all(roomData.things.map(x => deserialize(x, {room}) as Promise<Thing>))) {
       room.adoptThing(thing);
@@ -94,6 +96,11 @@ export class Room {
     for(const thing of this.things) {
       thing.tick?.(dt);
     }
+    this._animationTimer -= dt;
+    if (this._animationTimer <= 0) {
+      this._animationIndex = Math.floor(Math.random() * this.background.length);
+      this._animationTimer = Math.random() + 0.5
+    }
   }
 
   draw(ctx: CanvasRenderingContext2D) {
@@ -101,7 +108,8 @@ export class Room {
     this.doCameraStuff(ctx);
     ctx.translate(this.camera.x, 0);
     ctx.scale(this.camera.scale, this.camera.scale);
-    this.pattern = this.pattern ?? ctx.createPattern(this.background, 'no-repeat')!;
+    //this.pattern = this.pattern ?? ctx.createPattern(this.background, 'no-repeat')!;
+    this.pattern = ctx.createPattern(this.background[this._animationIndex], 'no-repeat')!;
     ctx.fillStyle = this.pattern!;
     ctx.fillRect(0, 0, this.width, this.height);
     for(const thing of this.things) {
@@ -178,7 +186,7 @@ export class Hall extends Room {
 
   private hatchAnimation?: AnimatedObject;
 
-  constructor(background: CanvasImageSource, roomData: RoomData) {
+  constructor(background: CanvasImageSource[], roomData: RoomData) {
     super(background, roomData);
   }
 
@@ -246,7 +254,7 @@ export class Hall extends Room {
 export interface RoomData {
   name: string;
   interacts?: string[];
-  background: string;
+  background: string[];
   things: object[];
   width: number;
   height: number;

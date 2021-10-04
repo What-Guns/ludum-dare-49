@@ -13,7 +13,7 @@
         "y": 564
       },
       "floorHeight": 950,
-      "background": "./backgrounds/foyer.png",
+      "background": ["./backgrounds/foyer1.png", "./backgrounds/foyer2.png"],
       "things": [
         {
           "@type": "ResourceSpawner",
@@ -156,7 +156,7 @@
         "y": 529
       },
       "floorHeight": 900,
-      "background": "./backgrounds/hall.png",
+      "background": ["./backgrounds/hall.png"],
       "interacts": [
         "metal-hushroom",
         "wooden-hushroom"
@@ -263,7 +263,7 @@
         "y": 549
       },
       "floorHeight": 925,
-      "background": "./backgrounds/Greenhouse.png",
+      "background": ["./backgrounds/Greenhouse1.png", "./backgrounds/Greenhouse2.png"],
       "interacts": [
         "hushroom",
         "gravity-stone",
@@ -328,7 +328,7 @@
         "y": 569
       },
       "floorHeight": 920,
-      "background": "./backgrounds/attic.png",
+      "background": ["./backgrounds/attic1.png", "./backgrounds/attic2.png"],
       "things": [
         {
           "@type": "TrapDoor",
@@ -383,7 +383,7 @@
         "y": 545
       },
       "floorHeight": 938,
-      "background": "./backgrounds/cellar.png",
+      "background": ["./backgrounds/cellar.png"],
       "things": [
         {
           "@type": "Furnace",

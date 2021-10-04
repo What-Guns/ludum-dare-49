@@ -7,6 +7,10 @@ export function loadImage(url: string) {
   });
 }
 
+export function loadImages(urls: string[]) {
+  return Promise.all(urls.map(async url => loadImage(url)));
+}
+
 export async function loadAudio(url: string, ctx: AudioContext) {
   const response = await fetch(url);
   if(!response.ok) {
