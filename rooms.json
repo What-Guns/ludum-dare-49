@@ -123,14 +123,6 @@
         {
           "@type": "ResourceSpawner",
           "@path": "./resource-spawner.js",
-          "x": 886,
-          "y": 524,
-          "z": -2,
-          "resourceType": "mouse-whisker"
-        },
-        {
-          "@type": "ResourceSpawner",
-          "@path": "./resource-spawner.js",
           "x": 419,
           "y": 814,
           "z": -2,
