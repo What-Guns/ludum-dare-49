@@ -3,7 +3,7 @@ import { NpcType } from "./npc.js";
 export const progressData = [
   {
     name: 'initial',
-    catDialog: 'Welcome to the cottage! You\'ll want to open that cabinet, to start with. WHy don\'t you look around and see if you can find a key?',
+    catDialog: 'Welcome to the cottage! You\'ll want to open that cabinet, to start with. Why don\'t you look around and see if you can find a key?',
     ghostDialog: 'You definitely should not be in the attic yet',
     rutabagaDialog: 'I feel like you cheated to get here. Shame!',
     unlockedRooms: ['foyer', 'greenhouse', 'hall', 'locked']
