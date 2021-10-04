@@ -361,6 +361,14 @@
           "y": 622,
           "z": 0,
           "puzzleObjectType": "broken-radio"
+        },
+        {
+          "@type": "ResourceSpawner",
+          "@path": "./resource-spawner.js",
+          "x": 208,
+          "y": 890,
+          "z": 0,
+          "resourceType": "doused-phoenix-feather"
         }
       ]
     },
