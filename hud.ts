@@ -41,6 +41,7 @@ export class HudItemWindow {
 
   set visible(isVisible: boolean) {
     this.element.style.visibility = isVisible ? 'visible' : 'hidden';
+    this.element.style.display = isVisible ? 'block' : 'none';
   }
 
   constructor() {
