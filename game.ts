@@ -12,6 +12,8 @@ import { getProgressLevel, isRoomUnlocked, increaseProgressLevel, increaseProgre
 import { materials } from './material.js';
 import { puzzleObjects } from './puzzleObject.js';
 
+let hasWarnedUserAboutLocalStorage = false;
+
 @Serializable('./game.js')
 export class Game {
   readonly rooms: Room[] = [];
@@ -55,7 +57,14 @@ export class Game {
   }
 
   private saveImmediately() {
-    localStorage.setItem('game-state', JSON.stringify(this.getState()));
+    try {
+      localStorage.setItem('game-state', JSON.stringify(this.getState()));
+    } catch (e) {
+      if(!hasWarnedUserAboutLocalStorage) {
+        alert(`Can't access local storage. Game will not be saved.`);
+      }
+      hasWarnedUserAboutLocalStorage = true;
+    }
     this.needsToSave = false;
   }
 

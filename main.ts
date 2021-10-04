@@ -31,15 +31,27 @@ addEventListener('load', async () => {
   init(canvas);
 
   document.getElementById('new-game-button')!.addEventListener('click', async () => {
-    localStorage.clear();
+    try {
+      localStorage.clear();
+    } catch (e) {
+      //whatever
+    }
     const gameData = await loadObject('./rooms.json');
     await startGame(gameData, canvas);
   });
 
-  continueButton.disabled = !localStorage.getItem('game-state');
+  let savedGame: any;
+  try {
+    savedGame = localStorage.getItem('game-state');
+  } catch (e) {
+    savedGame = null;
+    continueButton.remove();
+  }
+
+  continueButton.disabled = !savedGame;
 
   continueButton.addEventListener('click', async () => {
-    const gameData = JSON.parse(localStorage.getItem('game-state')!);
+    const gameData = JSON.parse(savedGame);
     await startGame(gameData, canvas);
   });
 
