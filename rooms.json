@@ -248,7 +248,7 @@
           "y": 669,
           "z": -2,
           "resourceType": "hushroom",
-          "minimumLevel": 9
+          "minimumLevel": "recovered-hushroom"
         }
       ]
     },

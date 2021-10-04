@@ -80,6 +80,7 @@ export function increaseProgressLevel(level: number) {
 
 export function getProgressLevel() { return currentLevel };
 export function getProgressLevelName() { return progressData[currentLevel].name }
+export function getProgressLevelIndex(name: string) { return progressData.findIndex(p => p.name === name) }
 
 export function isRoomUnlocked(roomName: string): boolean {
   return progressData[currentLevel].unlockedRooms.includes(roomName);

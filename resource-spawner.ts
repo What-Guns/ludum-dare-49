@@ -3,7 +3,7 @@ import {Thing} from './main.js';
 import {Serializable} from './serialization.js';
 import { hideHudItemWindow, makeHudItemWindow } from './hud.js';
 import { materials, MaterialType, Material} from './material.js';
-import { getProgressLevel } from './progressManager.js';
+import { getProgressLevel, getProgressLevelIndex } from './progressManager.js';
 import { debug } from './debug.js';
 
 @Serializable('./resource-spawner.js')
@@ -11,7 +11,7 @@ export class ResourceSpawner implements Thing {
   x: number;
   y: number;
   z: number;
-  minimumLevel: number;
+  minimumLevel?: string;
   readonly width: number;
   readonly height: number;
   room?: Room;
@@ -20,7 +20,7 @@ export class ResourceSpawner implements Thing {
     this.x = x;
     this.y = y;
     this.z = z ?? 0;
-    this.minimumLevel = minimumLevel || 0;
+    this.minimumLevel = minimumLevel;
     this.width = worldImage.width;
     this.height = worldImage.height;
   }
@@ -63,7 +63,7 @@ export class ResourceSpawner implements Thing {
 
   isVisible() {
     if (debug) return true;
-    if (this.minimumLevel > getProgressLevel()) return false;
+    if (this.minimumLevel && getProgressLevelIndex(this.minimumLevel) > getProgressLevel()) return false;
     return true;
   }
 
@@ -86,7 +86,7 @@ export interface ResourceSpawnerData {
   x: number;
   y: number;
   z: number;
-  minimumLevel?: number;
+  minimumLevel?: string;
   resourceType: MaterialType;
 }
 
