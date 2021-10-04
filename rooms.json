@@ -32,11 +32,13 @@
           "y": 782,
           "z": -1,
           "animating": true,
-          "frameRate": 2,
+          "frameRate": 4,
           "visible": true,
           "frames": [
             "sprites/Coals.png",
-            "sprites/Coalsglow.png"
+            "sprites/coals-glow-kindof.png",
+            "sprites/Coalsglow.png",
+            "sprites/coals-glow-kindof.png"
           ]
         },
         {
