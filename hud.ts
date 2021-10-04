@@ -71,7 +71,6 @@ export function makeHudItemWindow({onTake, onToss, onPlace, onApply, ...params}:
   if(onTake) {
     const takeButton = document.createElement('button');
     takeButton.innerText = 'Take';
-    takeButton.setAttribute('data-take-item', '');
     takeButton.addEventListener('click', () => {
       onTake();
       _hudItemWindow.visible = false;
@@ -82,7 +81,6 @@ export function makeHudItemWindow({onTake, onToss, onPlace, onApply, ...params}:
   if(onPlace) {
     const placeButton = document.createElement('button');
     placeButton.innerText = 'Place';
-    placeButton.setAttribute('data-place-item', '');
     placeButton.addEventListener('click', () => {
       onPlace();
       _hudItemWindow.visible = false;
@@ -93,7 +91,6 @@ export function makeHudItemWindow({onTake, onToss, onPlace, onApply, ...params}:
   if(onToss) {
     const tossButton = document.createElement('button');
     tossButton.innerText = 'Toss';
-    tossButton.setAttribute('data-toss-item', '');
     tossButton.addEventListener('click', () => {
       onToss();
       _hudItemWindow.visible = false;
@@ -102,20 +99,19 @@ export function makeHudItemWindow({onTake, onToss, onPlace, onApply, ...params}:
   }
 
   if(onApply) {
-    const placeButton = document.createElement('button');
-    placeButton.innerText = 'Apply';
-    placeButton.setAttribute('data-place-item', '');
-    placeButton.addEventListener('click', () => {
+    const applyButton = document.createElement('button');
+    applyButton.innerText = 'Use';
+    applyButton.addEventListener('click', () => {
       onApply();
       _hudItemWindow.visible = false;
     })
-    buttonContainer.appendChild(placeButton);
+    buttonContainer.appendChild(applyButton);
   }
   return _hudItemWindow;
 }
 export function hideHudItemWindow() { _hudItemWindow.visible = false }
 
-interface HudItemWindowParams {
+export interface HudItemWindowParams {
   image: string;
   name: string;
   traits: string[];

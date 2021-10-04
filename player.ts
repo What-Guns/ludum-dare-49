@@ -2,7 +2,7 @@ import {Serializable} from './serialization.js';
 import {loadImage} from './loader.js';
 import {Material, MaterialType, materials, getMaterialType} from './material.js';
 import {Potion, PotionType, getPotionType, potions} from './potions.js';
-import {HudItemHotbar, makeHudItemWindow} from './hud.js';
+import {HudItemHotbar, makeHudItemWindow, HudItemWindowParams} from './hud.js';
 import {playSFX} from './audio.js';
 import {Room} from './room.js';
 import {Cauldron} from './cauldron.js';
@@ -123,21 +123,14 @@ export class Player {
     const hotbarItem = {
       imageUrl,
       name: obj.name,
-      onActivate: () => {
-        const hudItemWindow = makeHudItemWindow({
-          image: imageUrl,
-          name: obj.name,
-          traits: [],
-          description: obj.description,
-          onToss: () => { this.tossPuzzleObject(obj) },
-          onPlace: () => { this.placePuzzleObject(obj) },
-        });
-        const { height } = hudItemWindow.element.getBoundingClientRect();
-        const { top, left } = this.hotbar._itemList.getBoundingClientRect();
-        hudItemWindow.y = top - height - 20;
-        hudItemWindow.x = left;
-        hudItemWindow.visible = true;
-      }
+      onActivate: () => this.showHudHotbarItemWindow({
+        image: imageUrl,
+        name: obj.name,
+        traits: [],
+        description: obj.description,
+        onToss: () => { this.tossPuzzleObject(obj) },
+        onPlace: () => { this.placePuzzleObject(obj) },
+      })
     };
     this.hotbar.addItem(hotbarItem);
     if(!isInitializing) {
@@ -161,31 +154,38 @@ export class Player {
     const hotbarItem = {
       imageUrl: mat.inventoryImageUrl ?? mat.worldImageUrl ?? PLACEHOLDER_IMAGE_URL,
       name: mat.name,
-      onActivate: () => {
-        const [cauldron] = this.room!.getObjectsOfType(Cauldron);
-        if(!cauldron) {
-          toast('This goes in a cauldron');
-          return;
-        }
-
-        if(!this.canReach(cauldron.x, cauldron.y)) {
-          toast('You cannot reach that');
-          return;
-        }
-
-        if(!cauldron.putItem(mat)) {
-          return;
-        }
-        this.hotbar.removeItem(hotbarItem);
-        this.heldMaterials.splice(this.heldMaterials.indexOf(mat), 1);
-        window.game!.save();
-      }
+      onActivate: () => this.showHudHotbarItemWindow({
+        name: mat.name,
+        description: mat.description,
+        image: mat.inventoryImageUrl!,
+        traits: [],
+        onApply: () => this.useMaterial(mat),
+      })
     };
     this.hotbar.addItem(hotbarItem);
     if(!isInitializing) {
       playSFX('great-jearb-06');
       window.game!.save();
     }
+  }
+
+  private useMaterial(mat: Material) {
+    const [cauldron] = this.room!.getObjectsOfType(Cauldron);
+    if(!cauldron) {
+      toast('This goes in a cauldron');
+      return;
+    }
+
+    if(!this.canReach(cauldron.x, cauldron.y)) {
+      toast('You cannot reach the cauldron.');
+      return;
+    }
+
+    if(!cauldron.putItem(mat)) {
+      return;
+    }
+    this.tossMaterial(mat);
+    window.game!.save();
   }
 
   takePotion(potionType: PotionType, isInitializing = false) {
@@ -196,31 +196,34 @@ export class Player {
     this.hotbar.addItem({
       imageUrl: potion.inventoryImageUrl,
       name: potion.name,
-      onActivate: () => {
-        const hudItemWindow = makeHudItemWindow({
-          name: potion.name,
-          image: potion.inventoryImageUrl,
-          traits: [],
-          description: 'a potion',
-          onToss: () => this.tossPotion(potion),
-          onApply: () => {
-            if (!this.applyPotion(potion)) {
-              toast(`You don’t have anything to apply that to.`);
-            }
-          },
-        });
-        const { height } = hudItemWindow.element.getBoundingClientRect();
-        const { top, left } = this.hotbar._itemList.getBoundingClientRect();
-        hudItemWindow.y = top - height - 20;
-        hudItemWindow.x = left;
-        hudItemWindow.visible = true;
-      },
+      onActivate: () => this.showHudHotbarItemWindow({
+        name: potion.name,
+        image: potion.inventoryImageUrl,
+        traits: [],
+        description: 'a potion',
+        onToss: () => this.tossPotion(potion),
+        onApply: () => {
+          if (!this.applyPotion(potion)) {
+            toast(`You don’t have anything to apply that to.`);
+          }
+        },
+      })
+
     });
 
     if(!isInitializing) {
       playSFX('great-jearb-06');
       window.game!.save();
     }
+  }
+
+  private showHudHotbarItemWindow(params: HudItemWindowParams) {
+    const hudItemWindow = makeHudItemWindow(params);
+    const { height } = hudItemWindow.element.getBoundingClientRect();
+    const { top, left } = this.hotbar._itemList.getBoundingClientRect();
+    hudItemWindow.y = top - height - 20;
+    hudItemWindow.x = left;
+    hudItemWindow.visible = true;
   }
 
   applyPotion(potion: Potion): boolean {

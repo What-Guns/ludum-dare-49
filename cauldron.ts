@@ -49,7 +49,10 @@ export class Cauldron implements Thing {
 
   doClick(x: number, y: number) {
     if(!this.isUnderPointer(x, y)) return false;
-    if(!this.brewing.length) return false;
+    if(!this.brewing.length) {
+      toast(`There’s nothing in here.`);
+      return true
+    }
     if(!this.room?.player) {
       alert('but who was potion?');
       return false;

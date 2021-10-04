@@ -1,11 +1,13 @@
 import {loadImage} from './loader.js';
 
+const PLACEHOLDER_IMAGE_URL = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";
+
 /** A thing that goes in your pocket, or in a cauldron. Cannot exist in the world. */
 export interface Material {
   name: string;
   effect: Effect;
   description: string;
-  inventoryImageUrl?: string;
+  inventoryImageUrl: string;
   worldImageUrl?: string;
   inventoryImage?: HTMLImageElement;
   worldImage?: HTMLImageElement;
@@ -43,6 +45,7 @@ export const materials: {[key: string]: Material} = {
     effect: 'smaller',
     brewTime: 5,
     expireTime: 10,
+    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
   },
   'morning-dew': {
     name: 'Morning Dew',
@@ -50,6 +53,7 @@ export const materials: {[key: string]: Material} = {
     effect: 'ephemeral',
     brewTime: 5,
     expireTime: 10,
+    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
   },
   'coin': {
     name: 'Coins',
@@ -66,6 +70,7 @@ export const materials: {[key: string]: Material} = {
     effect: 'wooden',
     brewTime: 5,
     expireTime: 10,
+    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
   },
   'anti-dote': {
     name: 'Anti-dote',
@@ -73,6 +78,7 @@ export const materials: {[key: string]: Material} = {
     effect: 'reversed',
     brewTime: 5,
     expireTime: 10,
+    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
   },
   'hushroom': {
     name: 'Hushroom',
@@ -107,6 +113,7 @@ export const materials: {[key: string]: Material} = {
     effect: 'incorporeal',
     brewTime: 5,
     expireTime: 10,
+    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
   },
   'transmuters-draught': {
     name: 'Transmuter’s Draught',
@@ -114,6 +121,7 @@ export const materials: {[key: string]: Material} = {
     effect: 'transmuted',
     brewTime: 5,
     expireTime: 10,
+    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
   },
   'doused-phoenix-feather': {
     name: 'Doused Phoenix Feather',
@@ -121,6 +129,7 @@ export const materials: {[key: string]: Material} = {
     effect: 'hovering',
     brewTime: 5,
     expireTime: 10,
+    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
   },
   'gravity-stone-piece': {
     name: 'Gravity Stone Piece',
@@ -176,4 +185,3 @@ export function getMaterialType(material: Material) {
 
 export type MaterialType = keyof typeof materials;
 
-const PLACEHOLDER_IMAGE_URL = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";
