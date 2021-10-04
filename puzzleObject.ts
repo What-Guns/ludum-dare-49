@@ -74,7 +74,7 @@ export const puzzleObjects: {[key: string]: PuzzleObject} = {
     progressLevelName: 'heated-floating-gravity-stone',
   },
   'hot-temporarily-floating-gravity-stone': {
-    name: 'Hot Floating Gravity Stone',
+    name: 'Hot Floating Gravity Stone ',
     description: 'This rock is smokin\' hot, and lighter than air! Put it back in the furnace and it will travel up the flue!',
     inventoryImageUrl: './sprites/Gravity_Stone.png',
     spawnerImageUrl: './sprites/Gravity_Stone.png',

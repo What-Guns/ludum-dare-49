@@ -283,7 +283,7 @@
         "gravity-stone",
         "hot-gravity-stone",
         "hot-floating-gravity-stone",
-        "hot-temporarily-gravity-stone"
+        "hot-temporarily-floating-gravity-stone"
       ],
       "things": [
         {

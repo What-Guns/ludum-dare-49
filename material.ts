@@ -113,7 +113,7 @@ export const materials: {[key: string]: Material} = {
     uselessInPotions: true,
   },
   'permanently-metal-hushroom': {
-    name: 'Metal Hushroom',
+    name: 'Metal Hushroom ',
     description: 'The hushroom looks a lot sturdier now! Heavy, too! But it’s not useful in potions like this.',
     effect: 'relaxed',
     brewTime: 0.000001,
@@ -135,7 +135,7 @@ export const materials: {[key: string]: Material} = {
     uselessInPotions: true,
   },
   'permanently-wooden-hushroom': {
-    name: 'Wooden Hushroom',
+    name: 'Wooden Hushroom ',
     description: 'The hushroom looks a lot sturdier now! But it’s not useful in potions like this.',
     effect: 'relaxed',
     brewTime: 0.000001,

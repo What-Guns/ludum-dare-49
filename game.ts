@@ -189,7 +189,7 @@ export class Game {
         player.tossPuzzleObject(puzzleObjects['hot-gravity-stone']);
         toast('The gravity stone is too hot and heavy to carry!');
         increaseProgressLevelName('dropped-gravity-stone');
-      } else if (item === 'hot-floating-gravity-stone' && player.hasPuzzleObject(puzzleObjects['hot-temporarily-floating-gravity-stone'])) {
+      } else if (item === 'hot-temporarily-floating-gravity-stone' && player.hasPuzzleObject(puzzleObjects['hot-temporarily-floating-gravity-stone'])) {
         player.tossPuzzleObject(puzzleObjects['hot-temporarily-floating-gravity-stone']);
         toast('The gravity stone is too hot to carry!');
         increaseProgressLevelName('dropped-gravity-stone');
