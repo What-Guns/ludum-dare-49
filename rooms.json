@@ -313,7 +313,7 @@
           "y": 1008,
           "z": 2,
           "resourceType": "gravity-stone-piece",
-          "minimumLevel": 10
+          "minimumLevel": "recovered-gravity-stone"
         }
       ]
     },
@@ -442,7 +442,8 @@
           "x": 995,
           "y": 826,
           "z": 0,
-          "puzzleObjectType": "gravity-stone"
+          "puzzleObjectType": "gravity-stone",
+          "minimumLevel": "returned-radio"
         }
       ]
     }
