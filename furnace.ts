@@ -35,17 +35,22 @@ export class Furnace implements Thing {
     }
     if (obj.name.includes('Key')) {
       toast('The ' + obj.name + ' melts into a puddle!');
-    } else if (obj.name === 'Gravity Stone') {
+    } else if (obj === puzzleObjects['gravity-stone']) {
       this.contents = obj;
       this.furnaceTime = 5;
       this.finishedCooking = false;
-    } else if (obj.name === 'Hot Gravity Stone') {
+    } else if (obj === puzzleObjects['hot-gravity-stone']) {
       this.contents = obj;
       this.furnaceTime = 0.5;
       this.finishedCooking = false;
-    } else if (obj.name === 'Hot Floating Gravity Stone') {
+    } else if (obj === puzzleObjects['hot-floating-gravity-stone']) {
       toast('The stone floated up the flue! Maybe it\'s upstairs...');
       increaseProgressLevelName('recovered-gravity-stone');
+    } else if (obj === puzzleObjects['hot-temporarily-floating-gravity-stone']) {
+      toast('The stone starts to rise up the flue!');
+      this.contents = obj;
+      this.furnaceTime = 2;
+      this.finishedCooking = false;
     } else {
       toast('The ' + obj.name + ' burns to ash!')
     }
@@ -61,18 +66,26 @@ export class Furnace implements Thing {
 
   finishCooking() {
     this.finishedCooking = true;
+    let didToast = false;
     if (!this.contents) {
 
-    } else if (this.contents.name === 'Gravity Stone') {
+    } else if (this.contents === puzzleObjects['gravity-stone']) {
       this.contents = puzzleObjects['hot-gravity-stone'];
-    } else if (this.contents.name === 'Hot Gravity Stone') {
+    } else if (this.contents === puzzleObjects['hot-gravity-stone']) {
       this.contents = puzzleObjects['hot-gravity-stone'];
-    } else if (this.contents.name === 'Hot Floating Gravity Stone') {
+    } else if (this.contents === puzzleObjects['hot-floating-gravity-stone']) {
       this.contents = puzzleObjects['hot-floating-gravity-stone'];
+    } else if (this.contents === puzzleObjects['hot-temporarily-floating-gravity-stone']) {
+      toast('…but it fell back down!');
+      didToast = true;
+      this.contents = puzzleObjects['hot-gravity-stone'];
     } else {
       toast('The ' + this.contents.name + ' burns to ash!')
+      didToast = true;
     }
-    toast('Done cooking ' + this.contents?.name); // heh heh, toast
+    if(!didToast) {
+      toast('Done cooking ' + this.contents?.name); // heh heh, toast
+    }
   }
 
   static async deserialize(data: FurnaceData) {

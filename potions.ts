@@ -124,6 +124,19 @@ export const potions: {[key: string]: Potion} = {
     turnsInto: 'hot-floating-gravity-stone',
     inventoryImageUrl: POTION_INVENTORY_URL,
   },
+  'temp-fiery-flight': {
+    name: 'Potion of Fiery Flight',
+    description: 'Apply this potion to a scalding hot object to make it take flight briefly!',
+    recipe: ['doused-phoenix-feather'],
+    color: {
+      hue: 0,
+      saturation: 100,
+      brightness: 200,
+    },
+    applyTo: 'hot-gravity-stone',
+    turnsInto: 'hot-temporarily-floating-gravity-stone',
+    inventoryImageUrl: POTION_INVENTORY_URL,
+  },
   'ghostly': {
     name: 'Ghostly Potion',
     description: 'Apply this potion to yourself and you will be able to phase right through doors!',
