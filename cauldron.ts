@@ -65,12 +65,11 @@ export class Cauldron implements Thing {
       if (createdPotion) {
         this.room.player.takePotion(getPotionType(createdPotion));
       } else {
-        console.log('You made something dubious')
+        this.room.player.takePotion('unstable')
       }
     } else {
-      toast('oh no');
+        this.room.player.takePotion('unstable')
     }
-    // TODO: actually produce a potion
     this.brewing.length = 0;
     return true;
   }
