@@ -59,6 +59,19 @@ export const potions: {[key: string]: Potion} = {
     turnsInto: 'metal-hushroom',
     inventoryImageUrl: POTION_INVENTORY_URL,
   },
+  'permanent-transmutation-metal': {
+    name: 'Potion of Metal Transmutation',
+    description: 'Apply this potion to an object to make it turn into metal!',
+    recipe:  ['transmuters-draught', 'coin'],
+    color: {
+      hue: 49,
+      saturation: 29,
+      brightness: 68,
+    },
+    applyTo: 'hushroom',
+    turnsInto: 'permanently-metal-hushroom',
+    inventoryImageUrl: POTION_INVENTORY_URL,
+  },
   'temp-transmutation-wood': {
     name: 'Temporary Potion of Wood Transmutation',
     description: 'Apply this potion to an object to make it turn into wood, for a little while anyway!',
@@ -70,6 +83,19 @@ export const potions: {[key: string]: Potion} = {
     },
     applyTo: 'hushroom',
     turnsInto: 'wooden-hushroom',
+    inventoryImageUrl: POTION_INVENTORY_URL,
+  },
+  'permanent-transmutation-wood': {
+    name: 'Potion of Wood Transmutation',
+    description: 'Apply this potion to an object to make it turn into wood!',
+    recipe: ['transmuters-draught', 'firewood'],
+    color: {
+      hue: 38,
+      saturation: 51,
+      brightness: 47,
+    },
+    applyTo: 'hushroom',
+    turnsInto: 'permanently-wooden-hushroom',
     inventoryImageUrl: POTION_INVENTORY_URL,
   },
   'energy': {

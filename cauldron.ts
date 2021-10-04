@@ -59,6 +59,13 @@ export class Cauldron implements Thing {
       return false;
     }
     const failureReason = this.brewing.map(({timeSpentInCauldron, material}) => {
+      if(material.uselessInPotions) {
+        return [
+          material.plural ? 'Those' : 'That',
+          material.name,
+          'can’t be used in potions in that state.',
+        ].join(' ');
+      }
       if(timeSpentInCauldron > material.expireTime) {
         return [
           material.plural ? 'Those' : 'That',

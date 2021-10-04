@@ -14,6 +14,7 @@ export interface Material {
   brewTime: number;
   expireTime: number;
   plural: boolean;
+  uselessInPotions?: boolean;
 }
 
 export type Effect = 
@@ -102,23 +103,47 @@ export const materials: {[key: string]: Material} = {
   },
   'metal-hushroom': {
     name: 'Metal Hushroom',
-    description: 'The hushroom looks a lot sturdier now! Heavy, too!',
+    description: 'The hushroom looks a lot sturdier now! Heavy, too! But it’s not useful in potions like this.',
     effect: 'relaxed',
-    brewTime: 10,
-    expireTime: 20,
+    brewTime: 0.000001,
+    expireTime: 0.000001,
     inventoryImageUrl: './sprites/metal-hushroom-inventory.png',
     worldImageUrl: './sprites/metal-hushroom.png',
     plural: false,
+    uselessInPotions: true,
+  },
+  'permanently-metal-hushroom': {
+    name: 'Metal Hushroom',
+    description: 'The hushroom looks a lot sturdier now! Heavy, too! But it’s not useful in potions like this.',
+    effect: 'relaxed',
+    brewTime: 0.000001,
+    expireTime: 0.000001,
+    inventoryImageUrl: './sprites/metal-hushroom-inventory.png',
+    worldImageUrl: './sprites/metal-hushroom.png',
+    plural: false,
+    uselessInPotions: true,
   },
   'wooden-hushroom': {
     name: 'Wooden Hushroom',
-    description: 'The hushroom looks a lot sturdier now! Lightweight, too!',
+    description: 'The hushroom looks a lot sturdier now! But it’s not useful in potions like this.',
     effect: 'relaxed',
-    brewTime: 10,
-    expireTime: 20,
+    brewTime: 0.000001,
+    expireTime: 0.000001,
     inventoryImageUrl: './sprites/wooden-hushroom-inventory.png',
     worldImageUrl: './sprites/wooden-hushroom.png',
     plural: false,
+    uselessInPotions: true,
+  },
+  'permanently-wooden-hushroom': {
+    name: 'Wooden Hushroom',
+    description: 'The hushroom looks a lot sturdier now! But it’s not useful in potions like this.',
+    effect: 'relaxed',
+    brewTime: 0.000001,
+    expireTime: 0.000001,
+    inventoryImageUrl: './sprites/wooden-hushroom-inventory.png',
+    worldImageUrl: './sprites/wooden-hushroom.png',
+    plural: false,
+    uselessInPotions: true,
   },
   'ghost-tears': {
     name: 'Ghost Tears',
