@@ -336,6 +336,12 @@ ul {
 
 #cheat-sheet footer {
   border-top: 2px solid brown;
+  text-align: center;
+}
+
+#cheat-sheet footer button {
+  margin: 1rem;
+  font-size: large;
 }
 
 .title-image {
