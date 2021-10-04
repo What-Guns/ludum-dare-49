@@ -313,6 +313,7 @@ ul {
   z-index: 11;
   background-color: tan;
   border: 8px solid brown;
+  animation: slide-down 1s 1;
 }
 
 #cheat-sheet header,
@@ -348,4 +349,16 @@ ul {
   height: 70%;
   text-align: center;
   margin: auto;
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateX(400px) translateY(400px) scale(0.75);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
