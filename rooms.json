@@ -74,26 +74,39 @@
           "materialInventorySize": 5
         },
         {
+          "@type": "AnimatedObject",
+          "@path": "./animated-object.js",
+          "x": 1065,
+          "y": 801,
+          "z": 2,
+          "animating": false,
+          "frameRate": 1,
+          "visible": true,
+          "frames": [
+            "sprites/table.png"
+          ]
+        },
+        {
           "@type": "Cabinet",
           "@path": "./cabinet.js",
-          "x": 400,
-          "y": 400,
-          "z": 1,
-          "bottomItem": {
-            "@type": "ResourceSpawner",
-            "@path": "./resource-spawner.js",
-            "x": 356,
-            "y": 759,
-            "z": 0,
-            "resourceType": "anti-dote"
-          },
+          "x": 1288,
+          "y": 590,
+          "z": 3,
           "topItem": {
             "@type": "ResourceSpawner",
             "@path": "./resource-spawner.js",
-            "x": 356,
-            "y": 759,
-            "z": 0,
+            "x": 336,
+            "y": 473.5,
+            "z": 4,
             "resourceType": "transmuters-draught"
+          },
+          "bottomItem": {
+            "@type": "ResourceSpawner",
+            "@path": "./resource-spawner.js",
+            "x": 336,
+            "y": 620.5,
+            "z": 4,
+            "resourceType": "anti-dote"
           }
         }
       ]

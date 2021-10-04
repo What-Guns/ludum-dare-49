@@ -27,10 +27,11 @@ export class AnimatedObject implements Thing {
   }
 
   tick(dt: number) {
-    this.t += dt;
+    if(this.animating) this.t += dt;
   }
 
   draw(ctx: CanvasRenderingContext2D) {
+    if(!this.visible) return;
     const frameNumber = Math.floor((this.t * this.frameRate)) % this.frames.length
     const frame = this.frames[frameNumber];
     ctx.drawImage(frame, this.x, this.y);
