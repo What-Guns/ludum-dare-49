@@ -1,3 +1,4 @@
+import {debug} from './debug.js';
 import {Thing} from './main.js';
 import {Serializable, pluck} from './serialization.js';
 import {loadImage} from './loader.js';
@@ -45,6 +46,7 @@ export class AnimatedObject implements Thing {
   }
 
   isUnderPointer(x: number, y: number) {
+    if(!debug) return false;
     if(x < this.x || y < this.y) return false;
     if(x > this.x + this.width || y > this.y + this.height) return false;
     return true;
