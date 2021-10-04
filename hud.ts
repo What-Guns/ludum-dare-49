@@ -1,6 +1,6 @@
 import {Room} from './room.js';
 import {Thing} from './main.js';
-import { HSBColor } from './crap.js';
+import { getFilterFromColor, HSBColor } from './crap.js';
 
 const popupContainer = document.getElementById('popup-window-container') as HTMLDivElement;
 
@@ -40,6 +40,11 @@ export class HudItemWindow {
     this.element.querySelector('img')!.src = src;
   }
 
+  set imageColor(color: HSBColor | undefined) {
+    if (!color) return;
+    this.element.querySelector('img')!.style.filter = getFilterFromColor(color);
+  }
+
   set visible(isVisible: boolean) {
     this.element.style.visibility = isVisible ? 'visible' : 'hidden';
     this.element.style.display = isVisible ? 'block' : 'none';
@@ -71,6 +76,7 @@ export class HudItemWindow {
 const _hudItemWindow = new HudItemWindow();
 export function makeHudItemWindow({onTake, onToss, onPlace, onApply, ...params}: HudItemWindowParams): HudItemWindow {
   _hudItemWindow.image = params.image;
+  _hudItemWindow.imageColor = params.imageColor;
   _hudItemWindow.itemName = params.name;
   _hudItemWindow.traitsList = params.traits;
   _hudItemWindow.itemDescription = params.description;
@@ -124,6 +130,7 @@ export function hideHudItemWindow() { _hudItemWindow.visible = false }
 
 export interface HudItemWindowParams {
   image: string;
+  imageColor?: HSBColor;
   name: string;
   traits: string[];
   description: string;
@@ -169,8 +176,7 @@ export class HudItemHotbar {
     const img = document.createElement('img');
     img.src = item.imageUrl;
     if (item.imageColor) {
-      const color = item.imageColor;
-      img.style.filter = `hue-rotate(${color.hue}deg) saturate(${color.saturation}%) brightness(${color.brightness}%)`;
+      img.style.filter = getFilterFromColor(item.imageColor);
     }
     slots[this.items.length - 1].appendChild(img);
   }

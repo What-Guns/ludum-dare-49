@@ -199,7 +199,8 @@ export class Player {
       name: potion.name,
       onActivate: () => makeHudItemWindow({
         name: potion.name,
-        image: potion.inventoryImageUrl,
+        image: POTION_INVENTORY_URL,
+        imageColor: potion.color,
         traits: [],
         description: 'a potion',
         onToss: () => this.tossPotion(potion),

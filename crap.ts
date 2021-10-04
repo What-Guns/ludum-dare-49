@@ -19,3 +19,7 @@ export type HSBColor = {
   saturation: number,
   brightness: number,
 }
+
+export function getFilterFromColor(color: HSBColor) {
+  return `hue-rotate(${color.hue}deg) saturate(${color.saturation}%) brightness(${color.brightness}%)`
+}
