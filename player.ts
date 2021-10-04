@@ -162,6 +162,7 @@ export class Player {
         image: mat.inventoryImageUrl!,
         traits: [],
         onBrew: () => this.useMaterial(mat),
+        onToss: () => this.tossMaterial(mat),
       }).showByHotbar()
     };
     this.hotbar.addItem(hotbarItem);
