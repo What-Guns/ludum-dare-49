@@ -38,13 +38,17 @@ export class Npc implements Thing {
 
   doClick(x: number, y: number): boolean {
     if (!this.isUnderPointer(x, y)) return false;
+    this.speak(getDialog(this.npcType));
+    return true;
+  }
+
+  speak(message: string) {
     this.textbox.visible = true;
-    this.textbox.textContent = getDialog(this.npcType);
+    this.textbox.textContent = message;
     
     stopSpeech();
     const { sample, timeBetweenSamples, variance, shift } = Npc.speechParams[this.npcType];
     startSpeech(sample, timeBetweenSamples, variance, shift);
-    return true;
   }
   
   isUnderPointer(x: number, y: number): boolean {

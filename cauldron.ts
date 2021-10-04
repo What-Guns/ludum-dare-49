@@ -5,6 +5,7 @@ import {Serializable} from './serialization.js';
 import {Thing} from './main.js';
 import {debug} from './debug.js';
 import {toast} from './toast.js';
+import {Npc} from './npc.js';
 import { potions, getPotionType } from './potions.js';
 
 
@@ -57,18 +58,34 @@ export class Cauldron implements Thing {
       alert('but who was potion?');
       return false;
     }
-    const isSuccessful = this.brewing.every(({timeSpentInCauldron, material}) => 
-      timeSpentInCauldron < material.expireTime && timeSpentInCauldron > material.brewTime);
-    if(isSuccessful) {
+    const failureReason = this.brewing.map(({timeSpentInCauldron, material}) => {
+      if(timeSpentInCauldron > material.expireTime) {
+        return [
+          material.plural ? 'Those' : 'That',
+          material.name,
+          'was in the cauldron for too long.'
+        ].join(' ');
+      } else if(timeSpentInCauldron < material.brewTime) {
+        return [
+          material.plural ? 'Those' : 'That',
+          material.name,
+          'needed more time in the cauldron.'
+        ].join(' ');
+      }
+      return null;
+    }).reduce((x, y) => x ?? y);
+    if(failureReason) {
+      this.announceFailure(failureReason);
+      this.room.player.takePotion('unstable')
+    } else {
       const ingredients = this.brewing.map(bm => getMaterialType(bm.material)).sort();
       const createdPotion = Object.values(potions).find(p => p.recipe?.sort().every((ing, index) => ing === ingredients[index]));
       if (createdPotion) {
         this.room.player.takePotion(getPotionType(createdPotion));
       } else {
+        this.announceFailure(`That combination doesn’t make anything useful.`);
         this.room.player.takePotion('unstable')
       }
-    } else {
-        this.room.player.takePotion('unstable')
     }
     this.brewing.length = 0;
     return true;
@@ -115,6 +132,15 @@ export class Cauldron implements Thing {
 
   denyItem(){
     toast("I'm a cauldron not a storage unit!")
+  }
+
+  private announceFailure(msg: string) {
+    const npcs = this.room?.getObjectsOfType(Npc) ?? [];
+    if(npcs.length) {
+      npcs[0].speak(msg);
+    } else {
+      toast(msg);
+    }
   }
 }
 

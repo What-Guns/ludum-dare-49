@@ -13,6 +13,7 @@ export interface Material {
   worldImage?: HTMLImageElement;
   brewTime: number;
   expireTime: number;
+  plural: boolean;
 }
 
 export type Effect = 
@@ -47,6 +48,7 @@ export const materials: {[key: string]: Material} = {
     expireTime: 10,
     inventoryImageUrl: './sprites/mouse-whisker-inventory.png',
     worldImageUrl: './sprites/mouse-whisker.png',
+    plural: false,
   },
   'morning-dew': {
     name: 'Morning Dew',
@@ -56,6 +58,7 @@ export const materials: {[key: string]: Material} = {
     expireTime: 10,
     inventoryImageUrl: './sprites/morning-dew-inventory.png',
     worldImageUrl: './sprites/morning-dew.png',
+    plural: false,
   },
   'coin': {
     name: 'Coins',
@@ -65,6 +68,7 @@ export const materials: {[key: string]: Material} = {
     worldImageUrl: './sprites/coins.png',
     brewTime: 10,
     expireTime: Infinity,
+    plural: true,
   },
   'firewood': {
     name: 'Firewood',
@@ -74,6 +78,7 @@ export const materials: {[key: string]: Material} = {
     expireTime: 10,
     inventoryImageUrl: './sprites/firewood-inventory.png',
     worldImageUrl: './sprites/invisible.png',
+    plural: false,
   },
   'anti-dote': {
     name: 'Anti-dote',
@@ -83,6 +88,7 @@ export const materials: {[key: string]: Material} = {
     expireTime: 10,
     inventoryImageUrl: './sprites/anti-dote-inventory.png',
     worldImageUrl: './sprites/anti-dote.png',
+    plural: false
   },
   'hushroom': {
     name: 'Hushroom',
@@ -92,6 +98,7 @@ export const materials: {[key: string]: Material} = {
     expireTime: 20,
     inventoryImageUrl: './sprites/hushroom-inventory.png',
     worldImageUrl: './sprites/hushroom.png',
+    plural: false,
   },
   'metal-hushroom': {
     name: 'Metal Hushroom',
@@ -101,6 +108,7 @@ export const materials: {[key: string]: Material} = {
     expireTime: 20,
     inventoryImageUrl: './sprites/metal-hushroom-inventory.png',
     worldImageUrl: './sprites/metal-hushroom.png',
+    plural: false,
   },
   'wooden-hushroom': {
     name: 'Wooden Hushroom',
@@ -110,6 +118,7 @@ export const materials: {[key: string]: Material} = {
     expireTime: 20,
     inventoryImageUrl: './sprites/wooden-hushroom-inventory.png',
     worldImageUrl: './sprites/wooden-hushroom.png',
+    plural: false,
   },
   'ghost-tears': {
     name: 'Ghost Tears',
@@ -118,6 +127,7 @@ export const materials: {[key: string]: Material} = {
     brewTime: 5,
     expireTime: 10,
     inventoryImageUrl: './sprites/ghost-tears-inventory.png',
+    plural: true,
   },
   'transmuters-draught': {
     name: 'Transmuter’s Draught',
@@ -127,6 +137,7 @@ export const materials: {[key: string]: Material} = {
     expireTime: 10,
     inventoryImageUrl: './sprites/transmuters-draught-inventory.png',
     worldImageUrl: './sprites/transmuters-draught.png',
+    plural: false,
   },
   'doused-phoenix-feather': {
     name: 'Doused Phoenix Feather',
@@ -136,6 +147,7 @@ export const materials: {[key: string]: Material} = {
     expireTime: 10,
     inventoryImageUrl: './sprites/doused-phoenix-feather-inventory.png',
     worldImageUrl: './sprites/doused-phoenix-feather.png',
+    plural: false,
   },
   'gravity-stone-piece': {
     name: 'Gravity Stone Piece',
@@ -144,7 +156,8 @@ export const materials: {[key: string]: Material} = {
     inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/rock_1faa8.png',
     worldImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/rock_1faa8.png',
     brewTime: 5,
-    expireTime: 10
+    expireTime: 10,
+    plural: false
   }
 };
 
