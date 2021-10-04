@@ -37,6 +37,24 @@ export const progressData = [
     ghostDialog: 'I\'m serious dude, get out of the attic',
     unlockedRooms: ['foyer', 'greenhouse', 'hall', 'cellar']
   },
+  {
+    name: 'got-radio',
+    catDialog: 'Please don\'t be scared of the ghost, they\'re just grumpy. I wonder what\'s wrong with their radio?',
+    ghostDialog: 'I\'m serious dude, get out of the attic',
+    unlockedRooms: ['foyer', 'greenhouse', 'hall', 'cellar']
+  },
+  {
+    name: 'fixed-radio',
+    catDialog: 'That looks like it did the trick! That radio should be back in working condition, the ghost will be overjoyed!',
+    ghostDialog: 'I\'m serious dude, get out of the attic',
+    unlockedRooms: ['foyer', 'greenhouse', 'hall', 'cellar']
+  },
+  {
+    name: 'returned-radio',
+    catDialog: 'Something about the gravity stone, I bet',
+    ghostDialog: 'welcome to the spooooooooky attic! ha ha i mean its spooky because i live here. can i interest you in some ghost tears',
+    unlockedRooms: ['foyer', 'greenhouse', 'hall', 'cellar', 'attic']
+  },
 ]
 
 let currentLevel = 0;

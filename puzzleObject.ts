@@ -43,12 +43,14 @@ export const puzzleObjects: {[key: string]: PuzzleObject} = {
     description: 'This radio is looking fine, but it won\'t play any tunes! It seems like it has been drained of power, and just needs some energy to start playing again.',
     inventoryImageUrl: './sprites/Radio.png',
     spawnerImageUrl: './sprites/Radio.png',
+    progressLevelName: 'got-radio',
   },
   'fixed-radio': {
     name: 'Fixed Radio',
     description: 'This radio is all fixed up!',
     inventoryImageUrl: './sprites/Radio.png',
     spawnerImageUrl: './sprites/Radio.png',
+    progressLevelName: 'fixed-radio',
   },
   'gravity-stone': {
     name: 'Gravity Stone',

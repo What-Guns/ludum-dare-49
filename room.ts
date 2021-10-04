@@ -13,6 +13,7 @@ import { RpgTextBox } from "./rpgTextBox.js";
 import { startSpeech, stopSpeech} from "./audio.js";
 import {toast} from './toast.js';
 import { puzzleObjects } from './puzzleObject.js';
+import { getProgressLevel, getProgressLevelIndex, increaseProgressLevel, increaseProgressLevelName } from './progressManager.js';
 
 @Serializable('./room.js')
 export class Room {
@@ -171,7 +172,7 @@ export class Room {
 @Serializable('./room.js')
 export class Hall extends Room {
   private readonly textbox: RpgTextBox = new RpgTextBox(() => {
-    this.giveRadio();
+    if (getProgressLevel() >= getProgressLevelIndex('recovered-hushroom') && getProgressLevel() < getProgressLevelIndex('returned-radio')) this.giveRadio();
     stopSpeech();
   });
 
@@ -205,9 +206,7 @@ export class Hall extends Room {
       const { sample, timeBetweenSamples, variance, shift } = Npc.speechParams['GHOST'];
       startSpeech(sample, timeBetweenSamples, variance, shift);
 
-      toast('Soon this will unlock the attic!')
-      // todo progress, unlock the attic
-    
+      increaseProgressLevelName('returned-radio');
       return;
     }
 
