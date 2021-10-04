@@ -41,9 +41,8 @@ export class Furnace implements Thing {
       this.furnaceTime = 0.5;
       this.finishedCooking = false;
     } else if (obj.name === 'Hot Floating Gravity Stone') {
-      this.contents = obj;
-      this.furnaceTime = 0.5;
-      this.finishedCooking = false;
+      toast('The stone floated up the flue! Maybe it\'s upstairs...');
+      // TODO progress
     } else {
       toast('The ' + obj.name + ' burns to ash!')
     }
@@ -66,7 +65,7 @@ export class Furnace implements Thing {
     } else if (this.contents.name === 'Hot Gravity Stone') {
       this.contents = puzzleObjects['hot-gravity-stone'];
     } else if (this.contents.name === 'Hot Floating Gravity Stone') {
-      this.contents = puzzleObjects['hot-gravity-stone'];
+      this.contents = puzzleObjects['hot-floating-gravity-stone'];
     } else {
       toast('The ' + this.contents.name + ' burns to ash!')
     }

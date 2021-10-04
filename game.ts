@@ -183,10 +183,14 @@ export class Game {
         increaseProgressLevel(8);
       } else if (item === 'gravity-stone' && player.hasPuzzleObject(puzzleObjects['gravity-stone'])) {
         player.tossPuzzleObject(puzzleObjects['gravity-stone']);
-        toast('The gravity stone is too heavy!');
+        toast('The gravity stone is too heavy to carry up a ladder!');
         // TODO increase progress level
       } else if (item === 'hot-gravity-stone' && player.hasPuzzleObject(puzzleObjects['hot-gravity-stone'])) {
         player.tossPuzzleObject(puzzleObjects['hot-gravity-stone']);
+        toast('The gravity stone is too hot and heavy to carry!');
+        // TODO increase progress level
+      } else if (item === 'hot-floating-gravity-stone' && player.hasPuzzleObject(puzzleObjects['hot-floating-gravity-stone'])) {
+        player.tossPuzzleObject(puzzleObjects['hot-floating-gravity-stone']);
         toast('The gravity stone is too hot to carry!');
         // TODO increase progress level
       } else if (item === 'wooden-hushroom' && player.hasMaterial(materials['wooden-hushroom'])) {
