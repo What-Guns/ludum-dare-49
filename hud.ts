@@ -1,5 +1,6 @@
 import {Room} from './room.js';
 import {Thing} from './main.js';
+import { HSBColor } from './crap.js';
 
 const popupContainer = document.getElementById('popup-window-container') as HTMLDivElement;
 
@@ -167,6 +168,10 @@ export class HudItemHotbar {
     }
     const img = document.createElement('img');
     img.src = item.imageUrl;
+    if (item.imageColor) {
+      const color = item.imageColor;
+      img.style.filter = `hue-rotate(${color.hue}deg) saturate(${color.saturation}%) brightness(${color.brightness}%)`;
+    }
     slots[this.items.length - 1].appendChild(img);
   }
 
@@ -199,6 +204,7 @@ export class HudItemHotbar {
 
 interface HotbarItem {
   imageUrl: string;
-  name: string,
+  imageColor?: HSBColor;
+  name: string;
   onActivate: () => void;
 }

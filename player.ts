@@ -1,7 +1,7 @@
 import {Serializable} from './serialization.js';
 import {loadImage} from './loader.js';
 import {Material, MaterialType, materials, getMaterialType} from './material.js';
-import {Potion, PotionType, getPotionType, potions} from './potions.js';
+import {Potion, PotionType, getPotionType, potions, POTION_INVENTORY_URL} from './potions.js';
 import {HudItemHotbar, makeHudItemWindow} from './hud.js';
 import {playSFX} from './audio.js';
 import {Room} from './room.js';
@@ -194,7 +194,8 @@ export class Player {
     this.heldPotions.push(potion);
 
     this.hotbar.addItem({
-      imageUrl: potion.inventoryImageUrl,
+      imageUrl: POTION_INVENTORY_URL,
+      imageColor: potion.color,
       name: potion.name,
       onActivate: () => makeHudItemWindow({
         name: potion.name,

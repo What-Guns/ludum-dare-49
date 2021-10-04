@@ -13,3 +13,9 @@ export function removeFromArray<T>(array: T[], item: T) {
   }
   array.splice(index, 1);
 }
+
+export type HSBColor = {
+  hue: number,
+  saturation: number,
+  brightness: number,
+}

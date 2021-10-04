@@ -54,7 +54,7 @@ export const materials: {[key: string]: Material} = {
     effect: 'ephemeral',
     brewTime: 5,
     expireTime: 10,
-    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
+    inventoryImageUrl: './sprites/morning-dew-inventory.png',
   },
   'coin': {
     name: 'Coins',
