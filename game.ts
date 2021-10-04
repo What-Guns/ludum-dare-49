@@ -129,7 +129,10 @@ export class Game {
   }
 
   goToDoor(roomName: string, doorName: string, direction: TransitionDirection) {
-    if (!isRoomUnlocked(roomName)) return toast('Locked');
+    if (!isRoomUnlocked(roomName)) {
+      this.room?.handleLockedDoor(roomName);
+      return;
+    }
     // defer the room transition so we don't tick two rooms in one pass
     this.nextRoom = [roomName, doorName, direction];
   }

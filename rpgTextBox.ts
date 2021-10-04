@@ -25,6 +25,12 @@ export class RpgTextBox {
     this._dismissButton.classList.add('material-icons-outlined', 'rpgTextBoxDismissButton');
     this._dismissButton.addEventListener('click', () => this.clickDismiss());
     this.element.appendChild(this._dismissButton);
+    this.visible = false;
+  }
+
+  set placement(placement: 'top'|'bottom') {
+    this.element.classList.remove('top', 'bottom');
+    this.element.classList.add(placement);
   }
 
   set visible(isVisible: boolean) {

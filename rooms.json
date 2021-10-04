@@ -143,7 +143,7 @@
       ]
     },
     {
-      "@type": "Room",
+      "@type": "Hall",
       "@path": "./room.js",
       "name": "hall",
       "width": 1920,

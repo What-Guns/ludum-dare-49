@@ -189,6 +189,11 @@ ul {
   border-radius: 13px;
 }
 
+.rpgTextBox.bottom {
+  top: initial;
+  bottom: 72px;
+}
+
 .rpgTextBoxPortrait {
   text-align: center;
   margin: 5px;

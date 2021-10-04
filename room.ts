@@ -1,4 +1,5 @@
 import {Portal} from './door.js';
+import {Npc} from './npc.js';
 import {Player} from './player.js';
 import {Serializable, serialize, isSerializable, deserialize, pluck} from './serialization.js';
 import {Thing} from './main.js';
@@ -7,6 +8,10 @@ import {loadImage} from './loader.js';
 import {ofType, Type} from './crap.js';
 import {pointer} from './input.js';
 import {translateAndScalePopupContainer, resizePopupContainer} from './hud.js';
+import { RpgTextBox } from "./rpgTextBox.js";
+import { startSpeech, stopSpeech} from "./audio.js";
+import {toast} from './toast.js';
+import { puzzleObjects } from './puzzleObject.js';
 
 @Serializable('./room.js')
 export class Room {
@@ -48,7 +53,7 @@ export class Room {
 
   static async deserialize(roomData: RoomData) {
     const background = await loadImage(roomData.background);
-    const room = new Room(background, roomData);
+    const room = new this(background, roomData);
     for(const thing of await Promise.all(roomData.things.map(x => deserialize(x, {room}) as Promise<Thing>))) {
       room.adoptThing(thing);
     }
@@ -139,6 +144,10 @@ export class Room {
     return this.things.filter(ofType(t));
   }
 
+  handleLockedDoor(_targetRoom: string) {
+    toast('Locked');
+  }
+
   private transformPointer() {
     this.pointer.x = (pointer.x - this.camera.x) / this.camera.scale;
     this.pointer.y = pointer.y / this.camera.scale;
@@ -155,6 +164,47 @@ export class Room {
       this.camera.x = xOverflow * -xAmount;
     }
     translateAndScalePopupContainer(this);
+  }
+}
+
+@Serializable('./rooms.js')
+export class Hall extends Room {
+  private readonly textbox: RpgTextBox = new RpgTextBox(() => {
+    this.giveRadio();
+    stopSpeech();
+  });
+
+  override handleLockedDoor(targetRoom: string) {
+    if(targetRoom !== 'attic') {
+      super.handleLockedDoor(targetRoom);
+      return;
+    }
+
+    this.textbox.imageSrc = Npc.textBoxImages['GHOST'];
+    this.textbox.visible = true;
+    this.textbox.placement = 'bottom';
+    this.textbox.textContent = '< angry ghost noises >';
+    
+    stopSpeech();
+    const { sample, timeBetweenSamples, variance, shift } = Npc.speechParams['GHOST'];
+    startSpeech(sample, timeBetweenSamples, variance, shift);
+  }
+
+  override deactivate() {
+    this.textbox.visible = false;
+    super.deactivate();
+  }
+
+  override tick(dt: number) {
+    super.tick(dt);
+    this.textbox.tick(dt);
+  }
+
+  private giveRadio() {
+    const brokenRadio = puzzleObjects['broken-radio'];
+    if(!this.player?.hasPuzzleObject(brokenRadio)) {
+      this.player?.takePuzzleObject(puzzleObjects['broken-radio']);
+    }
   }
 }
 
