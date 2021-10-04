@@ -32,7 +32,9 @@ export class Furnace implements Thing {
       toast("There's already something in the furnace");
       return false;
     }
-    if (obj.name === 'Gravity Stone') {
+    if (obj.name.includes('Key')) {
+      toast('The ' + obj.name + ' melts into a puddle!');
+    } else if (obj.name === 'Gravity Stone') {
       this.contents = obj;
       this.furnaceTime = 5;
       this.finishedCooking = false;
