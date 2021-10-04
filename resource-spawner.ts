@@ -45,19 +45,13 @@ export class ResourceSpawner implements Thing {
     } 
     if(!this.room?.player?.canReach(this.x, this.y)) return false;
     const image = this.material.inventoryImageUrl ?? this.material.worldImageUrl ?? PLACEHOLDER_IMAGE_URL;
-    const hudWindow = makeHudItemWindow({
+    makeHudItemWindow({
       image,
       name: this.material.name,
       traits: [this.material.effect],
       description: this.material.description,
       onTake: () => this.take(),
-    });
-    hudWindow.x = this.x;
-    hudWindow.y = this.y;
-    const { height } = hudWindow.element.getBoundingClientRect();
-    const hotbarTop = document.querySelector('.hudItemHotbar')?.getBoundingClientRect().top;
-    if (hotbarTop && hudWindow.y + height > hotbarTop) hudWindow.y = hotbarTop - height - 50;
-    hudWindow.visible = true;
+    }).showByThing(this);
     return true;
   }
 

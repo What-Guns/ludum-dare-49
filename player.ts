@@ -2,7 +2,7 @@ import {Serializable} from './serialization.js';
 import {loadImage} from './loader.js';
 import {Material, MaterialType, materials, getMaterialType} from './material.js';
 import {Potion, PotionType, getPotionType, potions} from './potions.js';
-import {HudItemHotbar, makeHudItemWindow, HudItemWindowParams} from './hud.js';
+import {HudItemHotbar, makeHudItemWindow} from './hud.js';
 import {playSFX} from './audio.js';
 import {Room} from './room.js';
 import {Cauldron} from './cauldron.js';
@@ -123,14 +123,14 @@ export class Player {
     const hotbarItem = {
       imageUrl,
       name: obj.name,
-      onActivate: () => this.showHudHotbarItemWindow({
+      onActivate: () => makeHudItemWindow({
         image: imageUrl,
         name: obj.name,
         traits: [],
         description: obj.description,
         onToss: () => { this.tossPuzzleObject(obj) },
         onPlace: () => { this.placePuzzleObject(obj) },
-      })
+      }).showByHotbar()
     };
     this.hotbar.addItem(hotbarItem);
     if(!isInitializing) {
@@ -154,13 +154,13 @@ export class Player {
     const hotbarItem = {
       imageUrl: mat.inventoryImageUrl ?? mat.worldImageUrl ?? PLACEHOLDER_IMAGE_URL,
       name: mat.name,
-      onActivate: () => this.showHudHotbarItemWindow({
+      onActivate: () => makeHudItemWindow({
         name: mat.name,
         description: mat.description,
         image: mat.inventoryImageUrl!,
         traits: [],
         onApply: () => this.useMaterial(mat),
-      })
+      }).showByHotbar()
     };
     this.hotbar.addItem(hotbarItem);
     if(!isInitializing) {
@@ -196,7 +196,7 @@ export class Player {
     this.hotbar.addItem({
       imageUrl: potion.inventoryImageUrl,
       name: potion.name,
-      onActivate: () => this.showHudHotbarItemWindow({
+      onActivate: () => makeHudItemWindow({
         name: potion.name,
         image: potion.inventoryImageUrl,
         traits: [],
@@ -209,7 +209,7 @@ export class Player {
             toast(`You don’t have anything to apply that to.`);
           }
         },
-      })
+      }).showByHotbar()
 
     });
 
@@ -217,15 +217,6 @@ export class Player {
       playSFX('great-jearb-06');
       window.game!.save();
     }
-  }
-
-  private showHudHotbarItemWindow(params: HudItemWindowParams) {
-    const hudItemWindow = makeHudItemWindow(params);
-    const { height } = hudItemWindow.element.getBoundingClientRect();
-    const { top, left } = this.hotbar._itemList.getBoundingClientRect();
-    hudItemWindow.y = top - height - 20;
-    hudItemWindow.x = left;
-    hudItemWindow.visible = true;
   }
 
   applyPotion(potion: Potion): boolean {

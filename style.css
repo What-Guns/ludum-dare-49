@@ -67,6 +67,10 @@ body.debug #debug-controls {
   pointer-events: initial;
 }
 
+.hudWindow .hudWindow {
+  position: static;
+}
+
 .hudItemWindow {
   width: 250px;
   border-radius: 10px;
@@ -115,6 +119,9 @@ body.debug #debug-controls {
   bottom: 10px;
   text-align: center;
   z-index: 10;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
 }
 
 .hudItemHotbarList {

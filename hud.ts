@@ -1,4 +1,5 @@
 import {Room} from './room.js';
+import {Thing} from './main.js';
 
 const popupContainer = document.getElementById('popup-window-container') as HTMLDivElement;
 
@@ -38,14 +39,6 @@ export class HudItemWindow {
     this.element.querySelector('img')!.src = src;
   }
 
-  set x(xVal: number) {
-    this.element.style.left = String(xVal) + "px";
-  }
-
-  set y(yVal: number) {
-    this.element.style.top = String(yVal) + "px";
-  }
-
   set visible(isVisible: boolean) {
     this.element.style.visibility = isVisible ? 'visible' : 'hidden';
   }
@@ -54,6 +47,22 @@ export class HudItemWindow {
     const template = document.getElementById('hud-window') as HTMLTemplateElement;
     this.element = template.content.firstElementChild!.cloneNode(true) as HTMLDivElement;
     popupContainer.appendChild(this.element);
+  }
+
+  showByHotbar() {
+    this.element.style.transform = '';
+    document.querySelector('.hud-window-container')!.appendChild(this.element);
+    this.visible = true;
+  }
+
+  showByThing({x, y, room}: Thing) {
+    const widthREAL = 266;
+    popupContainer.append(this.element);
+    const tx = Math.min(room!.width - widthREAL, Math.max(0, x - widthREAL/2));
+    const ty = y > 500 ? y - 400 : y + 50;
+    const transform =  `translate(${tx}px, ${ty}px)`;
+    this.element.style.transform = transform;
+    this.visible = true;
   }
 }
 
@@ -126,7 +135,6 @@ export class HudItemHotbar {
   readonly itemWidth = '40px';
   readonly itemHeight = '40px';
   private readonly items: HotbarItem[] = [];
-  private _selectedIndex = 0;
 
   private element = document.createElement('div');
   readonly _itemList = document.createElement('ul');
@@ -136,6 +144,10 @@ export class HudItemHotbar {
 
     this._itemList.classList.add('hudItemHotbarList');
     this.element.appendChild(this._itemList);
+
+    const hudWindowContainer = document.createElement('div');
+    hudWindowContainer.className = 'hud-window-container';
+    this.element.appendChild(hudWindowContainer)
     document.body.appendChild(this.element);
   }
 
@@ -181,15 +193,6 @@ export class HudItemHotbar {
   private clicked(li: HTMLLIElement) {
     const clickedIndex = Array.from(li.parentElement!.querySelectorAll('li')).indexOf(li);
     this.items[clickedIndex]?.onActivate();
-  }
-
-  set selectedIndex(index: number) {
-    this._selectedIndex = index;
-    console.log(`Selecting ${this._selectedIndex} in hotbar`);
-    [].forEach.call(this._itemList.children, (element: HTMLUListElement, i) => {
-      element.classList.remove('selected');
-      if (index == i) element.classList.add('selected');
-    });
   }
 }
 
