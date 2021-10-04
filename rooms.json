@@ -35,8 +35,8 @@
           "frameRate": 2,
           "visible": true,
           "frames": [
-            "http://localhost/ludum-dare-49/sprites/Coals.png",
-            "http://localhost/ludum-dare-49/sprites/Coalsglow.png"
+            "sprites/Coals.png",
+            "sprites/Coalsglow.png"
           ]
         },
         {
