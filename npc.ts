@@ -27,14 +27,20 @@ export class Npc implements Thing {
     "GHOST": './sprites/Ghost.png',
     "RUTABAGA": './sprites/Rutabaga_.png',
   };
-  static loading = false
+
+  private _animationTimer = 0;
+
   constructor(readonly x: number, readonly y: number, readonly z: number, readonly width: number, readonly height: number, readonly npcType: NpcType, readonly image: HTMLImageElement) {
     this.textbox.visible = false;
     this.textbox.imageSrc = Npc.textBoxImages[npcType];
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
-    ctx.drawImage(this.image, this.x, this.y)
+    let height = this.y
+    if (this.npcType == 'GHOST') {
+      height += (Math.sin(this._animationTimer * 2) * 30);
+    }
+    ctx.drawImage(this.image, this.x, height);
     if(!debug) return;
     ctx.fillStyle = 'purple';
     ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -42,6 +48,7 @@ export class Npc implements Thing {
 
   tick(dt: number): void {
     this.textbox.tick(dt);
+    this._animationTimer += dt;
   }
 
   stopDrawingDOM() {
