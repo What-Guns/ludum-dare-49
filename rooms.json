@@ -131,8 +131,8 @@
         {
           "@type": "ResourceSpawner",
           "@path": "./resource-spawner.js",
-          "x": 377,
-          "y": 752,
+          "x": 419,
+          "y": 814,
           "z": -2,
           "resourceType": "firewood"
         },
