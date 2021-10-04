@@ -1,3 +1,4 @@
+import {debug} from './debug.js';
 import { startSpeech, stopSpeech, SfxName } from "./audio.js";
 import { Thing } from "./main.js";
 import { getDialog } from "./progressManager.js";
@@ -21,6 +22,7 @@ export class Npc implements Thing {
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
+    if(!debug) return;
     ctx.fillStyle = 'purple';
     ctx.fillRect(this.x, this.y, 100, 100);
   }
