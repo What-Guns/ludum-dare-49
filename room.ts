@@ -13,7 +13,7 @@ import { RpgTextBox } from "./rpgTextBox.js";
 import { startSpeech, stopSpeech} from "./audio.js";
 import {toast} from './toast.js';
 import { puzzleObjects } from './puzzleObject.js';
-import { getProgressLevel, getProgressLevelIndex, increaseProgressLevel, increaseProgressLevelName } from './progressManager.js';
+import { getProgressLevel, getProgressLevelIndex, increaseProgressLevelName } from './progressManager.js';
 
 @Serializable('./room.js')
 export class Room {
