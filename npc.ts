@@ -23,7 +23,7 @@ export class Npc implements Thing {
     "RUTABAGA": './sprites/av_rutabaga.png',
   };
   static readonly worldImages: {[k in NpcType]: string} = {
-    "CAT": './sprites/av_cat.png',
+    "CAT": './sprites/cat.png',
     "GHOST": './sprites/Ghost.png',
     "RUTABAGA": './sprites/Rutabaga_.png',
   };
