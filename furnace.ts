@@ -36,6 +36,14 @@ export class Furnace implements Thing {
       this.contents = obj;
       this.furnaceTime = 5;
       this.finishedCooking = false;
+    } else if (obj.name === 'Hot Gravity Stone') {
+      this.contents = obj;
+      this.furnaceTime = 0.5;
+      this.finishedCooking = false;
+    } else if (obj.name === 'Hot Floating Gravity Stone') {
+      this.contents = obj;
+      this.furnaceTime = 0.5;
+      this.finishedCooking = false;
     } else {
       toast('The ' + obj.name + ' burns to ash!')
     }
@@ -51,8 +59,18 @@ export class Furnace implements Thing {
 
   finishCooking() {
     this.finishedCooking = true;
-    this.contents = puzzleObjects['hot-gravity-stone'];
-    toast('done cooking ' + this.contents?.name); // heh heh, toast
+    if (!this.contents) {
+
+    } else if (this.contents.name === 'Gravity Stone') {
+      this.contents = puzzleObjects['hot-gravity-stone'];
+    } else if (this.contents.name === 'Hot Gravity Stone') {
+      this.contents = puzzleObjects['hot-gravity-stone'];
+    } else if (this.contents.name === 'Hot Floating Gravity Stone') {
+      this.contents = puzzleObjects['hot-gravity-stone'];
+    } else {
+      toast('The ' + this.contents.name + ' burns to ash!')
+    }
+    toast('Done cooking ' + this.contents?.name); // heh heh, toast
   }
 
   static async deserialize(data: FurnaceData) {

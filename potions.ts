@@ -81,7 +81,7 @@ export const potions: {[key: string]: Potion} = {
       saturation: 92,
       brightness: 80,
     },
-    inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/coin_1fa99.png',
+    inventoryImageUrl: POTION_INVENTORY_URL,
     applyTo: 'broken-radio',
     turnsInto: 'fixed-radio',
   },
@@ -95,6 +95,7 @@ export const potions: {[key: string]: Potion} = {
       brightness: 100,
     },
     applyTo: 'hot-gravity-stone',
+    turnsInto: 'hot-floating-gravity-stone',
     inventoryImageUrl: POTION_INVENTORY_URL,
   },
   'ghostly': {

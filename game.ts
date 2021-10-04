@@ -187,7 +187,7 @@ export class Game {
         // TODO increase progress level
       } else if (item === 'hot-gravity-stone' && player.hasPuzzleObject(puzzleObjects['hot-gravity-stone'])) {
         player.tossPuzzleObject(puzzleObjects['hot-gravity-stone']);
-        toast('The gravity stone is too heavy!');
+        toast('The gravity stone is too hot to carry!');
         // TODO increase progress level
       } else if (item === 'wooden-hushroom' && player.hasMaterial(materials['wooden-hushroom'])) {
         player.tossMaterial(materials['wooden-hushroom']);
