@@ -205,6 +205,20 @@
           "name": "ladder"
         },
         {
+          "@type": "Ladder",
+          "@path": "./door.js",
+          "x": 998,
+          "y": 838,
+          "height": 504,
+          "width": 300,
+          "target": [
+            "locked",
+            "left",
+            "up"
+          ],
+          "name": "north"
+        },
+        {
           "@type": "Door",
           "@path": "./door.js",
           "x": 1702,
