@@ -8,26 +8,6 @@ export const progressData = [
     unlockedRooms: ['foyer', 'greenhouse', 'hall']
   },
   {
-    catDialog: 'You\'ve reached the next level! I am so very proud of you.',
-    ghostDialog: 'I\'m serious dude, get out of the attic',
-    unlockedRooms: ['foyer', 'greenhouse', 'hall']
-  },
-  {
-    catDialog: 'You\'ve reached the next level! I am so very proud of you.',
-    ghostDialog: 'I\'m serious dude, get out of the attic',
-    unlockedRooms: ['foyer', 'greenhouse', 'hall']
-  },
-  {
-    catDialog: 'You\'ve reached the next level! I am so very proud of you.',
-    ghostDialog: 'I\'m serious dude, get out of the attic',
-    unlockedRooms: ['foyer', 'greenhouse', 'hall']
-  },
-  {
-    catDialog: 'You\'ve reached the next level! I am so very proud of you.',
-    ghostDialog: 'I\'m serious dude, get out of the attic',
-    unlockedRooms: ['foyer', 'greenhouse', 'hall']
-  },
-  {
     name: 'got-key',
     catDialog: 'That key looks right, but it\'s far too large! You might need to apply a potion to the key to make it the correct size...',
     ghostDialog: 'I\'m serious dude, get out of the attic',
