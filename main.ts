@@ -14,6 +14,14 @@ declare global {
   }
 }
 
+addEventListener('unhandledrejection', rejection => {
+  alert(rejection.reason.message);
+});
+
+addEventListener('error', error => {
+  alert(error.message);
+});
+
 const materialsLoaded = preloadMaterialImages();
 
 addEventListener('load', async () => {
