@@ -110,6 +110,13 @@
             "z": 4,
             "resourceType": "anti-dote"
           }
+        },{
+          "@type": "ResourceSpawner",
+          "@path": "./resource-spawner.js",
+          "x": 886,
+          "y": 524,
+          "z": -2,
+          "resourceType": "mouse-whisker"
         }
       ]
     },

@@ -46,6 +46,7 @@ export const materials: {[key: string]: Material} = {
     brewTime: 5,
     expireTime: 10,
     inventoryImageUrl: './sprites/mouse-whisker-inventory.png',
+    worldImageUrl: './sprites/mouse-whisker.png',
   },
   'morning-dew': {
     name: 'Morning Dew',

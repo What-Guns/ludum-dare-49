@@ -15,19 +15,19 @@ export const puzzleObjects: {[key: string]: PuzzleObject} = {
   'key': {
     name: 'Key',
     description: 'A plain key with a loop and a couple of teeth',
-    inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/old-key_1f5dd-fe0f.png',
-    spawnerImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/old-key_1f5dd-fe0f.png',
+    inventoryImageUrl: './sprites/key-inventory.png',
+    spawnerImageUrl: './sprites/key.png',
   },
   'small-key': {
     name: 'Small Key',
-    description: 'This key has become really tiny! It looks like it\'s the right size to fit into a lockbox of some kind.',
-    inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/old-key_1f5dd-fe0f.png',
-    spawnerImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/old-key_1f5dd-fe0f.png',
+    description: 'This key has become really tiny! It looks like it\'s the right size to fit into a little tiny keyhole.',
+    inventoryImageUrl: './sprites/small-key-inventory.png',
+    spawnerImageUrl: 'https://static.wikia.nocookie.net/zelda/images/0/09/Boss_Key_%28Ocarina_of_Time%29.png',
   },
   'big-key': {
     name: 'Big Key',
-    description: 'This key has become really tiny! It looks like it\'s the right size to fit into a lockbox of some kind.',
-    inventoryImageUrl: 'https://static.wikia.nocookie.net/zelda/images/0/09/Boss_Key_%28Ocarina_of_Time%29.png',
+    description: 'This key has become bigger! It looks like it\'s the right size to fit into a large keyhole.',
+    inventoryImageUrl: './sprites/big-key-inventory.png',
     spawnerImageUrl: 'https://static.wikia.nocookie.net/zelda/images/0/09/Boss_Key_%28Ocarina_of_Time%29.png',
   },
   'hushroom': {
