@@ -4,6 +4,7 @@ import { Thing } from "./main.js";
 import { getDialog } from "./progressManager.js";
 import { RpgTextBox } from "./rpgTextBox.js";
 import {Serializable, pluck} from './serialization.js';
+import { loadImage, loadImages } from './loader.js';
 
 @Serializable('./npc.js')
 export class Npc implements Thing {
@@ -17,16 +18,23 @@ export class Npc implements Thing {
     "CAT": './sprites/av_cat.png',
     "GHOST": './sprites/av_ghost.png',
     "RUTABAGA": './sprites/av_rutabaga.png',
-  }
-  constructor(readonly x: number, readonly y: number, readonly z: number, readonly width: number, readonly height: number, readonly npcType: NpcType) {
+  };
+  static readonly worldImages: {[k in NpcType]: string} = {
+    "CAT": './sprites/av_cat.png',
+    "GHOST": './sprites/Ghost.png',
+    "RUTABAGA": './sprites/Rutabaga_.png',
+  };
+  static loading = false
+  constructor(readonly x: number, readonly y: number, readonly z: number, readonly width: number, readonly height: number, readonly npcType: NpcType, readonly image: HTMLImageElement) {
     this.textbox.visible = false;
     this.textbox.imageSrc = Npc.textBoxImages[npcType];
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
+    ctx.drawImage(this.image, this.x, this.y)
     if(!debug) return;
     ctx.fillStyle = 'purple';
-    ctx.fillRect(this.x, this.y, 100, 100);
+    ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 
   tick(dt: number): void {
@@ -64,7 +72,8 @@ export class Npc implements Thing {
   }
 
   static async deserialize({x, y, z, width, height, type}: NpcData) {
-    return new Npc(x, y, z ?? 0, width, height, type);
+    const image = await loadImage(Npc.worldImages[type]);
+    return new Npc(x, y, z ?? 0, width, height, type, image);
   }
 
   serialize(): NpcData {

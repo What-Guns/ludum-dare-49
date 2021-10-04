@@ -363,11 +363,11 @@
         {
           "@type": "Npc",
           "@path": "./npc.js",
-          "x": 600,
-          "y": 400,
+          "x": 665,
+          "y": 378,
           "z": 0,
-          "width": 100,
-          "height": 100,
+          "width": 233,
+          "height": 539,
           "type": "GHOST"
         },
         {
@@ -481,7 +481,7 @@
         "x": 728,
         "y": 529
       },
-      "floorHeight": 920,
+      "floorHeight": 1000,
       "background": ["./backgrounds/lockedroom1.png", "./backgrounds/lockedroom2.png"],
       "things": [
         {
@@ -509,11 +509,11 @@
         {
           "@type": "Npc",
           "@path": "./npc.js",
-          "x": 652,
-          "y": 666,
+          "x": 661,
+          "y": 578,
           "z": 0,
-          "width": 100,
-          "height": 100,
+          "width": 105,
+          "height": 214,
           "type": "RUTABAGA"
         }
       ]
