@@ -129,9 +129,11 @@ body.debug #debug-controls {
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
+  pointer-events: none;
 }
 
 .hudItemHotbarList {
+  pointer-events: initial;
   display: inline-grid;
   list-style-type: none;
   padding: 5px;
