@@ -5,6 +5,8 @@ import { getDialog } from "./progressManager.js";
 import { RpgTextBox } from "./rpgTextBox.js";
 import {Serializable, pluck} from './serialization.js';
 import { loadImage } from './loader.js';
+import { Game } from './game.js';
+import { puzzleObjects } from './puzzleObject.js';
 
 @Serializable('./npc.js')
 export class Npc implements Thing {
@@ -48,6 +50,10 @@ export class Npc implements Thing {
 
   doClick(x: number, y: number): boolean {
     if (!this.isUnderPointer(x, y)) return false;
+    const game = (window as any).game as Game;
+    if(game.room?.player?.hasPuzzleObject(puzzleObjects['rutabaga-no-more-potion'])) {
+      game.win();
+    }
     this.speak(getDialog(this.npcType));
     return true;
   }

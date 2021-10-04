@@ -208,6 +208,10 @@ export class Game {
       } 
     })
   }
+
+  win() {
+    alert('You have emerged victorious')
+  }
 }
 
 interface GameData {

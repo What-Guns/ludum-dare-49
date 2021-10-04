@@ -117,5 +117,5 @@ export function isRoomUnlocked(roomName: string): boolean {
 
 export function getDialog(npcType: NpcType) {
   const currentLevelData = progressData[currentLevel];
-  return npcType === 'CAT' ? currentLevelData.catDialog : currentLevelData.ghostDialog;
+  return npcType === 'CAT' ? currentLevelData.catDialog :  npcType === 'RUTABAGA' ? currentLevelData.rutabagaDialog : currentLevelData.ghostDialog;
 }
