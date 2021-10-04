@@ -285,4 +285,39 @@ ul {
   color: #D9CAB3;
 }
 
+#cheat-sheet {
+  display: none;
+  position: absolute;
+  flex-direction: column;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 24px;
+  z-index: 11;
+  background-color: tan;
+  border: 8px solid brown;
+}
 
+#cheat-sheet header,
+#cheat-sheet footer {
+  flex: 0 0 auto;
+}
+
+#cheat-sheet h1 {
+  margin: 0;
+  padding: 0;
+}
+
+#cheat-sheet ul {
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+#cheat-sheet header {
+  border-bottom: 2px solid brown;
+}
+
+#cheat-sheet footer {
+  border-top: 2px solid brown;
+}
