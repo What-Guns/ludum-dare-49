@@ -56,6 +56,7 @@ h1 {
   top: 0;
   right: 0;
   bottom: 0;
+  text-align: center;
 }
 
 #audio-fieldset label {
@@ -320,4 +321,10 @@ ul {
 
 #cheat-sheet footer {
   border-top: 2px solid brown;
+}
+
+.title-image {
+  height: 70%;
+  text-align: center;
+  margin: auto;
 }
