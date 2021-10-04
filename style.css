@@ -15,6 +15,12 @@ canvas, #popup-window-container {
   height: 100%;
 }
 
+h1 {
+  font-family: 'Yusei Magic', sans-serif;
+  font-size: xxx-large;
+  text-align: center;
+}
+
 #popup-window-container {
   pointer-events: none;
   z-index: 1;
@@ -266,7 +272,7 @@ ul {
   cursor: pointer;
   font-family: 'Yusei Magic', sans-serif;
   display: block;
-  font-size: xxx-large;
+  font-size: xx-large;
   margin: auto;
   color: #212121;
 }
