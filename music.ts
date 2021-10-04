@@ -151,6 +151,14 @@ const musicState: {[key: string]: MusicState} = {
     plantGain: 0.4,
     plantPan: 0,
   },
+  'locked': {
+    atticGain: 0,
+    overworldFilter: 24000,
+    overworldGain: 1,
+    plantFilter: 1180,
+    plantGain: 0.45,
+    plantPan: -1.5,
+  },
 };
 
 interface MusicState {

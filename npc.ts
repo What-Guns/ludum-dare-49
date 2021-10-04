@@ -4,7 +4,7 @@ import { Thing } from "./main.js";
 import { getDialog } from "./progressManager.js";
 import { RpgTextBox } from "./rpgTextBox.js";
 import {Serializable, pluck} from './serialization.js';
-import { loadImage, loadImages } from './loader.js';
+import { loadImage } from './loader.js';
 
 @Serializable('./npc.js')
 export class Npc implements Thing {
