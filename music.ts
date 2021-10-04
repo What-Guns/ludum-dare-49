@@ -4,7 +4,7 @@ import {audioContext, bgmGainNode} from './audio.js';
 const unloadedBgm = {
   'overworld': 'audio/overworld_song.mp3',
   'greenhouse': 'audio/Bach_Chorale.mp3',
-  'attic': 'audio/Spooky_Attic.mp3',
+  'attic': 'audio/Radio_Tune.mp3',
   'plants': 'audio/plant_choire.mp3',
 };
 
