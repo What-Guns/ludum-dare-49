@@ -204,7 +204,7 @@ export class Player {
         image: POTION_INVENTORY_URL,
         imageColor: potion.color,
         traits: [],
-        description: 'a potion',
+        description: potion.description,
         onToss: () => this.tossPotion(potion),
         onApply: () => {
           if(this.applyPotion(potion)) {

@@ -7,9 +7,10 @@ import { HSBColor } from './crap.js';
 /** A thing that goes in your pocket and applied to puzzle object, material, or player. Cannot exist in the world. */
 export interface Potion {
   name: string;
-  recipe?: MaterialType[]
+  description: string;
+  recipe?: MaterialType[];
   color: HSBColor;
-  applyTo?: PuzzleObjectType | MaterialType,
+  applyTo?: PuzzleObjectType | MaterialType;
   inventoryImageUrl: string;
   inventoryImage?: HTMLImageElement;
   turnsInto?: PuzzleObjectType | MaterialType;
@@ -21,6 +22,7 @@ export const POTION_INVENTORY_URL = './sprites/potion.png';
 export const potions: {[key: string]: Potion} = {
   'ensmallening': {
     name: 'Potion of Ensmallening',
+    description: 'Apply this potion to an object to make it smaller!',
     recipe: ['mouse-whisker'],
     color: {
       hue: 222,
@@ -34,6 +36,7 @@ export const potions: {[key: string]: Potion} = {
   },
   'embiggening': {
     name: 'Potion of Embiggening',
+    description: 'Apply this potion to an object to make it larger!',
     recipe: ['mouse-whisker', 'anti-dote'],
     color: {
       hue: 24,
@@ -46,6 +49,7 @@ export const potions: {[key: string]: Potion} = {
   },
   'temp-transmutation-metal': {
     name: 'Temporary Potion of Metal Transmutation',
+    description: 'Apply this potion to an object to make it turn into metal, for a little while anyway!',
     recipe:  ['transmuters-draught', 'coin', 'morning-dew'],
     color: {
       hue: 49,
@@ -58,6 +62,7 @@ export const potions: {[key: string]: Potion} = {
   },
   'temp-transmutation-wood': {
     name: 'Temporary Potion of Wood Transmutation',
+    description: 'Apply this potion to an object to make it turn into wood, for a little while anyway!',
     recipe: ['transmuters-draught', 'firewood', 'morning-dew'],
     color: {
       hue: 38,
@@ -70,6 +75,7 @@ export const potions: {[key: string]: Potion} = {
   },
   'energy': {
     name: 'Potion of Energy',
+    description: 'Apply this potion to an object to imbue it with lots of energy!',
     recipe: ['hushroom', 'anti-dote'],
     color: {
       hue: 237,
@@ -82,6 +88,7 @@ export const potions: {[key: string]: Potion} = {
   },
   'fiery-flight': {
     name: 'Enduring Potion of Fiery Flight',
+    description: 'Apply this potion to a scalding hot object to make it take flight!',
     recipe: ['doused-phoenix-feather','morning-dew','anti-dote'],
     color: {
       hue: 0,
@@ -93,6 +100,7 @@ export const potions: {[key: string]: Potion} = {
   },
   'ghostly': {
     name: 'Ghostly Potion',
+    description: 'Apply this potion to yourself and you will be able to phase right through doors!',
     recipe: ['gravity-stone-piece', 'anti-dote','ghost-tears','morning-dew'],
     color: {
       hue: 305,
@@ -105,6 +113,7 @@ export const potions: {[key: string]: Potion} = {
   },
   'unstable': {
     name: 'Unstable Potion',
+    description: 'Whoops, this potion didn\'t come out right. You can throw it away probably.',
     color: {
       hue: 129,
       saturation: 78,
