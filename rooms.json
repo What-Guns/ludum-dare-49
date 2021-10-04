@@ -281,7 +281,9 @@
       "interacts": [
         "hushroom",
         "gravity-stone",
-        "hot-gravity-stone"
+        "hot-gravity-stone",
+        "hot-floating-gravity-stone",
+        "hot-temporarily-gravity-stone"
       ],
       "things": [
         {
