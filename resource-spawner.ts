@@ -4,6 +4,7 @@ import {Serializable} from './serialization.js';
 import { hideHudItemWindow, makeHudItemWindow } from './hud.js';
 import { materials, MaterialType, Material} from './material.js';
 import { getProgressLevel } from './progressManager.js';
+import { debug } from './debug.js';
 
 @Serializable('./resource-spawner.js')
 export class ResourceSpawner implements Thing {
@@ -61,6 +62,7 @@ export class ResourceSpawner implements Thing {
   }
 
   isVisible() {
+    if (debug) return true;
     if (this.minimumLevel > getProgressLevel()) return false;
     return true;
   }
@@ -70,6 +72,7 @@ export class ResourceSpawner implements Thing {
   }
 
   isUnderPointer(x: number, y: number) {
+    if (!this.isVisible()) return false;
     return !(Math.abs(this.x - x) > this.width / 2 || Math.abs(this.y - y) > this.height / 2);
   }
 
