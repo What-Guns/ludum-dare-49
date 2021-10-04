@@ -42,7 +42,9 @@ export class Cabinet implements Thing {
     if(!this.bottomItem && !this.topItem) return false;
 
     if(this.bottomItem) {
-      if(player.hasPuzzleObject(puzzleObjects['small-key'])) {
+      const smallKey = puzzleObjects['small-key'];
+      if(player.hasPuzzleObject(smallKey)) {
+        player.tossPuzzleObject(smallKey);
         this.room!.adoptThing(this.bottomItem);
         this.bottomItem = null;
         increaseProgressLevelName('unlocked-bottom-cabinet');
@@ -56,7 +58,9 @@ export class Cabinet implements Thing {
     }
 
     if(this.topItem) {
-      if (player.hasPuzzleObject(puzzleObjects['big-key'])) {
+      const bigKey = puzzleObjects['big-key'];
+      if (player.hasPuzzleObject(bigKey)) {
+        player.tossPuzzleObject(bigKey);
         this.room?.adoptThing(this.topItem);
         this.topItem = null;
         increaseProgressLevelName('unlocked-top-cabinet');
