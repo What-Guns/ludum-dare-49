@@ -74,6 +74,15 @@
           "type": "CAT"
         },
         {
+          "@type": "CheatSheet",
+          "@path": "./cheatSheet.js",
+          "x": 1219,
+          "y": 1047,
+          "z": 0,
+          "width": 176,
+          "height": 248
+        },
+        {
           "@type": "Player",
           "@path": "./player.js",
           "x": 708,

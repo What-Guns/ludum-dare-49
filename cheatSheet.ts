@@ -37,7 +37,7 @@ export class CheatSheet implements Thing {
   }
 
   static async deserialize(data: CheatSheetData) {
-    const image = await loadImage('./sprites/Radio.png')
+    const image = await loadImage('./sprites/cheat-sheet.png')
     return new CheatSheet(data, image);
   }
 
