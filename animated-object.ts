@@ -14,13 +14,13 @@ export class AnimatedObject implements Thing {
   private readonly height: number;
   private t = 0;
 
-  constructor(readonly frames: HTMLImageElement[], data: AnimatedObjectData) {
-    this.x = data.x;
-    this.y = data.y;
-    this.z = data.z;
-    this.animating = data.animating;
-    this.frameRate = data.frameRate;
-    this.visible = data.visible;
+  constructor(readonly frames: HTMLImageElement[], private readonly objectData: AnimatedObjectData) {
+    this.x = objectData.x;
+    this.y = objectData.y;
+    this.z = objectData.z;
+    this.animating = objectData.animating;
+    this.frameRate = objectData.frameRate;
+    this.visible = objectData.visible;
     this.frames = frames;
     this.width = frames[0].width;
     this.height = frames[0].height;
@@ -39,7 +39,7 @@ export class AnimatedObject implements Thing {
   serialize(): AnimatedObjectData {
     return {
       ...pluck(this, 'x', 'y', 'z', 'animating', 'frameRate', 'visible'),
-      frames: this.frames.map(f => f.src),
+      frames: this.objectData.frames,
     };
   }
 
