@@ -79,6 +79,12 @@ export const progressData = [
     ghostDialog: 'do you want more of my tears, no no i assure you its no trouble',
     unlockedRooms: ['foyer', 'greenhouse', 'hall', 'cellar', 'attic']
   },
+  {
+    name: 'drank-ghostly-potion',
+    catDialog: 'Look at you, you\'re transparent! Quick, go through the locked door before it wears off!',
+    ghostDialog: 'hee hee you look like me, thats awesome',
+    unlockedRooms: ['foyer', 'greenhouse', 'hall', 'cellar', 'attic', 'locked']
+  },
 ]
 
 let currentLevel = 0;
