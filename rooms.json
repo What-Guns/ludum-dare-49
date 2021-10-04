@@ -138,8 +138,8 @@
         {
           "@type": "ResourceSpawner",
           "@path": "./resource-spawner.js",
-          "x": 723,
-          "y": 517,
+          "x": 811,
+          "y": 551,
           "z": -2,
           "resourceType": "morning-dew"
         }
