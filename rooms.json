@@ -66,7 +66,7 @@
         {
           "@type": "Player",
           "@path": "./player.js",
-          "x": 1113,
+          "x": 713.5,
           "y": 950,
           "heldMaterials": [],
           "heldPuzzleObjects": [],
@@ -76,8 +76,8 @@
         {
           "@type": "AnimatedObject",
           "@path": "./animated-object.js",
-          "x": 1065,
-          "y": 801,
+          "x": 1012,
+          "y": 786,
           "z": 2,
           "animating": false,
           "frameRate": 1,
@@ -89,22 +89,22 @@
         {
           "@type": "Cabinet",
           "@path": "./cabinet.js",
-          "x": 1288,
-          "y": 590,
+          "x": 1292,
+          "y": 592,
           "z": 3,
           "topItem": {
             "@type": "ResourceSpawner",
             "@path": "./resource-spawner.js",
-            "x": 336,
-            "y": 473.5,
+            "x": 1224,
+            "y": 663.5,
             "z": 4,
             "resourceType": "transmuters-draught"
           },
           "bottomItem": {
             "@type": "ResourceSpawner",
             "@path": "./resource-spawner.js",
-            "x": 336,
-            "y": 620.5,
+            "x": 1224,
+            "y": 810.5,
             "z": 4,
             "resourceType": "anti-dote"
           }
