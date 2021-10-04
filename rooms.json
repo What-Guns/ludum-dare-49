@@ -454,6 +454,20 @@
           "minimumLevel": "returned-radio"
         }
       ]
+    },
+    {
+      "@type": "Room",
+      "@path": "./room.js",
+      "name": "locked",
+      "width": 1434,
+      "height": 1080,
+      "vanishingPoint": {
+        "x": 728,
+        "y": 529
+      },
+      "floorHeight": 920,
+      "background": ["./backgrounds/lockedroom1.png", "./backgrounds/lockedroom2.png"],
+      "things": []
     }
   ],
   "currentProgressLevel": 0
