@@ -210,7 +210,7 @@ export class Game {
   }
 
   win() {
-    alert('You have emerged victorious')
+    (document.querySelector('#game-over') as HTMLDivElement).style.setProperty('display', 'block')
   }
 }
 

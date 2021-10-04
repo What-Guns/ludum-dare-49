@@ -59,6 +59,19 @@ h1 {
   text-align: center;
 }
 
+#game-over {
+  z-index: 3;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  display: none;
+  background-color: #F6F6F6;
+  z-index: 9999999;
+}
+
 #audio-fieldset label {
   display: block;
 }
