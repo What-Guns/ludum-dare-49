@@ -52,12 +52,12 @@ export class Music {
     }
     const now = audioContext.currentTime;
     if(immediate) {
-      this.atticGain.gain.setValueAtTime(state.atticGain, now);
-      this.overworldGain.gain.setValueAtTime(state.overworldGain, now);
-      this.overworldFilter.frequency.setValueAtTime(state.overworldFilter, now);
-      this.plantFilter.frequency.setValueAtTime(state.plantFilter, now);
-      this.plantGain.gain.setValueAtTime(state.plantGain, now);
-      this.plantPan.positionX.setValueAtTime(state.plantPan, now);
+      this.atticGain.gain.value = state.atticGain;
+      this.overworldGain.gain.value = state.overworldGain;
+      this.overworldFilter.frequency.value = state.overworldFilter;
+      this.plantFilter.frequency.value = state.plantFilter;
+      this.plantGain.gain.value = state.plantGain;
+      this.plantPan.positionX.value = state.plantPan;
     } else {
       const then = audioContext.currentTime + (immediate ? 0 : 1);
       this.fadeParam(this.atticGain.gain, state.atticGain, now, then);
@@ -101,7 +101,7 @@ export class Music {
     source.connect(gain);
     gain.connect(destination);
     source.loop = true;
-    source.start(0);
+    source.start(audioContext.currentTime + 1);
     return gain;
   }
 
@@ -111,6 +111,14 @@ export class Music {
 }
 
 const musicState: {[key: string]: MusicState} = {
+  'foyer': {
+    atticGain: 0,
+    overworldFilter: 24000,
+    overworldGain: 1,
+    plantFilter: 100,
+    plantGain: 0,
+    plantPan: -2,
+  },
   'hall': {
     atticGain: 0,
     overworldFilter: 24000,

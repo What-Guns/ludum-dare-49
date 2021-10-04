@@ -5,6 +5,65 @@
     {
       "@type": "Room",
       "@path": "./room.js",
+      "name": "foyer",
+      "width": 1433,
+      "height": 1080,
+      "vanishingPoint": {
+        "x": 711,
+        "y": 564
+      },
+      "floorHeight": 900,
+      "background": "./backgrounds/foyer.png",
+      "things": [
+        {
+          "@type": "Cauldron",
+          "@path": "./cauldron.js",
+          "x": 707,
+          "y": 739,
+          "z": -1,
+          "width": 180,
+          "height": 111,
+          "brewing": []
+        },
+        {
+          "@type": "Door",
+          "@path": "./door.js",
+          "x": 224,
+          "y": 918,
+          "height": 522,
+          "width": 150,
+          "target": [
+            "hall",
+            "east",
+            "left"
+          ],
+          "name": "west"
+        },
+        {
+          "@type": "Npc",
+          "@path": "./npc.js",
+          "x": 489,
+          "y": 467,
+          "z": 0,
+          "width": 100,
+          "height": 100,
+          "type": "CAT"
+        },
+        {
+          "@type": "Player",
+          "@path": "./player.js",
+          "x": 1113,
+          "y": 900,
+          "heldMaterials": [],
+          "heldPuzzleObjects": [],
+          "heldPotions": [],
+          "materialInventorySize": 5
+        }
+      ]
+    },
+    {
+      "@type": "Room",
+      "@path": "./room.js",
       "name": "hall",
       "width": 1203,
       "height": 839,
@@ -15,16 +74,6 @@
       "floorHeight": 781,
       "background": "./backgrounds/sample.jpeg",
       "things": [
-        {
-          "@type": "Cauldron",
-          "@path": "./cauldron.js",
-          "x": 651,
-          "y": 637,
-          "z": -1,
-          "width": 242,
-          "height": 152,
-          "brewing": []
-        },
         {
           "@type": "Container",
           "@path": "./container.js",
@@ -73,13 +122,18 @@
           "name": "ladder"
         },
         {
-          "@type": "Player",
-          "@path": "./player.js",
-          "x": 300,
-          "y": 781,
-          "heldMaterials": [],
-          "heldPuzzleObjects": [],
-          "materialInventorySize": 5
+          "@type": "Door",
+          "@path": "./door.js",
+          "x": 1122,
+          "y": 782,
+          "height": 522,
+          "width": 150,
+          "target": [
+            "foyer",
+            "west",
+            "right"
+          ],
+          "name": "east"
         }
       ]
     },
@@ -123,16 +177,6 @@
             "down"
           ],
           "name": "floor"
-        },
-        {
-          "@type": "Npc",
-          "@path": "./npc.js",
-          "x": 600,
-          "y": 400,
-          "z": 0,
-          "width": 100,
-          "height": 100,
-          "type": "CAT"
         },
         {
           "@type": "PuzzleObjectSpawner",
@@ -205,6 +249,15 @@
       "background": "./backgrounds/cellar.jpg",
       "things": [
         {
+          "@type": "Furnace",
+          "@path": "./furnace.js",
+          "x": 1250,
+          "y": 850,
+          "z": -1,
+          "width": 300,
+          "height": 250
+        },
+        {
           "@type": "Ladder",
           "@path": "./door.js",
           "x": 794,
@@ -247,15 +300,6 @@
           "y": 826,
           "z": 0,
           "puzzleObjectType": "gravity-stone"
-        },{
-          "@type": "Furnace",
-          "@path": "./furnace.js",
-          "x": 1250,
-          "y": 850,
-          "z": -1,
-          "width": 300,
-          "height": 250,
-          "brewing": []
         }
       ]
     }

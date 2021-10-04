@@ -2,7 +2,7 @@ import {pointer} from './input.js';
 import {Thing} from './main.js';
 import {materials} from './material.js';
 import { getProgressLevel, progressData, setProgressLevel } from './progressManager.js';
-import {deserialize} from './serialization.js';
+import {deserialize, isSerializable, serialize} from './serialization.js';
 
 export let debug = false;
 export let held: Held|null = null;
@@ -22,6 +22,16 @@ addEventListener('contextmenu', evt => {
   evt.preventDefault();
   const thing = window.game?.room?.getThingUnderCursor();
   held = thing ? {thing, previousPointer: {x: pointer.x, y: pointer.y}} : null;
+});
+
+addEventListener('mousedown', evt => {
+  if(!debug) return;
+  if(evt.which !== 2) return;
+  evt.preventDefault();
+  const thing = window.game?.room?.getThingUnderCursor();
+  if(thing && isSerializable(thing)) {
+    console.log(serialize(thing));
+  }
 });
 
 addEventListener('mouseup', () => held = null);

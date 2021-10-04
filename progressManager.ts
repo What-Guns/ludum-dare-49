@@ -4,17 +4,17 @@ export const progressData = [
   {
     catDialog: 'Welcome to the cottage! Try, idk, picking things up.',
     ghostDialog: 'You definitely should not be in the attic yet',
-    unlockedRooms: ['hall']
+    unlockedRooms: ['foyer', 'hall']
   },
   {
     catDialog: 'You\'ve reached the next level! I am so very proud of you.',
     ghostDialog: 'I\'m serious dude, get out of the attic',
-    unlockedRooms: ['greenhouse', 'hall', 'cellar']
+    unlockedRooms: ['foyer', 'greenhouse', 'hall', 'cellar']
   },
   {
     catDialog: 'You\'ve reached the next level! I am so very proud of you.',
     ghostDialog: 'I\'m serious dude, get out of the attic',
-    unlockedRooms: ['greenhouse', 'hall', 'cellar', 'attic']
+    unlockedRooms: ['foyer', 'greenhouse', 'hall', 'cellar', 'attic']
   },
 ]
 
