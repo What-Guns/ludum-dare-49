@@ -11,9 +11,11 @@ export class AnimatedObject implements Thing {
   animating: boolean;
   frameRate: number;
   visible: boolean;
+  oneshot: boolean;
+  t = 0;
+
   private readonly width: number;
   private readonly height: number;
-  private t = 0;
 
   constructor(readonly frames: HTMLImageElement[], private readonly objectData: AnimatedObjectData) {
     this.x = objectData.x;
@@ -25,22 +27,28 @@ export class AnimatedObject implements Thing {
     this.frames = frames;
     this.width = frames[0].width;
     this.height = frames[0].height;
+    this.oneshot = objectData.oneshot ?? false;
   }
 
   tick(dt: number) {
-    if(this.animating) this.t += dt;
+    if(this.animating) this.t += dt * this.frameRate;
+    if(this.oneshot) {
+      this.t = Math.min(this.t, this.frames.length - 1)
+    } else {
+      this.t = this.t % this.frames.length
+    }
   }
 
   draw(ctx: CanvasRenderingContext2D) {
     if(!this.visible) return;
-    const frameNumber = Math.floor((this.t * this.frameRate)) % this.frames.length
+    const frameNumber = Math.floor(this.t);
     const frame = this.frames[frameNumber];
     ctx.drawImage(frame, this.x, this.y);
   }
 
   serialize(): AnimatedObjectData {
     return {
-      ...pluck(this, 'x', 'y', 'z', 'animating', 'frameRate', 'visible'),
+      ...pluck(this, 'x', 'y', 'z', 'animating', 'frameRate', 'visible', 'oneshot'),
       frames: this.objectData.frames,
     };
   }
@@ -75,5 +83,6 @@ export interface AnimatedObjectData {
   frameRate: number;
   visible: boolean;
   animating: boolean;
+  oneshot: boolean;
 }
 

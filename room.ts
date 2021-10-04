@@ -1,3 +1,4 @@
+import {AnimatedObject} from './animated-object.js';
 import {Portal} from './door.js';
 import {Npc} from './npc.js';
 import {Player} from './player.js';
@@ -174,12 +175,28 @@ export class Hall extends Room {
     stopSpeech();
   });
 
+  private hatchAnimation?: AnimatedObject;
+
+  constructor(background: CanvasImageSource, roomData: RoomData) {
+    super(background, roomData);
+  }
+
+  override activate() {
+    if(!this.hatchAnimation) {
+      const animatedObjects = this.getObjectsOfType(AnimatedObject);
+      if(animatedObjects.length !== 1) throw new Error(`Expected to find exactly one animated object in the hall`);
+      this.hatchAnimation = animatedObjects[0];
+    }
+  }
+
   override handleLockedDoor(targetRoom: string) {
     if(targetRoom !== 'attic') {
       super.handleLockedDoor(targetRoom);
       return;
     }
 
+    this.hatchAnimation!.t = 0;
+    this.hatchAnimation!.animating = true;
     this.textbox.imageSrc = Npc.textBoxImages['GHOST'];
     this.textbox.visible = true;
     this.textbox.placement = 'bottom';
@@ -202,9 +219,12 @@ export class Hall extends Room {
 
   private giveRadio() {
     const brokenRadio = puzzleObjects['broken-radio'];
-    if(!this.player?.hasPuzzleObject(brokenRadio)) {
-      this.player?.takePuzzleObject(puzzleObjects['broken-radio']);
-    }
+    const fixedRadio = puzzleObjects['fixed-radio'];
+
+    const player = this.player;
+    if(!player) return;
+    if(player.hasPuzzleObject(brokenRadio) || player.hasPuzzleObject(fixedRadio)) return;
+    player.takePuzzleObject(puzzleObjects['broken-radio']);
   }
 }
 

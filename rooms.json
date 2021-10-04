@@ -118,21 +118,24 @@
             "z": 4,
             "resourceType": "anti-dote"
           }
-        },{
+        },
+        {
           "@type": "ResourceSpawner",
           "@path": "./resource-spawner.js",
           "x": 886,
           "y": 524,
           "z": -2,
           "resourceType": "mouse-whisker"
-        },{
+        },
+        {
           "@type": "ResourceSpawner",
           "@path": "./resource-spawner.js",
           "x": 377,
           "y": 752,
           "z": -2,
           "resourceType": "firewood"
-        },{
+        },
+        {
           "@type": "ResourceSpawner",
           "@path": "./resource-spawner.js",
           "x": 723,
@@ -154,7 +157,10 @@
       },
       "floorHeight": 900,
       "background": "./backgrounds/hall.png",
-      "interacts": ["metal-hushroom", "wooden-hushroom"],
+      "interacts": [
+        "metal-hushroom",
+        "wooden-hushroom"
+      ],
       "things": [
         {
           "@type": "TrapDoor",
@@ -211,14 +217,29 @@
             "right"
           ],
           "name": "east"
-        },{
-          "@type": "ResourceSpawner",
-          "@path": "./resource-spawner.js",
-          "x": 1442,
-          "y": 669,
-          "z": -2,
-          "resourceType": "hushroom",
-          "minimumLevel": 9
+        },
+        {
+          "@type": "AnimatedObject",
+          "@path": "./animated-object.js",
+          "x": 211,
+          "y": 169,
+          "z": -1,
+          "animating": false,
+          "frameRate": 4,
+          "visible": true,
+          "oneshot": true,
+          "frames": [
+            "sprites/Closedhatch.png",
+            "sprites/Kindaopenhatch.png",
+            "sprites/Open_hatch.png",
+            "sprites/Openhatchwitheyes.png",
+            "sprites/Openhatchwitheyes.png",
+            "sprites/Openhatchwitheyes.png",
+            "sprites/Openhatchwitheyes.png",
+            "sprites/Open_hatch.png",
+            "sprites/Kindaopenhatch.png",
+            "sprites/Closedhatch.png"
+          ]
         }
       ]
     },
@@ -234,7 +255,11 @@
       },
       "floorHeight": 925,
       "background": "./backgrounds/Greenhouse.png",
-      "interacts": ["hushroom", "gravity-stone", "hot-gravity-stone"],
+      "interacts": [
+        "hushroom",
+        "gravity-stone",
+        "hot-gravity-stone"
+      ],
       "things": [
         {
           "@type": "Door",
