@@ -84,7 +84,7 @@ export const materials: {[key: string]: Material} = {
   },
   'hushroom': {
     name: 'Hushroom',
-    description: 'This little mushroom will wilt if exposed to bright lights or loud sounds. Chill times and good vibes are this mushroom’s specialty!',
+    description: 'This little mushroom will wilt if exposed to loud sounds. Chill times and good vibes are this mushroom’s specialty!',
     effect: 'relaxed',
     brewTime: 10,
     expireTime: 20,
