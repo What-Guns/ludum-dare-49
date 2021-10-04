@@ -234,7 +234,9 @@ export class Player {
   applyPotion(potion: Potion): boolean {
     if (potion.name === 'Ghostly Potion') {
       this.isGhostly = true;
+      increaseProgressLevelName('drank-ghostly-potion');
       toast('You drink the ghostly potion');
+      this.tossPotion(potion);
       return true;
     }
     const { applyTo } = potion;
