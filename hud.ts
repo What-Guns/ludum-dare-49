@@ -74,7 +74,7 @@ export class HudItemWindow {
 }
 
 const _hudItemWindow = new HudItemWindow();
-export function makeHudItemWindow({onTake, onToss, onPlace, onApply, ...params}: HudItemWindowParams): HudItemWindow {
+export function makeHudItemWindow({onTake, onToss, onPlace, onApply, onBrew, ...params}: HudItemWindowParams): HudItemWindow {
   _hudItemWindow.image = params.image;
   _hudItemWindow.imageColor = params.imageColor;
   _hudItemWindow.itemName = params.name;
@@ -117,9 +117,19 @@ export function makeHudItemWindow({onTake, onToss, onPlace, onApply, ...params}:
 
   if(onApply) {
     const applyButton = document.createElement('button');
-    applyButton.innerText = 'Brew';
+    applyButton.innerText = 'Apply';
     applyButton.addEventListener('click', () => {
       onApply();
+      _hudItemWindow.visible = false;
+    })
+    buttonContainer.appendChild(applyButton);
+  }
+
+  if(onBrew) {
+    const applyButton = document.createElement('button');
+    applyButton.innerText = 'Brew';
+    applyButton.addEventListener('click', () => {
+      onBrew();
       _hudItemWindow.visible = false;
     })
     buttonContainer.appendChild(applyButton);
@@ -138,6 +148,7 @@ export interface HudItemWindowParams {
   onToss?: () => void;
   onPlace?: () => void;
   onApply?: () => void;
+  onBrew?: () => void;
 }
 
 export class HudItemHotbar {

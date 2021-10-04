@@ -8,7 +8,7 @@ import './audio.js';
 import { toast, Toast } from './toast.js';
 import './toast.js';
 import './progressManager.js';
-import { getProgressLevel, isRoomUnlocked, setProgressLevel } from './progressManager.js';
+import { getProgressLevel, isRoomUnlocked, increaseProgressLevel } from './progressManager.js';
 
 @Serializable('./game.js')
 export class Game {
@@ -31,7 +31,7 @@ export class Game {
   static async deserialize(data: GameData, {canvas}: GameExtras)  {
     const game = new Game(canvas, await Music.create());
     const rooms = (await Promise.all(data.rooms.map(deserialize))) as Room[];
-    setProgressLevel(data.currentProgressLevel);
+    increaseProgressLevel(data.currentProgressLevel);
     game.rooms.push(...rooms as Room[]);
     game.goToFirstRoom();
     return Promise.resolve(game);

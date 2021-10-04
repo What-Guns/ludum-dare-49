@@ -9,6 +9,7 @@ export interface PuzzleObject {
   description: string;
   inventoryImageUrl?: string;
   spawnerImageUrl?: string;
+  progressLevel?: number;
 }
 
 export const puzzleObjects: {[key: string]: PuzzleObject} = {
@@ -17,6 +18,7 @@ export const puzzleObjects: {[key: string]: PuzzleObject} = {
     description: 'A plain key with a loop and a couple of teeth',
     inventoryImageUrl: './sprites/key-inventory.png',
     spawnerImageUrl: './sprites/key.png',
+    progressLevel: 5,
   },
   'small-key': {
     name: 'Small Key',
