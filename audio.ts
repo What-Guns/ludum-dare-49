@@ -3,16 +3,7 @@ import { loadAudio } from './loader.js';
 const soundMap = new Map<string, AudioBuffer>();
 export const audioContext = new AudioContext();
 
-export type BgmTrackName = keyof typeof bgm;
 export type SfxName = keyof typeof sfx;
-
-const bgm = {
-  'crystal':'audio/The_Scientists_Crystalarium.mp3', 
-  'banjo': 'audio/Banjo_Kablooie.mp3',
-  'overworld': 'audio/overworld_song.mp3',
-  'greenhouse': 'audio/Bach_Chorale.mp3',
-  'attic': 'audio/Spooky_Attic.mp3',
-};
 
 const sfx = {
   'splat': 'audio/splat.ogg',
@@ -23,7 +14,7 @@ const sfx = {
   'bad-job-4': 'audio/bad-job-4.wav',
 };
 
-for(const [name, url] of Object.entries({...bgm, ...sfx})) {
+for(const [name, url] of Object.entries(sfx)) {
   loadSound(name, url);
 }
 
@@ -58,8 +49,6 @@ export function playSFXPitchShifted(name: SfxName, shift: number) {
   sound.start(0);
   return sound;
 }
-
-
 
 export async function playSpeech(sampleName: SfxName, numberOfSamples: number, timeBetweenSamples: number, variance: number, shift: number) {
   for (let x=0; x<numberOfSamples; x++) {
