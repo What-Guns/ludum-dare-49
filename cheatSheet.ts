@@ -45,7 +45,7 @@ export class CheatSheet implements Thing {
     if(!this.isUnderPointer(x, y)) {
       return false;
     }
-    (document.querySelector('#cheat-sheet') as HTMLDivElement).style.setProperty('display', 'block');
+    (document.querySelector('#cheat-sheet') as HTMLDivElement).style.setProperty('display', 'flex');
     return true;
   }
 
