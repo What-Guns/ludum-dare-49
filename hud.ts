@@ -117,7 +117,7 @@ export function makeHudItemWindow({onTake, onToss, onPlace, onApply, ...params}:
 
   if(onApply) {
     const applyButton = document.createElement('button');
-    applyButton.innerText = 'Use';
+    applyButton.innerText = 'Brew';
     applyButton.addEventListener('click', () => {
       onApply();
       _hudItemWindow.visible = false;
