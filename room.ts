@@ -167,7 +167,7 @@ export class Room {
   }
 }
 
-@Serializable('./rooms.js')
+@Serializable('./room.js')
 export class Hall extends Room {
   private readonly textbox: RpgTextBox = new RpgTextBox(() => {
     this.giveRadio();
