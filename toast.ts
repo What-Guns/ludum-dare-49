@@ -2,7 +2,8 @@ import { Game } from "./game.js";
 import { pointer } from "./input.js";
 
 export function toast(message: string) {
-  ((window as any).game as Game).toast = new Toast(message, 2, pointer.x , pointer.y);
+  const toastY = Math.min(pointer.y, window.innerHeight - 100);
+  ((window as any).game as Game).toast = new Toast(message, 2, pointer.x, toastY);
 }
 
 (window as any).toast = toast;
