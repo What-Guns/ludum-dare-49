@@ -46,6 +46,11 @@ export const progressData = [
     ghostDialog: 'I\'m serious dude, get out of the attic',
     unlockedRooms: ['foyer', 'greenhouse', 'hall', 'cellar']
   },
+  {
+    catDialog: 'Good thinking! Now you\'ll have hushrooms available in the hall whenever you want!',
+    ghostDialog: 'I\'m serious dude, get out of the attic',
+    unlockedRooms: ['foyer', 'greenhouse', 'hall', 'cellar']
+  },
 ]
 
 let currentLevel = 0;

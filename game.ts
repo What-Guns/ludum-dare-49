@@ -163,27 +163,47 @@ export class Game {
     targetRoom.adoptThing(player);
     targetRoom.activate();
 
-    if(this.room.destroys) {
-      this.room.destroys.forEach(item => {
-        if (item === 'hushroom' && player.hasMaterial(materials['hushroom'])) {
-          player.tossMaterial(materials['hushroom']);
-          toast('The hushroom withers from the loud music!');
-          increaseProgressLevel(8);
-        } else if (item === 'gravity-stone' && player.hasPuzzleObject(puzzleObjects['gravity-stone'])) {
-          player.tossPuzzleObject(puzzleObjects['gravity-stone']);
-          toast('The gravity stone is too heavy!');
-          // TODO increase progress level
-        } else if (item === 'hot-gravity-stone' && player.hasPuzzleObject(puzzleObjects['hot-gravity-stone'])) {
-          player.tossPuzzleObject(puzzleObjects['hot-gravity-stone']);
-          toast('The gravity stone is too heavy!');
-          // TODO increase progress level
-        }
-      })
-    }
+    this.performRoomItemInteraction(this.room.interacts)
 
     this.music.roomChanged(roomName);
 
     this.save();
+  }
+
+  performRoomItemInteraction(interactsList: string[] | undefined) {
+    if (!interactsList) return;
+    const player = this.room!.player!;
+    interactsList.forEach(item => {
+      if (item === 'hushroom' && player.hasMaterial(materials['hushroom'])) {
+        player.tossMaterial(materials['hushroom']);
+        toast('The hushroom withers from the loud music!');
+        increaseProgressLevel(8);
+      } else if (item === 'gravity-stone' && player.hasPuzzleObject(puzzleObjects['gravity-stone'])) {
+        player.tossPuzzleObject(puzzleObjects['gravity-stone']);
+        toast('The gravity stone is too heavy!');
+        // TODO increase progress level
+      } else if (item === 'hot-gravity-stone' && player.hasPuzzleObject(puzzleObjects['hot-gravity-stone'])) {
+        player.tossPuzzleObject(puzzleObjects['hot-gravity-stone']);
+        toast('The gravity stone is too heavy!');
+        // TODO increase progress level
+      } else if (item === 'wooden-hushroom' && player.hasPuzzleObject(puzzleObjects['wooden-hushroom'])) {
+        player.tossPuzzleObject(puzzleObjects['wooden-hushroom']);
+        if (getProgressLevel() < 9) {
+          toast('The hushrooms turned back to normal! They are now available in the hall.');
+          increaseProgressLevel(9);
+        } else {
+          toast('The hushrooms turned back to normal!');
+        }
+      } else if (item === 'metal-hushroom' && player.hasPuzzleObject(puzzleObjects['metal-hushroom'])) {
+        player.tossPuzzleObject(puzzleObjects['metal-hushroom']);
+        if (getProgressLevel() < 9) {
+          toast('The hushrooms turned back to normal! They are now available in the hall.');
+          increaseProgressLevel(9);
+        } else {
+          toast('The hushrooms turned back to normal!');
+        }
+      } 
+    })
   }
 }
 

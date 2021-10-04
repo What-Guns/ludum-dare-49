@@ -72,7 +72,7 @@ export const materials: {[key: string]: Material} = {
     brewTime: 5,
     expireTime: 10,
     inventoryImageUrl: './sprites/firewood-inventory.png',
-    worldImageUrl: './sprites/firewood.png',
+    worldImageUrl: './sprites/invisible.png',
   },
   'anti-dote': {
     name: 'Anti-dote',

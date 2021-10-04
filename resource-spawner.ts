@@ -3,20 +3,23 @@ import {Thing} from './main.js';
 import {Serializable} from './serialization.js';
 import { hideHudItemWindow, makeHudItemWindow } from './hud.js';
 import { materials, MaterialType, Material} from './material.js';
+import { getProgressLevel } from './progressManager.js';
 
 @Serializable('./resource-spawner.js')
 export class ResourceSpawner implements Thing {
   x: number;
   y: number;
   z: number;
+  minimumLevel: number;
   readonly width: number;
   readonly height: number;
   room?: Room;
 
-  constructor(readonly material: Material, readonly worldImage: HTMLImageElement, {x, y, z}: ResourceSpawnerData) {
+  constructor(readonly material: Material, readonly worldImage: HTMLImageElement, {x, y, z, minimumLevel}: ResourceSpawnerData) {
     this.x = x;
     this.y = y;
     this.z = z ?? 0;
+    this.minimumLevel = minimumLevel || 0;
     this.width = worldImage.width;
     this.height = worldImage.height;
   }
@@ -43,6 +46,7 @@ export class ResourceSpawner implements Thing {
       hideHudItemWindow();
       return false;
     } 
+    if (!this.isVisible()) return false;
     if(!this.room?.player?.canReach(this.x, this.y)) return false;
     const image = this.material.inventoryImageUrl ?? this.material.worldImageUrl ?? PLACEHOLDER_IMAGE_URL;
     makeHudItemWindow({
@@ -55,6 +59,11 @@ export class ResourceSpawner implements Thing {
     return true;
   }
 
+  isVisible() {
+    if (this.minimumLevel > getProgressLevel()) return false;
+    return true;
+  }
+
   take() {
     this.room?.player?.takeMaterial(this.material);
   }
@@ -64,6 +73,7 @@ export class ResourceSpawner implements Thing {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
+    if (!this.isVisible()) return;
     ctx.drawImage(this.worldImage, this.x - this.width / 2, this.y - this.height/2);
   }
 }
@@ -72,6 +82,7 @@ export interface ResourceSpawnerData {
   x: number;
   y: number;
   z: number;
+  minimumLevel?: number;
   resourceType: MaterialType;
 }
 

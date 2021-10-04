@@ -11,7 +11,7 @@ import {translateAndScalePopupContainer, resizePopupContainer} from './hud.js';
 @Serializable('./room.js')
 export class Room {
   readonly name: string;
-  readonly destroys?: string[];
+  readonly interacts?: string[];
   readonly width: number;
   readonly height: number;
   readonly vanishingPoint: {x: number, y: number};
@@ -42,7 +42,7 @@ export class Room {
     this.width = roomData.width;
     this.height = roomData.height;
     this.vanishingPoint = roomData.vanishingPoint;
-    this.destroys = roomData.destroys;
+    this.interacts = roomData.interacts;
     this.floorHeight = roomData.floorHeight;
   }
 
@@ -159,7 +159,7 @@ export class Room {
 
 export interface RoomData {
   name: string;
-  destroys?: string[];
+  interacts?: string[];
   background: string;
   things: object[];
   width: number;
