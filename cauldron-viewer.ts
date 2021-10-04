@@ -19,7 +19,7 @@ export class CauldronViewer implements Thing {
 
   draw(ctx: CanvasRenderingContext2D) {
     for(let i = 0; i < this.cauldron.brewing.length; i++) {
-      const dir = 2 * Math.PI * (i/this.cauldron.ITEM_CAPACITY) + this.rotation;
+      const dir = 2 * Math.PI * (i/this.cauldron.brewing.length) + this.rotation;
       const x = Math.cos(dir) * this.cauldron.width / 3 + this.x;
       const y = Math.sin(dir) * this.cauldron.width / 6 + this.y - this.cauldron.height/2 - 50;
       this.drawBrewingItem(ctx, this.cauldron.brewing[i], x, y);

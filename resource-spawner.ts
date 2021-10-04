@@ -54,7 +54,8 @@ export class ResourceSpawner implements Thing {
     makeHudItemWindow({
       image,
       name: this.material.name,
-      traits: [this.material.effect],
+      effect: this.material.effect,
+      brewTime: this.material.uselessInPotions ? undefined : {min: this.material.brewTime, max: this.material.expireTime},
       description: this.material.description,
       onTake: () => this.take(),
     }).showByThing(this);

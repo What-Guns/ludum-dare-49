@@ -148,7 +148,6 @@ export class PuzzleObjectSpawner implements Thing {
     makeHudItemWindow({
       image: image,
       name: this.puzzleObject.name,
-      traits: [],
       description: this.puzzleObject.description,
       onTake: () => this.take(),
     }).showByThing(this);

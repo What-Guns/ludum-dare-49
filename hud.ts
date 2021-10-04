@@ -16,20 +16,16 @@ export function resizePopupContainer(room: Room) {
 export class HudItemWindow {
   element: HTMLElement;
 
-  set traitsList(list: string[]) {
-    const traitsList = this.element.querySelector('ul')!;
-    while (traitsList.firstChild) {
-      traitsList.removeChild(traitsList.firstChild);
-    }
-    list.forEach(trait => {
-      const li = document.createElement('li');
-      li.innerText = trait;
-      traitsList.appendChild(li);
-    })
-  }
-
   set itemDescription(desc: string) {
     this.element.querySelector('.hudItemDescription')!.textContent = desc;
+  }
+
+  set effect(effect: string|undefined) {
+    this.element.querySelector('.hudItemEffect')!.textContent = effect ? `Effect: ${effect}` : '';
+  }
+
+  set brewTime(time: {min: number, max: number}|undefined) {
+    this.element.querySelector('.hudItemBrewTime')!.textContent = time ? `Brew time: between ${time.min} and ${time.max} seconds.` : '';
   }
 
   set itemName(name: string) {
@@ -78,8 +74,9 @@ export function makeHudItemWindow({onTake, onToss, onPlace, onApply, onBrew, ...
   _hudItemWindow.image = params.image;
   _hudItemWindow.imageColor = params.imageColor;
   _hudItemWindow.itemName = params.name;
-  _hudItemWindow.traitsList = params.traits;
   _hudItemWindow.itemDescription = params.description;
+  _hudItemWindow.effect = params.effect;
+  _hudItemWindow.brewTime = params.brewTime;
   const buttonContainer = document.querySelector('#buttonContainer')!;
   while(buttonContainer.firstChild) {
     buttonContainer.removeChild(buttonContainer.firstChild);
@@ -142,8 +139,9 @@ export interface HudItemWindowParams {
   image: string;
   imageColor?: HSBColor;
   name: string;
-  traits: string[];
   description: string;
+  brewTime?: {min: number, max: number};
+  effect?: string;
   onTake?: () => void;
   onToss?: () => void;
   onPlace?: () => void;

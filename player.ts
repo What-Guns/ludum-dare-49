@@ -134,7 +134,6 @@ export class Player {
       onActivate: () => makeHudItemWindow({
         image: imageUrl,
         name: obj.name,
-        traits: [],
         description: obj.description,
         onToss: () => { this.tossPuzzleObject(obj) },
         onPlace: () => { this.placePuzzleObject(obj) },
@@ -162,14 +161,22 @@ export class Player {
     const hotbarItem = {
       imageUrl: mat.inventoryImageUrl ?? mat.worldImageUrl ?? PLACEHOLDER_IMAGE_URL,
       name: mat.name,
-      onActivate: () => makeHudItemWindow({
-        name: mat.name,
-        description: mat.description,
-        image: mat.inventoryImageUrl!,
-        traits: [],
-        onBrew: () => this.useMaterial(mat),
-        onToss: () => this.tossMaterial(mat),
-      }).showByHotbar()
+      onActivate: () => {
+        const [cauldron] = this.room!.getObjectsOfType(Cauldron);
+        if(cauldron && cauldron.brewing.length) {
+          this.useMaterial(mat);
+        } else {
+          makeHudItemWindow({
+            name: mat.name,
+            description: mat.description,
+            image: mat.inventoryImageUrl!,
+            effect: mat.effect,
+            brewTime: mat.uselessInPotions ? undefined : {min: mat.brewTime, max: mat.expireTime},
+            onBrew: () => this.useMaterial(mat),
+            onToss: () => this.tossMaterial(mat),
+          }).showByHotbar();
+        }
+      }
     };
     this.hotbar.addItem(hotbarItem);
     if(!isInitializing) {
@@ -211,7 +218,6 @@ export class Player {
         name: potion.name,
         image: POTION_INVENTORY_URL,
         imageColor: potion.color,
-        traits: [],
         description: potion.description,
         onToss: () => this.tossPotion(potion),
         onApply: () => {
