@@ -98,8 +98,9 @@ export class Room {
     }
     this._animationTimer -= dt;
     if (this._animationTimer <= 0) {
-      this._animationIndex = Math.floor(Math.random() * this.background.length);
-      this._animationTimer = Math.random() + 0.5
+      this._animationIndex++;
+      this._animationIndex %= this.background.length;
+      this._animationTimer = (Math.random() * 0.7) + 0.2
     }
   }
 
