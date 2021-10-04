@@ -346,8 +346,8 @@
         {
           "@type": "AnimatedObject",
           "@path": "./animated-object.js",
-          "x": 618,
-          "y": 782,
+          "x": 697,
+          "y": 808,
           "z": -1,
           "animating": true,
           "frameRate": 5,
