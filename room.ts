@@ -195,6 +195,22 @@ export class Hall extends Room {
       return;
     }
 
+    if(this.player!.hasPuzzleObject(puzzleObjects['fixed-radio'])) {
+      this.player!.tossPuzzleObject(puzzleObjects['fixed-radio']);
+      this.textbox.imageSrc = Npc.textBoxImages['GHOST'];
+      this.textbox.visible = true;
+      this.textbox.placement = 'bottom';
+      this.textbox.textContent = 'You fixed my radio! Thanks a bundle! Come on up!';
+      stopSpeech();
+      const { sample, timeBetweenSamples, variance, shift } = Npc.speechParams['GHOST'];
+      startSpeech(sample, timeBetweenSamples, variance, shift);
+
+      toast('Soon this will unlock the attic!')
+      // todo progress, unlock the attic
+    
+      return;
+    }
+
     this.hatchAnimation!.t = 0;
     this.hatchAnimation!.animating = true;
     this.textbox.imageSrc = Npc.textBoxImages['GHOST'];
