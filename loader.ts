@@ -3,7 +3,7 @@ export function loadImage(url: string) {
   img.src = url;
   return new Promise<HTMLImageElement>((resolve, reject) => {
     img.addEventListener('load', () => resolve(img));
-    img.addEventListener('error', reject);
+    img.addEventListener('error', () => reject(new Error(`Failed to load ${url}`)));
   });
 }
 

@@ -13,12 +13,14 @@ const loadedMusic = loadMusic();
 type TrackName = keyof typeof unloadedBgm;
 
 export class Music {
-  private overworldGain: GainNode;
-  private overworldFilter: BiquadFilterNode;
-  private plantGain: GainNode;
-  private plantPan: PannerNode;
-  private plantFilter: BiquadFilterNode;
-  private atticGain: GainNode;
+  readonly plantAnalyzer: AnalyserNode;
+
+  private readonly overworldGain: GainNode;
+  private readonly overworldFilter: BiquadFilterNode;
+  private readonly plantGain: GainNode;
+  private readonly plantPan: PannerNode;
+  private readonly plantFilter: BiquadFilterNode;
+  private readonly atticGain: GainNode;
   private readonly sliders = new Map<AudioParam, HTMLInputElement>();
 
   constructor(private readonly bgm: LoadedBgm) {
@@ -32,7 +34,10 @@ export class Music {
     this.plantPan.connect(this.plantFilter);
     this.plantPan.panningModel = 'HRTF';
     this.plantPan.positionY.setValueAtTime(1, 0);
-    this.plantGain = this.startTrack('plants', this.plantPan);
+    this.plantAnalyzer = audioContext.createAnalyser();
+    this.plantAnalyzer.fftSize = 128;
+    this.plantAnalyzer.connect(this.plantPan);
+    this.plantGain = this.startTrack('plants', this.plantAnalyzer);
     this.atticGain = this.startTrack('attic', bgmGainNode);
     this.roomChanged('hall', true);
 

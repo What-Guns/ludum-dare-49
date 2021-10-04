@@ -25,7 +25,7 @@ export class Game {
   private transition: Transition|null = null;
   private needsToSave = false;
 
-  constructor(public readonly canvas: HTMLCanvasElement, private readonly music: Music) {
+  constructor(public readonly canvas: HTMLCanvasElement, readonly music: Music) {
     this.ctx = canvas.getContext('2d')!;
     window.game = this;
   }
