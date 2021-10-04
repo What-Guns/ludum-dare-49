@@ -1,6 +1,7 @@
 import { hideHudItemWindow, makeHudItemWindow } from "./hud.js";
 import { loadImage } from "./loader.js";
 import { Thing } from "./main.js";
+import { getProgressLevel, getProgressLevelIndex } from "./progressManager.js";
 import { Room } from "./room.js";
 import { Serializable } from "./serialization.js";
 
@@ -89,14 +90,16 @@ export class PuzzleObjectSpawner implements Thing {
   x: number;
   y: number;
   z: number;
+  minimumLevel?: string;
   readonly width: number;
   readonly height: number;
   room?: Room;
 
-  constructor(readonly puzzleObject: PuzzleObject, readonly worldImage: HTMLImageElement, {x, y, z}: PuzzleObjectData) {
+  constructor(readonly puzzleObject: PuzzleObject, readonly worldImage: HTMLImageElement, {x, y, z, minimumLevel}: PuzzleObjectData) {
     this.x = x;
     this.y = y;
     this.z = z ?? 0;
+    this.minimumLevel = minimumLevel;
     this.width = worldImage.width;
     this.height = worldImage.height;
   }
@@ -146,6 +149,7 @@ export class PuzzleObjectSpawner implements Thing {
 
   isVisible() {
     if (!this.room?.player) return false; 
+    if (this.minimumLevel && getProgressLevelIndex(this.minimumLevel) > getProgressLevel()) return false;
     return !this.room?.player?.hasPuzzleObject(this.puzzleObject);
   }
 
@@ -159,6 +163,7 @@ export interface PuzzleObjectData {
   x: number;
   y: number;
   z?: number;
+  minimumLevel?: string;
   puzzleObjectType: PuzzleObjectType;
 }
 
