@@ -38,6 +38,7 @@ export class ResourceSpawner implements Thing {
       y: this.y,
       z: this.z,
       resourceType,
+      minimumLevel: this.minimumLevel,
     };
   }
 
