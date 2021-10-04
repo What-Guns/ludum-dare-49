@@ -189,6 +189,7 @@
       },
       "floorHeight": 925,
       "background": "./backgrounds/greenhouse.jpg",
+      "destroys": ["hushroom", "gravity-stone", "hot-gravity-stone"],
       "things": [
         {
           "@type": "Door",

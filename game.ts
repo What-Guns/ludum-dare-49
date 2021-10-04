@@ -9,6 +9,8 @@ import { toast, Toast } from './toast.js';
 import './toast.js';
 import './progressManager.js';
 import { getProgressLevel, isRoomUnlocked, increaseProgressLevel } from './progressManager.js';
+import { materials } from './material.js';
+import { puzzleObjects } from './puzzleObject.js';
 
 @Serializable('./game.js')
 export class Game {
@@ -160,6 +162,24 @@ export class Game {
     player.targetX = targetDoor.x;
     targetRoom.adoptThing(player);
     targetRoom.activate();
+
+    if(this.room.destroys) {
+      this.room.destroys.forEach(item => {
+        if (item === 'hushroom' && player.hasMaterial(materials['hushroom'])) {
+          player.tossMaterial(materials['hushroom']);
+          toast('The hushroom withers from the loud music!');
+          increaseProgressLevel(8);
+        } else if (item === 'gravity-stone' && player.hasPuzzleObject(puzzleObjects['gravity-stone'])) {
+          player.tossPuzzleObject(puzzleObjects['gravity-stone']);
+          toast('The gravity stone is too heavy!');
+          // TODO increase progress level
+        } else if (item === 'hot-gravity-stone' && player.hasPuzzleObject(puzzleObjects['hot-gravity-stone'])) {
+          player.tossPuzzleObject(puzzleObjects['hot-gravity-stone']);
+          toast('The gravity stone is too heavy!');
+          // TODO increase progress level
+        }
+      })
+    }
 
     this.music.roomChanged(roomName);
 
