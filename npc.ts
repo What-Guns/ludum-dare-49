@@ -59,7 +59,7 @@ export class Npc implements Thing {
   doClick(x: number, y: number): boolean {
     if (!this.isUnderPointer(x, y)) return false;
     const game = (window as any).game as Game;
-    if(game.room?.player?.hasPuzzleObject(puzzleObjects['rutabaga-no-more-potion'])) {
+    if(this.npcType === 'RUTABAGA' && game.room?.player?.hasPuzzleObject(puzzleObjects['rutabaga-no-more-potion'])) {
       game.win();
     }
     if(this.npcType === 'GHOST') {
