@@ -12,7 +12,7 @@
         "x": 711,
         "y": 564
       },
-      "floorHeight": 900,
+      "floorHeight": 950,
       "background": "./backgrounds/foyer.png",
       "things": [
         {
@@ -67,11 +67,34 @@
           "@type": "Player",
           "@path": "./player.js",
           "x": 1113,
-          "y": 900,
+          "y": 950,
           "heldMaterials": [],
           "heldPuzzleObjects": [],
           "heldPotions": [],
           "materialInventorySize": 5
+        },
+        {
+          "@type": "Cabinet",
+          "@path": "./cabinet.js",
+          "x": 400,
+          "y": 400,
+          "z": 1,
+          "bottomItem": {
+            "@type": "ResourceSpawner",
+            "@path": "./resource-spawner.js",
+            "x": 356,
+            "y": 759,
+            "z": 0,
+            "resourceType": "anti-dote"
+          },
+          "topItem": {
+            "@type": "ResourceSpawner",
+            "@path": "./resource-spawner.js",
+            "x": 356,
+            "y": 759,
+            "z": 0,
+            "resourceType": "transmuters-draught"
+          }
         }
       ]
     },
@@ -88,25 +111,6 @@
       "floorHeight": 781,
       "background": "./backgrounds/sample.jpeg",
       "things": [
-        {
-          "@type": "Container",
-          "@path": "./container.js",
-          "x": 822,
-          "y": 205,
-          "z": -1,
-          "width": 235,
-          "height": 179,
-          "items": [
-            {
-              "@type": "ResourceSpawner",
-              "@path": "./resource-spawner.js",
-              "x": 872,
-              "y": 257,
-              "z": 0,
-              "resourceType": "mouse-whisker"
-            }
-          ]
-        },
         {
           "@type": "Door",
           "@path": "./door.js",
