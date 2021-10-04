@@ -77,6 +77,7 @@ export class Room {
     return {
       ...pluck(this, 'name', 'width', 'height', 'vanishingPoint', 'floorHeight'),
       background: this.roomData.background,
+      interacts: this.roomData.interacts,
       things: (this.things as object[]).filter(isSerializable).map(serialize),
     };
   }

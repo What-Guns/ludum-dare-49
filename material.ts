@@ -55,6 +55,7 @@ export const materials: {[key: string]: Material} = {
     brewTime: 5,
     expireTime: 10,
     inventoryImageUrl: './sprites/morning-dew-inventory.png',
+    worldImageUrl: './sprites/morning-dew.png',
   },
   'coin': {
     name: 'Coins',

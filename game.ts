@@ -186,22 +186,12 @@ export class Game {
         player.tossPuzzleObject(puzzleObjects['hot-gravity-stone']);
         toast('The gravity stone is too heavy!');
         // TODO increase progress level
-      } else if (item === 'wooden-hushroom' && player.hasPuzzleObject(puzzleObjects['wooden-hushroom'])) {
-        player.tossPuzzleObject(puzzleObjects['wooden-hushroom']);
-        if (getProgressLevel() < 9) {
-          toast('The hushrooms turned back to normal! They are now available in the hall.');
-          increaseProgressLevel(9);
-        } else {
-          toast('The hushrooms turned back to normal!');
-        }
-      } else if (item === 'metal-hushroom' && player.hasPuzzleObject(puzzleObjects['metal-hushroom'])) {
-        player.tossPuzzleObject(puzzleObjects['metal-hushroom']);
-        if (getProgressLevel() < 9) {
-          toast('The hushrooms turned back to normal! They are now available in the hall.');
-          increaseProgressLevel(9);
-        } else {
-          toast('The hushrooms turned back to normal!');
-        }
+      } else if (item === 'wooden-hushroom' && player.hasMaterial(materials['wooden-hushroom'])) {
+        player.tossMaterial(materials['wooden-hushroom']);
+        increaseProgressLevel(9);
+      } else if (item === 'metal-hushroom' && player.hasMaterial(materials['metal-hushroom'])) {
+        player.tossMaterial(materials['metal-hushroom']);
+        increaseProgressLevel(9);
       } 
     })
   }

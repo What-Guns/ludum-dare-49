@@ -132,6 +132,13 @@
           "y": 752,
           "z": -2,
           "resourceType": "firewood"
+        },{
+          "@type": "ResourceSpawner",
+          "@path": "./resource-spawner.js",
+          "x": 723,
+          "y": 517,
+          "z": -2,
+          "resourceType": "morning-dew"
         }
       ]
     },
