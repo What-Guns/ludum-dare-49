@@ -109,7 +109,8 @@ export class Room {
   doClick() {
     const transformedX = (pointer.x - this.camera.x) / this.camera.scale;
     const transformedY = pointer.y / this.camera.scale;
-    for(const thing of this.things) {
+    for(let i = this.things.length - 1; i >= 0; i--) {
+      let thing = this.things[i];
       if(thing.doClick?.(transformedX, transformedY)) return;
     }
     this.things.find((t): t is Player => t instanceof Player)?.moveToCursor(transformedX);
