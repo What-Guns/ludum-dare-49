@@ -28,8 +28,8 @@ export class Toast {
     ctx.lineWidth = 2;
     ctx.fillStyle = 'white';
     ctx.font = "48px 'Yusei Magic'";
-    ctx.fillText(this.message, this.x, this.y - offset);
-    ctx.strokeText(this.message, this.x, this.y - offset);
+    ctx.fillText(this.message, 0, this.y - offset);
+    ctx.strokeText(this.message, 0, this.y - offset);
     ctx.globalAlpha = oldAlpha;
   }
 }

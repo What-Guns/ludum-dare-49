@@ -45,8 +45,10 @@ export class Cabinet implements Thing {
         this.room!.adoptThing(this.bottomItem);
         this.bottomItem = null;
         window.game!.save();
+      } else if(player.hasPuzzleObject(puzzleObjects['key'])) {
+        toast('This key is too big!')
       } else {
-        toast(`You need the small key`);
+        toast(`Locked`);
       }
       return true;
     }
@@ -56,8 +58,12 @@ export class Cabinet implements Thing {
         this.room?.adoptThing(this.topItem);
         this.topItem = null;
         window.game!.save();
+      } else if(player.hasPuzzleObject(puzzleObjects['key'])) {
+        toast('This key is too small!')
+      } else if(player.hasPuzzleObject(puzzleObjects['small-key'])) {
+        toast('This key is much too small!')
       } else {
-        toast(`You need the big key`);
+        toast(`Locked`);
       }
     }
 
