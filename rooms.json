@@ -16,6 +16,14 @@
       "background": "./backgrounds/foyer.png",
       "things": [
         {
+          "@type": "ResourceSpawner",
+          "@path": "./resource-spawner.js",
+          "x": 886,
+          "y": 524,
+          "z": -2,
+          "resourceType": "mouse-whisker"
+        },
+        {
           "@type": "Cauldron",
           "@path": "./cauldron.js",
           "x": 707,
@@ -68,7 +76,7 @@
         {
           "@type": "Player",
           "@path": "./player.js",
-          "x": 713.5,
+          "x": 708,
           "y": 950,
           "heldMaterials": [],
           "heldPuzzleObjects": [],
@@ -97,26 +105,19 @@
           "topItem": {
             "@type": "ResourceSpawner",
             "@path": "./resource-spawner.js",
-            "x": 1224,
-            "y": 663.5,
+            "x": 1228,
+            "y": 665.5,
             "z": 4,
             "resourceType": "transmuters-draught"
           },
           "bottomItem": {
             "@type": "ResourceSpawner",
             "@path": "./resource-spawner.js",
-            "x": 1224,
-            "y": 810.5,
+            "x": 1228,
+            "y": 812.5,
             "z": 4,
             "resourceType": "anti-dote"
           }
-        },{
-          "@type": "ResourceSpawner",
-          "@path": "./resource-spawner.js",
-          "x": 886,
-          "y": 524,
-          "z": -2,
-          "resourceType": "mouse-whisker"
         }
       ]
     },
@@ -124,22 +125,36 @@
       "@type": "Room",
       "@path": "./room.js",
       "name": "hall",
-      "width": 1203,
-      "height": 839,
+      "width": 1920,
+      "height": 1080,
       "vanishingPoint": {
-        "x": 641,
-        "y": 412
+        "x": 969,
+        "y": 529
       },
-      "floorHeight": 781,
-      "background": "./backgrounds/sample.jpeg",
+      "floorHeight": 900,
+      "background": "./backgrounds/hall.png",
       "things": [
+        {
+          "@type": "TrapDoor",
+          "@path": "./door.js",
+          "x": 391,
+          "y": 191,
+          "height": 90,
+          "width": 211,
+          "target": [
+            "attic",
+            "floor",
+            "up"
+          ],
+          "name": "ceiling"
+        },
         {
           "@type": "Door",
           "@path": "./door.js",
-          "x": 152,
-          "y": 781,
-          "height": 522,
-          "width": 150,
+          "x": 237,
+          "y": 918,
+          "height": 532,
+          "width": 144,
           "target": [
             "greenhouse",
             "east",
@@ -150,13 +165,13 @@
         {
           "@type": "Ladder",
           "@path": "./door.js",
-          "x": 427,
-          "y": 705,
-          "height": 569,
+          "x": 428,
+          "y": 825,
+          "height": 582,
           "width": 100,
           "target": [
             "attic",
-            "ladder",
+            "floor",
             "up"
           ],
           "name": "ladder"
@@ -164,9 +179,9 @@
         {
           "@type": "Door",
           "@path": "./door.js",
-          "x": 1122,
-          "y": 782,
-          "height": 522,
+          "x": 1702,
+          "y": 919,
+          "height": 543,
           "width": 150,
           "target": [
             "foyer",
@@ -188,7 +203,7 @@
         "y": 549
       },
       "floorHeight": 925,
-      "background": "./backgrounds/greenhouse.jpg",
+      "background": "./backgrounds/Greenhouse.png",
       "destroys": ["hushroom", "gravity-stone", "hot-gravity-stone"],
       "things": [
         {
@@ -233,28 +248,28 @@
       "@type": "Room",
       "@path": "./room.js",
       "name": "attic",
-      "width": 1455,
-      "height": 957,
+      "width": 1461,
+      "height": 1080,
       "vanishingPoint": {
-        "x": 727,
-        "y": 415
+        "x": 709,
+        "y": 569
       },
-      "floorHeight": 791,
+      "floorHeight": 920,
       "background": "./backgrounds/attic.png",
       "things": [
         {
-          "@type": "Ladder",
+          "@type": "TrapDoor",
           "@path": "./door.js",
-          "x": 427,
-          "y": 705,
-          "height": 569,
-          "width": 100,
+          "x": 489,
+          "y": 870,
+          "height": 95,
+          "width": 245,
           "target": [
             "hall",
             "ladder",
             "down"
           ],
-          "name": "ladder"
+          "name": "floor"
         },
         {
           "@type": "Npc",
@@ -269,8 +284,8 @@
         {
           "@type": "PuzzleObjectSpawner",
           "@path": "./puzzleObject.js",
-          "x": 964,
-          "y": 520,
+          "x": 1009,
+          "y": 622,
           "z": 0,
           "puzzleObjectType": "broken-radio"
         }

@@ -14,7 +14,7 @@ export class Npc implements Thing {
   };
   static readonly textBoxImages: {[k in NpcType]: string} = {
     "CAT": 'https://static.tvtropes.org/pmwiki/pub/images/achewood_789.jpg',
-    "GHOST": 'https://static.wikia.nocookie.net/vsbattles/images/f/f6/6d0c7f35a66688f309ceedf4e94013dc.png',
+    "GHOST": './sprites/Ghost.png',
   }
   constructor(readonly x: number, readonly y: number, readonly z: number, readonly width: number, readonly height: number, readonly npcType: NpcType) {
     this.textbox.visible = false;

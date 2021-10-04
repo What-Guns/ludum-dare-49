@@ -17,7 +17,6 @@ export interface Potion {
   sfx?: SfxName;
 }
 
-const PLACEHOLDER_IMAGE_URL = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";
 export const POTION_INVENTORY_URL = './sprites/potion.png';
 export const potions: {[key: string]: Potion} = {
   'ensmallening': {
@@ -31,7 +30,7 @@ export const potions: {[key: string]: Potion} = {
     },
     applyTo: 'key',
     turnsInto: 'small-key',
-    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
+    inventoryImageUrl: POTION_INVENTORY_URL,
     sfx: 'ensmallening',
   },
   'embiggening': {
@@ -45,7 +44,7 @@ export const potions: {[key: string]: Potion} = {
     },
     applyTo: 'key',
     turnsInto: 'big-key',
-    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
+    inventoryImageUrl: POTION_INVENTORY_URL,
   },
   'temp-transmutation-metal': {
     name: 'Temporary Potion of Metal Transmutation',
@@ -58,7 +57,7 @@ export const potions: {[key: string]: Potion} = {
     },
     applyTo: 'hushroom',
     turnsInto: 'metal-hushroom',
-    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
+    inventoryImageUrl: POTION_INVENTORY_URL,
   },
   'temp-transmutation-wood': {
     name: 'Temporary Potion of Wood Transmutation',
@@ -71,7 +70,7 @@ export const potions: {[key: string]: Potion} = {
     },
     applyTo: 'hushroom',
     turnsInto: 'wooden-hushroom',
-    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
+    inventoryImageUrl: POTION_INVENTORY_URL,
   },
   'energy': {
     name: 'Potion of Energy',
@@ -96,7 +95,7 @@ export const potions: {[key: string]: Potion} = {
       brightness: 100,
     },
     applyTo: 'hot-gravity-stone',
-    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
+    inventoryImageUrl: POTION_INVENTORY_URL,
   },
   'ghostly': {
     name: 'Ghostly Potion',
@@ -109,7 +108,7 @@ export const potions: {[key: string]: Potion} = {
     },
     //applyTo: You look in a mirror and question... Am I a Player? Am I just a Thing? 
     //         Or I am the final puzzele object waiting to be solved....
-    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
+    inventoryImageUrl: POTION_INVENTORY_URL,
   },
   'unstable': {
     name: 'Unstable Potion',
@@ -119,7 +118,7 @@ export const potions: {[key: string]: Potion} = {
       saturation: 78,
       brightness: 89,
     },
-    inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
+    inventoryImageUrl: POTION_INVENTORY_URL,
   }
 };
 
