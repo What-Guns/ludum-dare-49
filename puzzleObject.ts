@@ -79,6 +79,12 @@ export const puzzleObjects: {[key: string]: PuzzleObject} = {
     inventoryImageUrl: './sprites/Gravity_Stone.png',
     spawnerImageUrl: './sprites/Gravity_Stone.png',
   },
+  'rutabaga-no-more-potion': {
+    name: 'Rutabaga-No-More Potion',
+    description: 'This potion will turn rutabagas into whatever they were before they were turned into rutabagas!',
+    inventoryImageUrl: './sprites/Rutabaganomorepotion.png',
+    spawnerImageUrl: './sprites/Rutabaganomorepotion.png',
+  },
 }
 
 export function getPuzzleObjectType(puzzleObject: PuzzleObject) {

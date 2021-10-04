@@ -487,10 +487,10 @@
         {
           "@type": "PuzzleObjectSpawner",
           "@path": "./puzzleObject.js",
-          "x": 905,
-          "y": 707,
+          "x": 923,
+          "y": 689,
           "z": -1,
-          "puzzleObjectType": "key"
+          "puzzleObjectType": "rutabaga-no-more-potion"
         },
         {
           "@type": "Door",
