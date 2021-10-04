@@ -132,7 +132,9 @@ export class Room {
       let thing = this.things[i];
       if(thing.doClick?.(transformedX, transformedY)) return;
     }
-    this.things.find((t): t is Player => t instanceof Player)?.moveToCursor(transformedX);
+    const boundarySize = 250
+    const clampedX = Math.max(boundarySize, Math.min(transformedX, this.width - boundarySize));
+    this.things.find((t): t is Player => t instanceof Player)?.moveToCursor(clampedX);
   }
 
   activate() {
