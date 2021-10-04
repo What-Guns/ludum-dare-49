@@ -289,6 +289,20 @@
           "height": 250
         },
         {
+          "@type": "AnimatedObject",
+          "@path": "./animated-object.js",
+          "x": 618,
+          "y": 782,
+          "z": -1,
+          "animating": true,
+          "frameRate": 5,
+          "visible": true,
+          "frames": [
+            "sprites/furnace1.png",
+            "sprites/furnace2.png"
+          ]
+        },
+        {
           "@type": "Ladder",
           "@path": "./door.js",
           "x": 794,
