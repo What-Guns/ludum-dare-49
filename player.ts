@@ -21,15 +21,17 @@ export class Player {
   room?: Room;
 
   private inventorySize: number;
+  private isGhostly = false;
   private readonly hotbar = new HudItemHotbar();
   private readonly heldMaterials: Material[] = [];
   private readonly heldPuzzleObjects: PuzzleObject[] = [];
   private readonly heldPotions: Potion[] = [];
 
-  constructor({x, y, heldMaterials = [], materialInventorySize, heldPuzzleObjects = [], heldPotions = []}: PlayerData, private standingImage: HTMLImageElement, private walkingImage: HTMLImageElement) {
+  constructor({x, y, isGhostly, heldMaterials = [], materialInventorySize, heldPuzzleObjects = [], heldPotions = []}: PlayerData, private standingImage: HTMLImageElement, private walkingImage: HTMLImageElement) {
     this.x = x;
     this.y = y;
     this.targetX = x;
+    this.isGhostly = isGhostly;
     this.inventorySize = materialInventorySize ?? 5;
     this.hotbar.setCapacity(this.inventorySize);
     for(const mat of heldMaterials) this.takeMaterial(materials[mat], true);
@@ -67,6 +69,9 @@ export class Player {
     ctx.save();
     ctx.translate(this.x, this.y);
     if(this.targetX < this.x) ctx.scale(-1, 1);
+    if (this.isGhostly) {
+      ctx.globalAlpha = 0.5;
+    }
     ctx.drawImage(image, -width/2, -height);
     ctx.restore();
   }
@@ -75,6 +80,7 @@ export class Player {
     return {
       x: this.x,
       y: this.y,
+      isGhostly: this.isGhostly,
       heldMaterials: this.heldMaterials.map(getMaterialType),
       heldPuzzleObjects: this.heldPuzzleObjects.map(getPuzzleObjectType),
       heldPotions: this.heldPotions.map(getPotionType),
@@ -226,6 +232,11 @@ export class Player {
   }
 
   applyPotion(potion: Potion): boolean {
+    if (potion.name === 'Ghostly Potion') {
+      this.isGhostly = true;
+      toast('You drink the ghostly potion');
+      return true;
+    }
     const { applyTo } = potion;
     const materialToApplyTo = this.heldMaterials.find(mat => getMaterialType(mat) === applyTo);
     const puzzleObjectToApplyTo = this.heldPuzzleObjects.find(po => getPuzzleObjectType(po) === applyTo);
@@ -261,6 +272,7 @@ export class Player {
 interface PlayerData {
   x: number;
   y: number;
+  isGhostly: boolean;
   heldMaterials: MaterialType[];
   heldPuzzleObjects: PuzzleObjectType[];
   heldPotions: PotionType[];

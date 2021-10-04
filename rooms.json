@@ -78,6 +78,7 @@
           "@path": "./player.js",
           "x": 708,
           "y": 950,
+          "isGhostly": false,
           "heldMaterials": [],
           "heldPuzzleObjects": [],
           "heldPotions": [],
