@@ -188,6 +188,7 @@ export class Player {
       return;
     }
     this.tossMaterial(mat);
+    this.targetX = cauldron.x - 150;
     window.game!.save();
   }
 

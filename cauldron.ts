@@ -125,7 +125,8 @@ export class Cauldron implements Thing {
   }
 
   isUnderPointer(x: number, y: number) {
-    return Math.abs(x - this.x) < this.width / 2  && Math.abs(y - this.y) < this.height / 2;
+    const extraHeight = this.brewing.length ? 400 : 0;
+    return Math.abs(x - this.x) < this.width / 2  && Math.abs(y - this.y) < (this.height + extraHeight)/ 2;
   }
 
   putItem(material: Material): boolean {
