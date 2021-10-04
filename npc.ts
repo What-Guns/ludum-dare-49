@@ -7,6 +7,7 @@ import {Serializable, pluck} from './serialization.js';
 import { loadImage } from './loader.js';
 import { Game } from './game.js';
 import { puzzleObjects } from './puzzleObject.js';
+import { materials } from './material.js';
 
 @Serializable('./npc.js')
 export class Npc implements Thing {
@@ -53,6 +54,9 @@ export class Npc implements Thing {
     const game = (window as any).game as Game;
     if(game.room?.player?.hasPuzzleObject(puzzleObjects['rutabaga-no-more-potion'])) {
       game.win();
+    }
+    if(this.npcType === 'GHOST') {
+      game.room?.player?.takeMaterial(materials['ghost-tears'])
     }
     this.speak(getDialog(this.npcType));
     return true;
