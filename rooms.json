@@ -277,7 +277,7 @@
         "y": 545
       },
       "floorHeight": 938,
-      "background": "./backgrounds/cellar.jpg",
+      "background": "./backgrounds/cellar.png",
       "things": [
         {
           "@type": "Furnace",
@@ -319,8 +319,8 @@
         {
           "@type": "ResourceSpawner",
           "@path": "./resource-spawner.js",
-          "x": 356,
-          "y": 759,
+          "x": 352,
+          "y": 696,
           "z": 0,
           "resourceType": "hushroom"
         },
