@@ -271,6 +271,15 @@
           "y": 400,
           "z": 0,
           "puzzleObjectType": "key"
+        },
+        {
+          "@type": "ResourceSpawner",
+          "@path": "./resource-spawner.js",
+          "x": 1360,
+          "y": 1008,
+          "z": 2,
+          "resourceType": "gravity-stone-piece",
+          "minimumLevel": 10
         }
       ]
     },
