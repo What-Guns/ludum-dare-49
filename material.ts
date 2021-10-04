@@ -178,8 +178,8 @@ export const materials: {[key: string]: Material} = {
     name: 'Gravity Stone Piece',
     effect: 'heavy',
     description: 'After floating up the flue the Enduring Potion of Fiery Flight wore off the Gravity Stone sending it crashing on the ground, breaking it to pieces. The pieces are still really heavy and so you need to time to recover picking each one up.',
-    inventoryImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/rock_1faa8.png',
-    worldImageUrl: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/rock_1faa8.png',
+    inventoryImageUrl: './sprites/Broken_Gravity_Stone.png',
+    worldImageUrl: './sprites/Broken_Gravity_Stone.png',
     brewTime: 5,
     expireTime: 10,
     plural: false

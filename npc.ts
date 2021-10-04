@@ -11,10 +11,12 @@ export class Npc implements Thing {
   static readonly speechParams: {[k in NpcType]: SpeechParams} = {
     "CAT": { sample: 'meow', timeBetweenSamples: 150, variance: 1.2, shift: 0.8 },
     "GHOST": { sample: 'mahp', timeBetweenSamples: 150, variance: 1.2, shift: 0.8 },
+    "RUTABAGA": { sample: 'mahp', timeBetweenSamples: 150, variance: 1.2, shift: 0.8 }, // todo give him a voice
   };
   static readonly textBoxImages: {[k in NpcType]: string} = {
-    "CAT": 'https://static.tvtropes.org/pmwiki/pub/images/achewood_789.jpg',
-    "GHOST": './sprites/Ghost.png',
+    "CAT": './sprites/av_cat.png',
+    "GHOST": './sprites/av_ghost.png',
+    "RUTABAGA": './sprites/av_rutabaga.png',
   }
   constructor(readonly x: number, readonly y: number, readonly z: number, readonly width: number, readonly height: number, readonly npcType: NpcType) {
     this.textbox.visible = false;
@@ -89,4 +91,4 @@ interface SpeechParams {
   shift: number
 }
 
-export type NpcType = "CAT" | "GHOST";
+export type NpcType = "CAT" | "GHOST" | "RUTABAGA";
