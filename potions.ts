@@ -1,6 +1,7 @@
 import {loadImage} from './loader.js';
 import { MaterialType } from './material.js';
 import {PuzzleObjectType} from './puzzleObject.js'
+import {SfxName} from './audio.js';
 
 /** A thing that goes in your pocket and applied to puzzle object, material, or player. Cannot exist in the world. */
 export interface Potion {
@@ -11,6 +12,7 @@ export interface Potion {
   inventoryImageUrl: string;
   inventoryImage?: HTMLImageElement;
   turnsInto?: PuzzleObjectType | MaterialType;
+  sfx?: SfxName;
 }
 
 const PLACEHOLDER_IMAGE_URL = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";
@@ -23,6 +25,7 @@ export const potions: {[key: string]: Potion} = {
     applyTo: 'key',
     turnsInto: 'small-key',
     inventoryImageUrl: PLACEHOLDER_IMAGE_URL,
+    sfx: 'ensmallening',
   },
   'embiggening': {
     name: 'Potion of Embiggening',

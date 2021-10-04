@@ -203,7 +203,9 @@ export class Player {
         description: 'a potion',
         onToss: () => this.tossPotion(potion),
         onApply: () => {
-          if (!this.applyPotion(potion)) {
+          if(this.applyPotion(potion)) {
+            if(potion.sfx) playSFX(potion.sfx);
+          } else {
             toast(`You don’t have anything to apply that to.`);
           }
         },

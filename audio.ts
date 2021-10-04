@@ -12,6 +12,7 @@ const sfx = {
   'great-jearb-06': 'audio/great-jearb-06.wav',
   'chimes-002': 'audio/Chimes-002.wav',
   'bad-job-4': 'audio/bad-job-4.wav',
+  'ensmallening': 'audio/Mouse_Whisper.mp3',
 };
 
 for(const [name, url] of Object.entries(sfx)) {
