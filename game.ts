@@ -195,9 +195,11 @@ export class Game {
         increaseProgressLevelName('dropped-gravity-stone');
       } else if (item === 'wooden-hushroom' && player.hasMaterial(materials['wooden-hushroom'])) {
         player.tossMaterial(materials['wooden-hushroom']);
+        toast('The hushroom turned back to normal!');
         increaseProgressLevelName('recovered-hushroom');
       } else if (item === 'metal-hushroom' && player.hasMaterial(materials['metal-hushroom'])) {
         player.tossMaterial(materials['metal-hushroom']);
+        toast('The hushroom turned back to normal!');
         increaseProgressLevelName('recovered-hushroom');
       } 
     })
