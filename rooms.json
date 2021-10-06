@@ -533,5 +533,11 @@
       ]
     }
   ],
-  "currentProgressLevel": 0
+  "currentProgressLevel": 0,
+  "flags": [
+    {
+      "name": "radio-playing",
+      "value": true
+    }
+  ]
 }
