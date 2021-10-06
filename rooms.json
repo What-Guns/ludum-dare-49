@@ -416,7 +416,7 @@
           "z": 2,
           "width": 300,
           "height": 250,
-          "flagsToSwitch": [
+          "flagsToToggle": [
             "radio-playing"
           ]
         },

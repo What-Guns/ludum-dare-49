@@ -30,6 +30,26 @@ export class Flags {
     flag.value = !flag.value;
   }
 
+  enableFlag(flagName: string) {
+    let flag = this.getFlag(flagName);
+    if (!flag) {
+      flag = { name: flagName, value: true };
+      this.flagsList.push(flag);
+      console.log(`New flag '${flagName}' created`);
+    }
+    flag.value = true;
+  }
+
+  disableFlag(flagName: string) {
+    let flag = this.getFlag(flagName);
+    if (!flag) {
+      flag = { name: flagName, value: false };
+      this.flagsList.push(flag);
+      console.log(`New flag '${flagName}' created`);
+    }
+    flag.value = false;
+  }
+
   getFlagValue(flagName: string) {
     let flag = this.getFlag(flagName);
     if (!flag) {
@@ -47,6 +67,14 @@ export class Flags {
 
 export function toggleFlag(flagName: string) {
   Flags._instance.toggleFlag(flagName);
+}
+
+export function enableFlag(flagName: string) {
+  Flags._instance.enableFlag(flagName);
+}
+
+export function disableFlag(flagName: string) {
+  Flags._instance.disableFlag(flagName);
 }
 
 export function getFlagValue(flagName: string) {

@@ -1,5 +1,5 @@
 import { debug } from "./debug.js";
-import { toggleFlag } from "./flags.js";
+import { disableFlag, enableFlag, toggleFlag } from "./flags.js";
 import { Thing } from "./main.js";
 import { Room } from "./room.js";
 import { pluck, Serializable } from "./serialization.js";
@@ -10,22 +10,26 @@ export class FlagSwitcher implements Thing {
   y: number;
   z: number;
   room?: Room | undefined;
-  flagsToSwitch: string[];
+  flagsToToggle: string[];
+  flagsToEnable: string[];
+  flagsToDisable: string[];
   
   width: number;
   height: number;
 
-  constructor({x, y, z, width, height, flagsToSwitch}: FlagSwitcherData) {
+  constructor({x, y, z, width, height, flagsToToggle, flagsToEnable, flagsToDisable}: FlagSwitcherData) {
     this.x = x;
     this.y = y;
     this.z = z;
     this.width = width;
     this.height = height;
-    this.flagsToSwitch = flagsToSwitch;
+    this.flagsToToggle = flagsToToggle || [];
+    this.flagsToEnable = flagsToEnable || [];
+    this.flagsToDisable = flagsToDisable || [];
   }
 
   serialize(): FlagSwitcherData {
-    return pluck(this, 'x', 'y', 'z', 'flagsToSwitch', 'width', 'height');
+    return pluck(this, 'x', 'y', 'z', 'flagsToToggle', 'flagsToEnable', 'flagsToDisable', 'width', 'height');
   }
 
   static async deserialize(data: FlagSwitcherData) {
@@ -37,7 +41,9 @@ export class FlagSwitcher implements Thing {
       return false;
     }
     if(!this.room?.player?.canReach(this.x, this.y)) return false;
-    this.flagsToSwitch.forEach(f => toggleFlag(f));
+    this.flagsToToggle.forEach(f => toggleFlag(f));
+    this.flagsToEnable.forEach(f => enableFlag(f));
+    this.flagsToDisable.forEach(f => disableFlag(f));
     window.game!.save();
     return true;
   }
@@ -54,7 +60,9 @@ export class FlagSwitcher implements Thing {
 }
 
 type FlagSwitcherData = {
-  flagsToSwitch: string[],
+  flagsToToggle: string[],
+  flagsToEnable: string[],
+  flagsToDisable: string[],
   x: number,
   y: number,
   z: number,
