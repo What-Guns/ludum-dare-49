@@ -382,15 +382,44 @@
         {
           "@type": "AnimatedObject",
           "@path": "./animated-object.js",
-          "x": 955,
+          "x": 935,
           "y": 780,
-          "z": 0,
+          "z": 2,
           "animating": true,
-          "frameRate": 5,
-          "visible": true,
+          "frameRate": 2.5,
+          "visible": "radio-playing",
           "frames": [
-            "sprites/Radio.png"
+            "sprites/radio-center.png",
+            "sprites/radio-left.png",
+            "sprites/radio-center.png",
+            "sprites/radio-right.png"
           ]
+        },
+        {
+          "@type": "AnimatedObject",
+          "@path": "./animated-object.js",
+          "x": 935,
+          "y": 780,
+          "z": 2,
+          "animating": true,
+          "frameRate": 2.5,
+          "visible": "!radio-playing",
+          "frames": [
+            "sprites/radio-off.png"
+          ]
+        },
+        {
+          "@type": "FlagSwitcher",
+          "@path": "./flagSwitcher.js",
+          "x": 1085,
+          "y": 905,
+          "z": 2,
+          "width": 300,
+          "height": 250,
+          "flagsToToggle": [
+            "radio-playing"
+          ],
+          "sfx": "click"
         },
         {
           "@type": "ResourceSpawner",
@@ -533,5 +562,11 @@
       ]
     }
   ],
-  "currentProgressLevel": 0
+  "currentProgressLevel": 0,
+  "flags": [
+    {
+      "name": "radio-playing",
+      "value": true
+    }
+  ]
 }

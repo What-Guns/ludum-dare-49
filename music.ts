@@ -1,10 +1,12 @@
 import {loadAudio} from './loader.js';
 import {audioContext, bgmGainNode} from './audio.js';
+import { getFlagValue } from './flags.js';
 
 const unloadedBgm = {
   'overworld': 'audio/overworld_song.mp3',
   'greenhouse': 'audio/Bach_Chorale.mp3',
-  'attic': 'audio/Radio_Tune.mp3',
+  'attic': 'audio/Spooky_Attic.mp3',
+  'radio': 'audio/Radio_Tune.mp3',
   'plants': 'audio/plant_choire.mp3',
 };
 
@@ -21,6 +23,7 @@ export class Music {
   private readonly plantPan: PannerNode;
   private readonly plantFilter: BiquadFilterNode;
   private readonly atticGain: GainNode;
+  private readonly radioGain: GainNode;
   private readonly sliders = new Map<AudioParam, HTMLInputElement>();
 
   constructor(private readonly bgm: LoadedBgm) {
@@ -39,6 +42,7 @@ export class Music {
     this.plantAnalyzer.connect(this.plantPan);
     this.plantGain = this.startTrack('plants', this.plantAnalyzer);
     this.atticGain = this.startTrack('attic', bgmGainNode);
+    this.radioGain = this.startTrack('radio', bgmGainNode);
     this.roomChanged('hall', true);
 
     this.makeSlider('overworld gain', this.overworldGain.gain, 0, 1);
@@ -47,10 +51,26 @@ export class Music {
     this.makeSlider('plant pan', this.plantPan.positionX, -2, 2);
     this.makeSlider('plant filter', this.plantFilter.frequency, 0, this.plantFilter.frequency.maxValue);
     this.makeSlider('attic gain', this.atticGain.gain, 0, 1);
+    this.makeSlider('radio gain', this.radioGain.gain, 0, 1);
+  }
+
+  getMusicState(room: string) {
+    let state = musicState[room];
+    if (state) return state;
+    let candidateStateNames = Object.keys(musicState).filter(ms => ms.includes(room));
+    if (candidateStateNames.length === 0) return undefined;
+    if (candidateStateNames.length === 1) return musicState[candidateStateNames[0]];
+    candidateStateNames = candidateStateNames.filter(stateName => {
+      const flagName = stateName.split(':')[1];
+      return getFlagValue(flagName);
+    });
+    if (candidateStateNames.length === 0) return undefined;
+    if (candidateStateNames.length > 1) console.warn(`More than one valid state found: ${candidateStateNames}`);
+    return musicState[candidateStateNames[0]];
   }
 
   roomChanged(room: string, immediate = false) {
-    const state = musicState[room];
+    const state = this.getMusicState(room);
     if(!state) {
       alert(`I don't know what ${room} should sound like`);
       return;
@@ -63,6 +83,7 @@ export class Music {
       this.plantFilter.frequency.value = state.plantFilter;
       this.plantGain.gain.value = state.plantGain;
       this.plantPan.positionX.value = state.plantPan;
+      this.radioGain.gain.value = state.radioGain;
     } else {
       const then = audioContext.currentTime + (immediate ? 0 : 1);
       this.fadeParam(this.atticGain.gain, state.atticGain, now, then);
@@ -71,6 +92,7 @@ export class Music {
       this.fadeParam(this.plantFilter.frequency, state.plantFilter, now, then);
       this.fadeParam(this.plantGain.gain, state.plantGain, now, then);
       this.fadeParam(this.plantPan.positionX, state.plantPan, now, then);
+      this.fadeParam(this.radioGain.gain, state.radioGain, now, then);
     }
   }
 
@@ -123,6 +145,7 @@ const musicState: {[key: string]: MusicState} = {
     plantFilter: 100,
     plantGain: 0,
     plantPan: -2,
+    radioGain: 0,
   },
   'hall': {
     atticGain: 0,
@@ -131,6 +154,7 @@ const musicState: {[key: string]: MusicState} = {
     plantFilter: 1180,
     plantGain: 0.45,
     plantPan: -1.5,
+    radioGain: 0,
   },
   'greenhouse': {
     atticGain: 0,
@@ -139,14 +163,25 @@ const musicState: {[key: string]: MusicState} = {
     plantFilter: 24000,
     plantGain: 0.8,
     plantPan: 0,
+    radioGain: 0,
   },
-  'attic': {
+  'attic:radio-playing': {
+    atticGain: 0,
+    overworldGain: 0,
+    overworldFilter: 24000,
+    plantFilter: 1000,
+    plantGain: 0,
+    plantPan: 0,
+    radioGain: 0.235,
+  },
+  'attic:!radio-playing': {
     atticGain: 0.235,
     overworldGain: 0,
     overworldFilter: 24000,
     plantFilter: 1000,
     plantGain: 0,
     plantPan: 0,
+    radioGain: 0,
   },
   'cellar': {
     atticGain: 0,
@@ -155,6 +190,7 @@ const musicState: {[key: string]: MusicState} = {
     plantFilter: 400,
     plantGain: 0.4,
     plantPan: 0,
+    radioGain: 0,
   },
   'locked': {
     atticGain: 0,
@@ -163,6 +199,7 @@ const musicState: {[key: string]: MusicState} = {
     plantFilter: 1180,
     plantGain: 0.45,
     plantPan: -1.5,
+    radioGain: 0,
   },
 };
 
@@ -173,6 +210,7 @@ interface MusicState {
   plantFilter: number;
   plantGain: number;
   plantPan: number;
+  radioGain: number;
 }
 
 type LoadedBgm = {[key in TrackName]: AudioBuffer};

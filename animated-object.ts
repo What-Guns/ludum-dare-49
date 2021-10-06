@@ -2,6 +2,7 @@ import {debug} from './debug.js';
 import {Thing} from './main.js';
 import {Serializable, pluck} from './serialization.js';
 import {loadImage} from './loader.js';
+import { getFlagValue } from './flags.js';
 
 @Serializable('./animated-object.js')
 export class AnimatedObject implements Thing {
@@ -10,7 +11,7 @@ export class AnimatedObject implements Thing {
   z: number;
   animating: boolean;
   frameRate: number;
-  visible: boolean;
+  visible: string | boolean;
   oneshot: boolean;
   t = 0;
 
@@ -40,10 +41,21 @@ export class AnimatedObject implements Thing {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    if(!this.visible) return;
+    if (this.shouldBeInvisible()) return;
     const frameNumber = Math.floor(this.t);
     const frame = this.frames[frameNumber];
     ctx.drawImage(frame, this.x, this.y);
+  }
+
+  shouldBeInvisible(): boolean {
+    if (typeof this.visible == 'boolean') return !this.visible;
+    let visibleString = this.visible as string;
+    let negative = false;
+    if (visibleString.startsWith('!')) {
+      visibleString = visibleString.substring(1);
+      negative = true;
+    }
+    return getFlagValue(visibleString) ? negative : !negative;
   }
 
   serialize(): AnimatedObjectData {
@@ -81,7 +93,7 @@ export interface AnimatedObjectData {
   z: number;
   frames: string[];
   frameRate: number;
-  visible: boolean;
+  visible: string | boolean;
   animating: boolean;
   oneshot: boolean;
 }

@@ -11,6 +11,7 @@ import './progressManager.js';
 import { getProgressLevel, isRoomUnlocked, increaseProgressLevel, increaseProgressLevelName } from './progressManager.js';
 import { materials } from './material.js';
 import { puzzleObjects } from './puzzleObject.js';
+import { Flags, FlagsData } from './flags.js';
 
 let hasWarnedUserAboutLocalStorage = false;
 
@@ -36,6 +37,7 @@ export class Game {
     const game = new Game(canvas, await Music.create());
     const rooms = (await Promise.all(data.rooms.map(deserialize))) as Room[];
     increaseProgressLevel(data.currentProgressLevel);
+    Flags.deserialize(data.flags);
     game.rooms.push(...rooms as Room[]);
     game.goToFirstRoom();
     return Promise.resolve(game);
@@ -45,6 +47,7 @@ export class Game {
     return {
       rooms: this.rooms.map(room => serialize<Room, RoomData>(room)),
       currentProgressLevel: getProgressLevel(),
+      flags: Flags._instance.serialize(),
     };
   }
 
@@ -226,6 +229,7 @@ export class Game {
 interface GameData {
   rooms: RoomData[],
   currentProgressLevel: number,
+  flags: FlagsData,
 }
 
 interface GameExtras {
