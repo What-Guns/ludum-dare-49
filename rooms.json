@@ -383,8 +383,8 @@
           "@type": "AnimatedObject",
           "@path": "./animated-object.js",
           "x": 935,
-          "y": 680,
-          "z": 0,
+          "y": 780,
+          "z": 2,
           "animating": true,
           "frameRate": 2.5,
           "visible": "radio-playing",
@@ -399,13 +399,25 @@
           "@type": "AnimatedObject",
           "@path": "./animated-object.js",
           "x": 935,
-          "y": 680,
-          "z": 0,
+          "y": 780,
+          "z": 2,
           "animating": true,
           "frameRate": 2.5,
           "visible": "!radio-playing",
           "frames": [
             "sprites/radio-off.png"
+          ]
+        },
+        {
+          "@type": "FlagSwitcher",
+          "@path": "./flagSwitcher.js",
+          "x": 1085,
+          "y": 905,
+          "z": 2,
+          "width": 300,
+          "height": 250,
+          "flagsToSwitch": [
+            "radio-playing"
           ]
         },
         {

@@ -53,10 +53,6 @@ export function getFlagValue(flagName: string) {
   return Flags._instance.getFlagValue(flagName);
 }
 
-/*export interface FlagsData {
-  flagsList: FlagData[],
-}*/
-
 export type FlagsData = FlagData[];
 
 type FlagData = {
