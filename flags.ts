@@ -23,19 +23,16 @@ export class Flags {
   toggleFlag(flagName: string) {
     let flag = this.getFlag(flagName);
     if (!flag) {
-      flag = { name: flagName, value: true };
-      this.flagsList.push(flag);
-      console.log(`New flag '${flagName}' created`);
+      flag = this.createFlag(flagName, true);
     }
     flag.value = !flag.value;
+    window.game!.music.roomChanged(window.game?.room?.name!, true);
   }
 
   enableFlag(flagName: string) {
     let flag = this.getFlag(flagName);
     if (!flag) {
-      flag = { name: flagName, value: true };
-      this.flagsList.push(flag);
-      console.log(`New flag '${flagName}' created`);
+      flag = this.createFlag(flagName, true);
     }
     flag.value = true;
   }
@@ -43,25 +40,31 @@ export class Flags {
   disableFlag(flagName: string) {
     let flag = this.getFlag(flagName);
     if (!flag) {
-      flag = { name: flagName, value: false };
-      this.flagsList.push(flag);
-      console.log(`New flag '${flagName}' created`);
+      flag = this.createFlag(flagName, false);
     }
     flag.value = false;
   }
 
   getFlagValue(flagName: string) {
-    let flag = this.getFlag(flagName);
+    const negativeFlag = flagName.startsWith('!');
+    const realFlagName = negativeFlag ? flagName.substring(1) : flagName;
+    let flag = this.getFlag(realFlagName);
     if (!flag) {
-      flag = { name: flagName, value: false };
-      this.flagsList.push(flag);
-      console.log(`New flag '${flagName}' created`);
+      flag = this.createFlag(realFlagName, negativeFlag);
     }
-    return flag.value;
+    return negativeFlag ? !flag.value : flag.value;
   }
 
   getFlag(flagName: string) {
     return this.flagsList.find(f => f.name === flagName);
+  }
+
+  private createFlag(flagName: string, initialValue: boolean) {
+    const negativeFlag = flagName.startsWith('!');
+    const flag = { name: negativeFlag ? flagName.substring(1) : flagName, value: negativeFlag ? initialValue : !initialValue };
+    this.flagsList.push(flag);
+    console.warn(`New flag '${flagName}' created`);
+    return flag;
   }
 }
 
