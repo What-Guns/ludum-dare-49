@@ -38,6 +38,7 @@ export class FlagSwitcher implements Thing {
     }
     if(!this.room?.player?.canReach(this.x, this.y)) return false;
     this.flagsToSwitch.forEach(f => toggleFlag(f));
+    window.game!.save();
     return true;
   }
   
