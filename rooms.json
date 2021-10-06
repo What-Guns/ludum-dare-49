@@ -382,14 +382,17 @@
         {
           "@type": "AnimatedObject",
           "@path": "./animated-object.js",
-          "x": 955,
-          "y": 780,
+          "x": 935,
+          "y": 680,
           "z": 0,
           "animating": true,
-          "frameRate": 5,
+          "frameRate": 2.5,
           "visible": true,
           "frames": [
-            "sprites/Radio.png"
+            "sprites/radio-center.png",
+            "sprites/radio-left.png",
+            "sprites/radio-center.png",
+            "sprites/radio-right.png"
           ]
         },
         {
