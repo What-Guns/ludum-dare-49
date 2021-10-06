@@ -387,12 +387,25 @@
           "z": 0,
           "animating": true,
           "frameRate": 2.5,
-          "visible": true,
+          "visible": "radio-playing",
           "frames": [
             "sprites/radio-center.png",
             "sprites/radio-left.png",
             "sprites/radio-center.png",
             "sprites/radio-right.png"
+          ]
+        },
+        {
+          "@type": "AnimatedObject",
+          "@path": "./animated-object.js",
+          "x": 935,
+          "y": 680,
+          "z": 0,
+          "animating": true,
+          "frameRate": 2.5,
+          "visible": "!radio-playing",
+          "frames": [
+            "sprites/radio-off.png"
           ]
         },
         {
