@@ -58,7 +58,7 @@ export class ResourceSpawner implements Thing {
       brewTime: this.material.uselessInPotions ? undefined : {min: this.material.brewTime, max: this.material.expireTime},
       description: this.material.description,
       onTake: () => this.take(),
-    }).showByThing(this);
+    }).showByHotbar();
     return true;
   }
 
