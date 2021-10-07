@@ -1,5 +1,4 @@
 import {Room} from './room.js';
-import {Thing} from './main.js';
 import { getFilterFromColor, HSBColor, fractionalize } from './crap.js';
 
 const popupContainer = document.getElementById('popup-window-container') as HTMLDivElement;
@@ -49,22 +48,12 @@ export class HudItemWindow {
   constructor() {
     const template = document.getElementById('hud-window') as HTMLTemplateElement;
     this.element = template.content.firstElementChild!.cloneNode(true) as HTMLDivElement;
-    popupContainer.appendChild(this.element);
+    popupContainer.appendChild(this.element);  
   }
 
   showByHotbar() {
     this.element.style.transform = '';
     document.querySelector('.hud-window-container')!.appendChild(this.element);
-    this.visible = true;
-  }
-
-  showByThing({x, y, room}: Thing) {
-    const widthREAL = 266;
-    popupContainer.append(this.element);
-    const tx = Math.min(room!.width - widthREAL, Math.max(0, x - widthREAL/2));
-    const ty = y > 500 ? y - 400 : y + 50;
-    const transform =  `translate(${tx}px, ${ty}px)`;
-    this.element.style.transform = transform;
     this.visible = true;
   }
 }
