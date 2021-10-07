@@ -87,6 +87,22 @@ body.debug #debug-controls {
   pointer-events: initial;
 }
 
+@media (max-height: 400px) {
+  .hudWindow {
+    font-size: small;
+  }
+}
+
+@media (max-height: 500px) {
+  h2 {
+    font-size: small;
+  }
+
+  #potions-title {
+    font-size: large;
+  }
+}
+
 .hudWindow .hudWindow {
   position: static;
 }
@@ -194,7 +210,7 @@ ul {
 }
 
 .rpgTextBox {
-  width: 95%;
+  width: 85%;
   margin: auto;
   padding: 5px;
   position: absolute;
@@ -263,6 +279,7 @@ ul {
   width: 100%;
   display: flex;
   justify-content: center;
+  max-height: 30%;
 }
 
 #welcome-links {
@@ -280,6 +297,24 @@ ul {
 .welcome-button-container {
   width: 100%;
   text-align: center;
+  display: flex;
+}
+
+#welcome-content  {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  max-height: 90%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.title-image {
+  height: 70vh;
+  text-align: center;
+  margin: auto;
 }
 
 .title-button {
@@ -299,6 +334,24 @@ ul {
 
 .title-button:disabled {
   color: #D9CAB3;
+}
+
+@media (max-height: 1600px) {
+  .title-image {
+    order: 2;
+  }
+
+  #new-game-button {
+    order: 1;
+  }
+
+  #continue-button {
+    order: 3
+  }
+
+  #welcome-content {
+    flex-direction: row;
+  }
 }
 
 #cheat-sheet {
@@ -343,12 +396,6 @@ ul {
 #cheat-sheet footer button {
   margin: 1rem;
   font-size: large;
-}
-
-.title-image {
-  height: 70%;
-  text-align: center;
-  margin: auto;
 }
 
 @keyframes slide-down {

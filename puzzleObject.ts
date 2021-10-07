@@ -150,7 +150,7 @@ export class PuzzleObjectSpawner implements Thing {
       name: this.puzzleObject.name,
       description: this.puzzleObject.description,
       onTake: () => this.take(),
-    }).showByThing(this);
+    }).showByHotbar();
     return true;
   }
 
