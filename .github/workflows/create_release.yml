@@ -24,10 +24,13 @@ jobs:
       - name: build
         run: npx tsc
       - name: create archive
-        run: tar czf game.tar.gz audio/ backgrounds/ dist/ portraits/ sprites/ index.html style.css what-guns.png rooms.json
+        run: tar czf toil-and-trouble.tar.gz audio/ backgrounds/ dist/ portraits/ sprites/ index.html style.css what-guns.png rooms.json
+      - name: create zip
+        run: zip -r toil-and-trouble.zip audio/ backgrounds/ dist/ portraits/ sprites/ index.html style.css what-guns.png rooms.json
       - uses: softprops/action-gh-release@v0.1.5
         with:
           files:
-            game.tar.gz
+            toil-and-trouble.tar.gz
+            toil-and-trouble.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
