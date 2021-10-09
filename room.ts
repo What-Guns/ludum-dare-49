@@ -42,8 +42,6 @@ export class Room {
 
   private readonly things: Thing[] = [];
 
-  pattern?: CanvasPattern;
-
   player?: Player;
 
   constructor(private readonly background: CanvasImageSource[], private readonly roomData: RoomData) {
@@ -109,10 +107,7 @@ export class Room {
     this.doCameraStuff(ctx);
     ctx.translate(this.camera.x, 0);
     ctx.scale(this.camera.scale, this.camera.scale);
-    //this.pattern = this.pattern ?? ctx.createPattern(this.background, 'no-repeat')!;
-    this.pattern = ctx.createPattern(this.background[this._animationIndex], 'no-repeat')!;
-    ctx.fillStyle = this.pattern!;
-    ctx.fillRect(0, 0, this.width, this.height);
+    ctx.drawImage(this.background[this._animationIndex], 0, 0);
     for(const thing of this.things) {
       thing.draw?.(ctx);
     }
