@@ -34,3 +34,11 @@ jobs:
             toil-and-trouble.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Butler Push
+        uses: josephbmanley/butler-publish-itchio-action@v1.0.2
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          CHANNEL: browser
+          ITCH_GAME: toil-and-trouble
+          ITCH_USER: whatguns
+          package: toil-and-trouble.zip
