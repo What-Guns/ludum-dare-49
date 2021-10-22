@@ -41,4 +41,4 @@ jobs:
           CHANNEL: browser
           ITCH_GAME: toil-and-trouble
           ITCH_USER: whatguns
-          package: toil-and-trouble.zip
+          PACKAGE: toil-and-trouble.zip
