@@ -76,24 +76,14 @@ export class Music {
       return;
     }
     const now = audioContext.currentTime;
-    if(immediate) {
-      this.atticGain.gain.value = state.atticGain;
-      this.overworldGain.gain.value = state.overworldGain;
-      this.overworldFilter.frequency.value = state.overworldFilter;
-      this.plantFilter.frequency.value = state.plantFilter;
-      this.plantGain.gain.value = state.plantGain;
-      this.plantPan.positionX.value = state.plantPan;
-      this.radioGain.gain.value = state.radioGain;
-    } else {
-      const then = audioContext.currentTime + (immediate ? 0 : 1);
-      this.fadeParam(this.atticGain.gain, state.atticGain, now, then);
-      this.fadeParam(this.overworldGain.gain, state.overworldGain, now, then);
-      this.fadeParam(this.overworldFilter.frequency, state.overworldFilter, now, then);
-      this.fadeParam(this.plantFilter.frequency, state.plantFilter, now, then);
-      this.fadeParam(this.plantGain.gain, state.plantGain, now, then);
-      this.fadeParam(this.plantPan.positionX, state.plantPan, now, then);
-      this.fadeParam(this.radioGain.gain, state.radioGain, now, then);
-    }
+    const then = audioContext.currentTime + (immediate ? 0 : 1);
+    this.fadeParam(this.atticGain.gain, state.atticGain, now, then);
+    this.fadeParam(this.overworldGain.gain, state.overworldGain, now, then);
+    this.fadeParam(this.overworldFilter.frequency, state.overworldFilter, now, then);
+    this.fadeParam(this.plantFilter.frequency, state.plantFilter, now, then);
+    this.fadeParam(this.plantGain.gain, state.plantGain, now, then);
+    this.fadeParam(this.plantPan.positionX, state.plantPan, now, then);
+    this.fadeParam(this.radioGain.gain, state.radioGain, now, then);
   }
 
   private fadeParam(param: AudioParam, value: number, start: number, end: number) {
