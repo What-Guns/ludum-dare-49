@@ -1,6 +1,6 @@
 import {loadImage} from './loader.js';
 
-const PLACEHOLDER_IMAGE_URL = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/large-blue-square_1f7e6.png";
+const PLACEHOLDER_IMAGE_URL = "./sprites/invisible.png"
 
 /** A thing that goes in your pocket, or in a cauldron. Cannot exist in the world. */
 export interface Material {
